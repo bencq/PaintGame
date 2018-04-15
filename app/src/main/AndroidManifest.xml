@@ -16,12 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartGameActivity">
-        </activity>
-        <activity android:name=".ManageProblemActivity">
-        </activity>
-        <activity android:name=".PlayGameActivity" android:launchMode="singleTask">
-        </activity>
+        <activity android:name=".StartGameActivity" />
+        <activity android:name=".ManageProblemActivity" />
+        <activity android:name=".PlayGameActivity" />
+        <activity android:name=".AddProblemActivity" />
+        <activity android:name=".DesignProblemActivity"/>
     </application>
 
 </manifest>

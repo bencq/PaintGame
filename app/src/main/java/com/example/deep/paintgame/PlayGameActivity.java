@@ -16,8 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Date;
-import java.util.Timer;
+
 
 public class PlayGameActivity extends AppCompatActivity {
     //方块状态
@@ -46,7 +45,6 @@ public class PlayGameActivity extends AppCompatActivity {
     private TextView textView_time; // 时间文字对象
     private Thread timeThread; // 计时器线程对象
     private Thread buttonThread; // 按钮事件线程对象
-    private Timer timer; //计时器
 
 
 
@@ -74,16 +72,16 @@ public class PlayGameActivity extends AppCompatActivity {
         button_playGame_knock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentColor == PANE_DEFAULT)
+                if(currentColor == PANE_NOT_EXISTED)
                 {
-                    currentColor = PANE_NOT_EXISTED;
-                    button_playGame_knock.setBackgroundColor(Color.RED);
+                    currentColor = PANE_DEFAULT;
+                    button_playGame_knock.setBackgroundColor(Color.LTGRAY);
                     button_playGame_mark.setBackgroundColor(Color.LTGRAY);
                 }
                 else
                 {
-                    currentColor = PANE_DEFAULT;
-                    button_playGame_knock.setBackgroundColor(Color.LTGRAY);
+                    currentColor = PANE_NOT_EXISTED;
+                    button_playGame_knock.setBackgroundColor(Color.RED);
                     button_playGame_mark.setBackgroundColor(Color.LTGRAY);
                 }
             }
@@ -94,15 +92,15 @@ public class PlayGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(currentColor == PANE_DEFAULT)
                 {
-                    currentColor = PANE_MARKED;
-                    button_playGame_knock.setBackgroundColor(Color.LTGRAY);
-                    button_playGame_mark.setBackgroundColor(Color.GREEN);
-                }
-                else
-                {
                     currentColor = PANE_DEFAULT;
                     button_playGame_knock.setBackgroundColor(Color.LTGRAY);
                     button_playGame_mark.setBackgroundColor(Color.LTGRAY);
+                }
+                else
+                {
+                    currentColor = PANE_MARKED;
+                    button_playGame_knock.setBackgroundColor(Color.LTGRAY);
+                    button_playGame_mark.setBackgroundColor(Color.GREEN);
                 }
             }
         });
@@ -295,7 +293,7 @@ public class PlayGameActivity extends AppCompatActivity {
         }
 
         /*创建提示数字信息*/
-        int textSize = 14;
+        int textSize = button_size / 2;
         for (int i = 0; i < problem_size; ++i) {
             // 设置每一行的数字信息
             int rowPaneCount = 0; // 该行的方格数量
