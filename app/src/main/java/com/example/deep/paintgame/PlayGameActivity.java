@@ -293,7 +293,7 @@ public class PlayGameActivity extends AppCompatActivity {
         }
 
         /*创建提示数字信息*/
-        int textSize = button_size / 2;
+        int textSize = button_size / 4;
         for (int i = 0; i < problem_size; ++i) {
             // 设置每一行的数字信息
             int rowPaneCount = 0; // 该行的方格数量
@@ -317,7 +317,7 @@ public class PlayGameActivity extends AppCompatActivity {
             String rowHintString = rowPaneCount + "/" + rowPartCount;
             rowHint.setText(rowHintString);
             rowHint.setTextSize(textSize);
-            rowHint.setGravity(Gravity.CENTER);
+            rowHint.setGravity(Gravity.CENTER_VERTICAL);
             RelativeLayout.LayoutParams rowHintParams = new RelativeLayout.LayoutParams(button_size, button_size);
             rowHintParams.leftMargin = 0;
             rowHintParams.topMargin = textView_size + button_size * i;
@@ -346,7 +346,7 @@ public class PlayGameActivity extends AppCompatActivity {
             String colHintString =  colPaneCount + "/" + colPartCount;
             colHint.setText(colHintString);
             colHint.setTextSize(textSize);
-            colHint.setGravity(Gravity.CENTER);
+            colHint.setGravity(Gravity.CENTER_HORIZONTAL);
             RelativeLayout.LayoutParams colHintParams = new RelativeLayout.LayoutParams(button_size, button_size);
             colHintParams.leftMargin = textView_size + button_size * i;
             colHintParams.topMargin = 0;

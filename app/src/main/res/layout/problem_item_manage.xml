@@ -5,14 +5,15 @@
     >
 
 
-    <ImageView
+    <com.example.deep.paintgame.View.SquareImageView
         android:id="@+id/imageView_PIM_image"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="start|top"
+        android:scaleType="centerCrop"
         android:text="image" />
 
     <LinearLayout

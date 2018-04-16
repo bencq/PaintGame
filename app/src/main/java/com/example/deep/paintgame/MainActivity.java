@@ -47,13 +47,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "dealFirstTimeRunApp: " + "isFirstTimeRunApp: " + isFirstTimeRunApp);
         if(isFirstTimeRunApp)
         {
-            String problemNames[] = {"test","origin_1","origin_2"};
-            int problemSizes[] = {8,6,6};
+            String problemNames[] = {"test","origin_1","origin_2","origin_3"};
+            int problemSizes[] = {8,6,6,12};
             String problemData[] =
                     {
                             "04040400#04040400#44444444#04040400#04040400#04444440#04444440#04444440#",
                             "444444#444444#444444#444444#444444#000000#",
-                            "040404#040404#040404#040404#040404#040404#"
+                            "040404#040404#040404#040404#040404#040404#",
+                            "040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#"
                     };
 
             SharedPreferences.Editor editor = sharedPreferences.edit();

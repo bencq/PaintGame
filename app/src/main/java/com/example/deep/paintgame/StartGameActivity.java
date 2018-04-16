@@ -23,6 +23,8 @@ public class StartGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startgame);
 
+
+
         problemList = getProblemList();
         if(problemList == null)
         {
