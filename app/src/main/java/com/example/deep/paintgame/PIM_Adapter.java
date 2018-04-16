@@ -1,5 +1,6 @@
 package com.example.deep.paintgame;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,7 +45,7 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
             public void onClick(final View view) {
                 final int position = viewholder.getAdapterPosition();
                 Problem problem = problemList.get(position);
-                String name = problem.getName();
+                final String name = problem.getName();
                 AlertDialog alertDialog = new AlertDialog.Builder(parent.getContext()).create();
                 alertDialog.setTitle("确认要删除 " + name + " ?");
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "确认", new DialogInterface.OnClickListener() {
@@ -57,7 +58,7 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
                         //处理SharedPreferences
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(parent.getContext());
                         String problemNames = sharedPreferences.getString("problemNames",null);
-                        if(true || !TextUtils.isEmpty(problemNames))
+                        if(problemNames != null)
                         {
                             StringBuilder stringBuilder = new StringBuilder();
                             for(int j = 0; j < problemList.size(); ++j)
@@ -68,6 +69,10 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("problemNames",stringBuilder.toString());
                             editor.apply();
+
+                            //删除具体题目
+                            SharedPreferences sharedPreferences_problem = parent.getContext().getSharedPreferences("problem_" + name, Context.MODE_PRIVATE);
+                            sharedPreferences_problem.edit().clear().apply();
                         }
                         else
                         {
@@ -90,6 +95,16 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
             @Override
             public void onClick(View view) {
 
+                //debug
+                //准备添加回调startActivityForResult 来更新图片
+                final int position = viewholder.getAdapterPosition();
+                Problem problem = problemList.get(position);
+                String name = problem.getName();
+
+                Intent intent = new Intent(view.getContext(), DesignProblemActivity.class);
+                intent.putExtra("name",name);
+                intent.putExtra("mode",DesignProblemActivity.MODE_EDIT);
+                view.getContext().startActivity(intent);
             }
         });
         return viewholder;

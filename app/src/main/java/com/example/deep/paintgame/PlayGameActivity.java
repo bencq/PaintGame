@@ -90,7 +90,7 @@ public class PlayGameActivity extends AppCompatActivity {
         button_playGame_mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentColor == PANE_DEFAULT)
+                if(currentColor == PANE_MARKED)
                 {
                     currentColor = PANE_DEFAULT;
                     button_playGame_knock.setBackgroundColor(Color.LTGRAY);
@@ -256,7 +256,7 @@ public class PlayGameActivity extends AppCompatActivity {
         }
 
         /*初始化布局对象*/
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.relativeLayout_playGame_button);
+        RelativeLayout layout = findViewById(R.id.relativeLayout_playGame_button);
 
         /*获取Activity大小*/
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -317,9 +317,9 @@ public class PlayGameActivity extends AppCompatActivity {
             String rowHintString = rowPaneCount + "/" + rowPartCount;
             rowHint.setText(rowHintString);
             rowHint.setTextSize(textSize);
-            rowHint.setGravity(Gravity.CENTER_VERTICAL);
+            rowHint.setGravity(Gravity.CENTER);
             RelativeLayout.LayoutParams rowHintParams = new RelativeLayout.LayoutParams(button_size, button_size);
-            rowHintParams.leftMargin = 0;
+            rowHintParams.rightMargin = 0;
             rowHintParams.topMargin = textView_size + button_size * i;
             layout.addView(rowHint, rowHintParams);
 
@@ -346,10 +346,10 @@ public class PlayGameActivity extends AppCompatActivity {
             String colHintString =  colPaneCount + "/" + colPartCount;
             colHint.setText(colHintString);
             colHint.setTextSize(textSize);
-            colHint.setGravity(Gravity.CENTER_HORIZONTAL);
+            colHint.setGravity(Gravity.CENTER);
             RelativeLayout.LayoutParams colHintParams = new RelativeLayout.LayoutParams(button_size, button_size);
             colHintParams.leftMargin = textView_size + button_size * i;
-            colHintParams.topMargin = 0;
+            colHintParams.bottomMargin = 0;
             layout.addView(colHint, colHintParams);
         }
 

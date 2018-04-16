@@ -26,7 +26,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        android:maxLength="20"
+        android:maxLength="16"
         android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -35,6 +35,8 @@ public class ManageProblemActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.menuItem_addProblem:
+                //debug
+                //准备添加回调startActivityForResult 来更新图片
                 Intent intent = new Intent(ManageProblemActivity.this,AddProblemActivity.class);
                 ManageProblemActivity.this.startActivity(intent);
                 break;
