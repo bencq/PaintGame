@@ -276,7 +276,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
         /*创建按钮对象*/
         int textView_size = 100;
-        int button_size = (width - textView_size) / problem_size; // 每个按钮的大小
+        int button_size = (layoutParams.width - textView_size) / problem_size; // 每个按钮的大小
         buttons = new Button[problem_size][problem_size];
 
         for (int row = 0; row < problem_size; ++row) {
@@ -293,7 +293,14 @@ public class PlayGameActivity extends AppCompatActivity {
         }
 
         /*创建提示数字信息*/
-        int textSize = button_size / 4;
+        int textSize;
+        if (problem_size >= 11) {
+            textSize = 12;
+        } else if (10 >= problem_size && problem_size >= 6) {
+            textSize = 14;
+        } else {
+            textSize = 14;
+        }
         for (int i = 0; i < problem_size; ++i) {
             // 设置每一行的数字信息
             int rowPaneCount = 0; // 该行的方格数量
@@ -318,7 +325,7 @@ public class PlayGameActivity extends AppCompatActivity {
             rowHint.setText(rowHintString);
             rowHint.setTextSize(textSize);
             rowHint.setGravity(Gravity.CENTER);
-            RelativeLayout.LayoutParams rowHintParams = new RelativeLayout.LayoutParams(button_size, button_size);
+            RelativeLayout.LayoutParams rowHintParams = new RelativeLayout.LayoutParams(textView_size, button_size);
             rowHintParams.rightMargin = 0;
             rowHintParams.topMargin = textView_size + button_size * i;
             layout.addView(rowHint, rowHintParams);
@@ -347,7 +354,7 @@ public class PlayGameActivity extends AppCompatActivity {
             colHint.setText(colHintString);
             colHint.setTextSize(textSize);
             colHint.setGravity(Gravity.CENTER);
-            RelativeLayout.LayoutParams colHintParams = new RelativeLayout.LayoutParams(button_size, button_size);
+            RelativeLayout.LayoutParams colHintParams = new RelativeLayout.LayoutParams(button_size, textView_size);
             colHintParams.leftMargin = textView_size + button_size * i;
             colHintParams.bottomMargin = 0;
             layout.addView(colHint, colHintParams);
