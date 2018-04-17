@@ -10,7 +10,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -271,7 +270,7 @@ public class DesignProblemActivity extends AppCompatActivity {
 
         /*创建按钮对象*/
         int textView_size = 100;
-        int button_size = (layoutParams.width - textView_size) / problem_size; // 每个按钮的大小
+        int button_size = (width - textView_size) / problem_size; // 每个按钮的大小
         buttons = new Button[problem_size][problem_size];
 
         for (int row = 0; row < problem_size; ++row) {
