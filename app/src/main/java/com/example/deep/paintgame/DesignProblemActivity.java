@@ -10,8 +10,10 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -260,7 +262,7 @@ public class DesignProblemActivity extends AppCompatActivity {
         }
 
         /*初始化布局对象*/
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.relativeLayout_DP_button);
+        RelativeLayout layout = findViewById(R.id.relativeLayout_DP_button);
 
         /*获取Activity大小*/
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -268,8 +270,11 @@ public class DesignProblemActivity extends AppCompatActivity {
         int width = displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
 
-        /*获取布局大小*/
-        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) layout.getLayoutParams();
+        /*动态改变布局对象属性*/
+        ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+        layoutParams.width = width;
+        layoutParams.height = width;
+        layout.setLayoutParams(layoutParams);
 
         /*创建按钮对象*/
         int textView_size = 100;

@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 
 public class PlayGameActivity extends AppCompatActivity {
+    //
+    private static final String TAG = "PlayGameActivity";
     //方块状态
     public static final int PANE_NOT_EXISTED = 0;
     public static final int PANE_DEFAULT = 1;
@@ -28,6 +31,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
     public static final int IS_FINISHED_TRUE = 1;
     public static final int IS_FINISHED_FALSE = 0;
+
 
     private int problem_size; // 当前题目的尺寸大小
     private String problem_name; // 当前题目的名字
@@ -265,24 +269,18 @@ public class PlayGameActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
 
         /*动态改变布局对象属性*/
-        int rightMargin = 30;
-        ConstraintLayout.LayoutParams params_relativeLayout = new ConstraintLayout.LayoutParams(layout.getLayoutParams());
-        params_relativeLayout.width = width - rightMargin;
-        params_relativeLayout.height = width;
-        layout.setLayoutParams(params_relativeLayout);
+        ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+        layoutParams.width = width;
+        layoutParams.height = width;
+        layout.setLayoutParams(layoutParams);
 
-        /*获取布局大小*/
-        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) layout.getLayoutParams();
-        //layoutParams.width =  width * 4 / 5;
-        //layoutParams.height = height * 4 / 5;
-        //layout.setLayoutParams(layoutParams);
         Log.i("PlayGameActivity", "Activity width is " + width);
         Log.i("PlayGameActivity", "Activity height is " + height);
         Log.i("PlayGameActivity", "RelativeLayout width is " + layoutParams.width);
         Log.i("PlayGameActivity", "RelativeLayout height is " + layoutParams.height);
 
         /*创建按钮对象*/
-        int textView_size = 100;
+        int textView_size = 100;//layoutParams.width / (problem_size + 1);
         int button_size = (layoutParams.width - textView_size) / problem_size; // 每个按钮的大小
         buttons = new Button[problem_size][problem_size];
 
