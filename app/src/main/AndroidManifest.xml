@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".StartGameActivity" />
-        <activity android:name=".ManageProblemActivity" />
+        <activity android:name=".ManageProblemActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
         <activity android:name=".PlayGameActivity" />
         <activity android:name=".AddProblemActivity" />
         <activity android:name=".DesignProblemActivity"/>

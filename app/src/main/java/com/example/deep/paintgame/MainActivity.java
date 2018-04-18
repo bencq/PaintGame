@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         button_main_ManageProblem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,8 +39,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        button_main_GameHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //debug
+                // 启动游戏帮助Activity
+            }
+        });
     }
 
+
+    //初始化游戏数据 完成后将该函数debug处putBoolean 改为false
     public void dealFirstTimeRunApp()
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -64,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 stringBuilder.append(problemName).append("#");
             }
             editor.putString("problemNames",stringBuilder.toString());
-            editor.putBoolean("isFirstTimeRunApp",true);//debug
+            editor.putBoolean("isFirstTimeRunApp",false);//debug
             editor.apply();
 
             for (int i = 0; i < problemNames.length; ++i)
