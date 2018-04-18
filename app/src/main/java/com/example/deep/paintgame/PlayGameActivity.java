@@ -264,6 +264,13 @@ public class PlayGameActivity extends AppCompatActivity {
         int width = displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
 
+        /*动态改变布局对象属性*/
+        int rightMargin = 30;
+        ConstraintLayout.LayoutParams params_relativeLayout = new ConstraintLayout.LayoutParams(layout.getLayoutParams());
+        params_relativeLayout.width = width - rightMargin;
+        params_relativeLayout.height = width;
+        layout.setLayoutParams(params_relativeLayout);
+
         /*获取布局大小*/
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) layout.getLayoutParams();
         //layoutParams.width =  width * 4 / 5;
@@ -276,7 +283,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
         /*创建按钮对象*/
         int textView_size = 100;
-        int button_size = (width - textView_size) / problem_size; // 每个按钮的大小
+        int button_size = (layoutParams.width - textView_size) / problem_size; // 每个按钮的大小
         buttons = new Button[problem_size][problem_size];
 
         for (int row = 0; row < problem_size; ++row) {
