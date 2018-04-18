@@ -104,7 +104,10 @@ public class DesignProblemActivity extends AppCompatActivity {
                     Toast.makeText(DesignProblemActivity.this,"发生未知错误!",Toast.LENGTH_SHORT).show();
                     finish();
                 }
+
+
                 Toast.makeText(DesignProblemActivity.this,"保存成功!",Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -286,6 +289,9 @@ public class DesignProblemActivity extends AppCompatActivity {
             }
         }
 
+
+        //debug
+        // 更新文字提示信息
         /*创建提示数字信息*/
         int textSize;
         if (problem_size >= 11) {

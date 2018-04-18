@@ -11,6 +11,8 @@ import android.widget.ImageView;
  * Created by Bencq on 2018/04/15.
  */
 
+
+//正方形 ImageView
 @SuppressLint("AppCompatCustomView")
 public class SquareImageView extends ImageView{
     public SquareImageView(Context context) {

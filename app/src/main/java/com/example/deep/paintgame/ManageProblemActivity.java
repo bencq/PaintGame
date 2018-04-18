@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,7 +21,9 @@ import java.util.List;
 public class ManageProblemActivity extends AppCompatActivity {
 
     private static final String TAG = "ManageProblemActivity";
-    List<Problem> problemList;
+    public DrawerLayout drawerLayout;
+    public PIM_Adapter pim_adapter;
+    public List<Problem> problemList;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,11 +35,12 @@ public class ManageProblemActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
+            /*case android.R.id.home:
+                drawerLayout.openDrawer(Gravity.END);
+                break;*/
+
             case R.id.menuItem_addProblem:
-                //debug
-                //准备添加回调startActivityForResult 来更新图片
-                Intent intent = new Intent(ManageProblemActivity.this,AddProblemActivity.class);
-                ManageProblemActivity.this.startActivity(intent);
+                drawerLayout.openDrawer(Gravity.END);
                 break;
 
             default:
@@ -52,16 +54,18 @@ public class ManageProblemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manageproblem);
 
+        drawerLayout = findViewById(R.id.drawerLayout_MP);
+
         problemList = getProblemList();
         if(problemList == null)
         {
             Log.e(TAG, "onCreate: " + "发生未知错误，problemList == null");
             return;
         }
-        RecyclerView recyclerView = findViewById(R.id.recyclerView_manageProblem);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView_MP);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(ManageProblemActivity.this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        PIM_Adapter pim_adapter = new PIM_Adapter(problemList);
+        pim_adapter = new PIM_Adapter(problemList);
         recyclerView.setAdapter(pim_adapter);
     }
 
