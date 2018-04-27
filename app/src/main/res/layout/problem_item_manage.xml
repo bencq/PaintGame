@@ -5,7 +5,7 @@
     >
 
 
-    <com.example.deep.paintgame.View.SquareImageView
+    <com.example.deep.paintgame.view.SquareImageView
         android:id="@+id/imageView_PIM_image"
         android:layout_width="150dp"
         android:layout_height="150dp"

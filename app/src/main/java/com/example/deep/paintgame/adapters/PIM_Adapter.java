@@ -1,13 +1,15 @@
-package com.example.deep.paintgame;
+package com.example.deep.paintgame.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Collections;
+import com.example.deep.paintgame.DesignProblemActivity;
+import com.example.deep.paintgame.ManageProblemActivity;
+import com.example.deep.paintgame.R;
+import com.example.deep.paintgame.javaBean.Problem;
+import com.example.deep.paintgame.utils.Paths;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -25,28 +34,34 @@ import java.util.List;
 
 public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
 
+    private static final String TAG = "PIM_Adapter";
+
     public PIM_Adapter(List<Problem> problemList) {
         this.problemList = problemList;
         this.pim_adapter = this;
     }
 
     private List<Problem> problemList;
-
     private PIM_Adapter pim_adapter;
+
+    private Context context;
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.problem_item_manage,parent,false);
-        final ViewHolder viewholder = new ViewHolder(view);
+
+        context = parent.getContext();
+
+        View view = LayoutInflater.from(context).inflate(R.layout.problem_item_manage,parent,false);
+        final ViewHolder viewHolder = new ViewHolder(view);
 
 
-        viewholder.button_PIM_delete.setOnClickListener(new View.OnClickListener() {
+        viewHolder.button_PIM_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                final int position = viewholder.getAdapterPosition();
-                Problem problem = problemList.get(position);
+                final int position = viewHolder.getAdapterPosition();
+                final Problem problem = problemList.get(position);
                 final String name = problem.getName();
-                AlertDialog alertDialog = new AlertDialog.Builder(parent.getContext()).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("确认要删除 " + name + " ?");
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "确认", new DialogInterface.OnClickListener() {
                     @Override
@@ -56,7 +71,7 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
                         pim_adapter.notifyItemRemoved(position);
 
                         //处理SharedPreferences
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(parent.getContext());
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                         String problemNames = sharedPreferences.getString("problemNames",null);
                         if(problemNames != null)
                         {
@@ -71,12 +86,25 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
                             editor.apply();
 
                             //删除具体题目
-                            SharedPreferences sharedPreferences_problem = parent.getContext().getSharedPreferences("problem_" + name, Context.MODE_PRIVATE);
+                            SharedPreferences sharedPreferences_problem = context.getSharedPreferences("problem_" + name, Context.MODE_PRIVATE);
                             sharedPreferences_problem.edit().clear().apply();
+
+                            //删除图片
+                            File file_image = Paths.getImageFile(context,problem.getName());
+                            Log.d(TAG, "onClick: " + "file_image.exists(): " + file_image.exists());
+                            if(file_image.exists())
+                            {
+                                boolean isDeleteSuccessful = file_image.delete();
+                                Log.d(TAG, "onClick: " + "isDeleteSuccessful: " + isDeleteSuccessful);
+                            }
+                            else
+                            {
+                                Toast.makeText(context,"删除图片失败!发生未知错误!",Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else
                         {
-                            Toast.makeText(parent.getContext(),"删除失败!发生未知错误!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"删除失败!发生未知错误!",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -91,29 +119,40 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
             }
         });
 
-        viewholder.button_PIM_edit.setOnClickListener(new View.OnClickListener() {
+        viewHolder.button_PIM_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //debug
-                //准备添加回调startActivityForResult 来更新图片
-                final int position = viewholder.getAdapterPosition();
+
+                final int position = viewHolder.getAdapterPosition();
                 Problem problem = problemList.get(position);
                 String name = problem.getName();
 
                 Intent intent = new Intent(view.getContext(), DesignProblemActivity.class);
                 intent.putExtra("name",name);
                 intent.putExtra("mode",DesignProblemActivity.MODE_EDIT);
-                view.getContext().startActivity(intent);
+                intent.putExtra("position",position);
+                ((ManageProblemActivity)(context)).startActivityForResult(intent,DesignProblemActivity.MODE_EDIT);
+
             }
         });
-        return viewholder;
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Problem problem = problemList.get(position);
-        holder.imageView_PIM_image.setImageResource(problem.getImageId());
+
+        try
+        {
+            Bitmap bitmap = BitmapFactory.decodeStream(context.openFileInput(Paths.getImageFileName(problem.getName())));
+            holder.imageView_PIM_image.setImageBitmap(bitmap);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
         holder.textView_PIM_name.setText(problem.getName());
         holder.textView_PIM_size.setText(String.valueOf(problem.getSize()));
     }
@@ -123,11 +162,11 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
         return problemList.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder
     {
         ImageView imageView_PIM_image;
         Button button_PIM_delete;
-        Button button_PIM_edit;
+        public Button button_PIM_edit;
         TextView textView_PIM_name;
         TextView textView_PIM_size;
 

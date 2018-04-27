@@ -1,4 +1,4 @@
-package com.example.deep.paintgame;
+package com.example.deep.paintgame.adapters;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.deep.paintgame.PlayGameActivity;
+import com.example.deep.paintgame.R;
+import com.example.deep.paintgame.javaBean.Problem;
 
 import java.util.List;
 

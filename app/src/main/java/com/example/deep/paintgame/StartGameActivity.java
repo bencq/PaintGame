@@ -10,6 +10,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.deep.paintgame.adapters.PIS_Adapter;
+import com.example.deep.paintgame.javaBean.Problem;
+
 import java.util.ArrayList;
 import java.util.List;
 

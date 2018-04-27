@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +13,9 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.deep.paintgame.adapters.PIM_Adapter;
+import com.example.deep.paintgame.javaBean.Problem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,48 @@ public class ManageProblemActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public PIM_Adapter pim_adapter;
     public List<Problem> problemList;
+    public RecyclerView recyclerView_MP;
+    public AddProblemFragment addProblemFragment;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+
+            case DesignProblemActivity.MODE_ADD:
+                if(resultCode == RESULT_OK)
+                {
+                    Log.d(TAG, "onActivityResult: " + "add notify pic suc");
+                    problemList.add(new Problem(addProblemFragment.str_name,addProblemFragment.size,null,R.drawable.questionmark_small));
+                    pim_adapter.notifyItemChanged(problemList.size() - 1);
+                }
+                break;
+
+
+            case DesignProblemActivity.MODE_EDIT:
+                //debug
+                // 更新图片
+                if(resultCode == RESULT_OK)
+                {
+                    int position = data.getIntExtra("position",-1);
+                    Log.d(TAG, "onActivityResult: " + "position: " + position);
+                    if(position == -1)
+                    {
+                        Toast.makeText(ManageProblemActivity.this,"未知错误导致更新图片失败!",Toast.LENGTH_SHORT).show(); //debug
+                    }
+                    else
+                    {
+                        pim_adapter.notifyItemChanged(position);
+                    }
+                }
+                break;
+
+            default:
+                Log.d(TAG, "onActivityResult: " + "requestCode: " + requestCode);
+                break;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,10 +79,6 @@ public class ManageProblemActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-            /*case android.R.id.home:
-                drawerLayout.openDrawer(Gravity.END);
-                break;*/
-
             case R.id.menuItem_addProblem:
                 drawerLayout.openDrawer(Gravity.END);
                 break;
@@ -54,6 +94,7 @@ public class ManageProblemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manageproblem);
 
+        addProblemFragment = (AddProblemFragment)(getSupportFragmentManager().findFragmentById(R.id.fragment_MP_addProblem));
         drawerLayout = findViewById(R.id.drawerLayout_MP);
 
         problemList = getProblemList();
@@ -62,11 +103,11 @@ public class ManageProblemActivity extends AppCompatActivity {
             Log.e(TAG, "onCreate: " + "发生未知错误，problemList == null");
             return;
         }
-        RecyclerView recyclerView = findViewById(R.id.recyclerView_MP);
+        recyclerView_MP = findViewById(R.id.recyclerView_MP);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(ManageProblemActivity.this,2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView_MP.setLayoutManager(gridLayoutManager);
         pim_adapter = new PIM_Adapter(problemList);
-        recyclerView.setAdapter(pim_adapter);
+        recyclerView_MP.setAdapter(pim_adapter);
     }
 
 

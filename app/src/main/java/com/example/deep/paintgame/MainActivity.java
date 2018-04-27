@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
@@ -56,10 +57,15 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         boolean isFirstTimeRunApp = sharedPreferences.getBoolean("isFirstTimeRunApp",true);
         Log.d(TAG, "dealFirstTimeRunApp: " + "isFirstTimeRunApp: " + isFirstTimeRunApp);
+
+        //第一次启动程序
         if(isFirstTimeRunApp)
         {
+            //题目名
             String problemNames[] = {"test","origin_1","origin_2","origin_3"};
+            //题目尺寸
             int problemSizes[] = {8,10,6,12};
+            //题目数据
             String problemData[] =
                     {
                             "04040400#04040400#44444444#04040400#04040400#04444440#04444440#04444440#",
@@ -68,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                             "040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#"
                     };
 
+
+            //处理题目名字放到SP中
             SharedPreferences.Editor editor = sharedPreferences.edit();
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -78,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("isFirstTimeRunApp",false);//debug
             editor.apply();
 
+
+            //SP记录具体每个题目的数据
             for (int i = 0; i < problemNames.length; ++i)
             {
                 String name = problemNames[i];
@@ -87,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
                 editor_problem.putString("data", problemData[i]);
                 editor_problem.apply();
             }
+
+            //debug
+            //处理题目初始图片
 
         }
     }

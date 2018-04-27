@@ -1,8 +1,7 @@
-package com.example.deep.paintgame.View;
+package com.example.deep.paintgame.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;

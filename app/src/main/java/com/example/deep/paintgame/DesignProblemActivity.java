@@ -2,15 +2,14 @@ package com.example.deep.paintgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.deep.paintgame.utils.Paths;
+import com.example.deep.paintgame.utils.Utils;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class DesignProblemActivity extends AppCompatActivity {
@@ -38,11 +43,15 @@ public class DesignProblemActivity extends AppCompatActivity {
     private int mode;
     private int problem_size; // 当前题目的尺寸大小
     private String problem_name; // 当前题目的名字
+    private int problem_position;
     private Button button_DP_confirm; //确认按钮
     private Button[][] buttons; // 按钮对象
     private int[][] problem_currentAnswer; // 当前玩家的答案
     private int currentColor = PANE_RIGHT; // 当前的颜色，注意：0为不存在的方块，1为白色即默认方块颜色，2为绿色即标记颜色，3为红色即错误颜色
     private Thread buttonThread; // 按钮事件线程对象
+
+
+    RelativeLayout relativeLayout_DP_button;
 
 
     @Override
@@ -58,6 +67,7 @@ public class DesignProblemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         problem_name = intent.getStringExtra("name");
         problem_size = intent.getIntExtra("size", 0);
+        problem_position = intent.getIntExtra("position", -1);
         mode = intent.getIntExtra("mode",MODE_ADD);
 
         //开始游戏
@@ -67,6 +77,7 @@ public class DesignProblemActivity extends AppCompatActivity {
         button_DP_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(mode == MODE_ADD)
                 {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DesignProblemActivity.this);
@@ -99,7 +110,6 @@ public class DesignProblemActivity extends AppCompatActivity {
                     String data = getDataString();
                     editor_problem.putString("data",data);
                     editor_problem.apply();
-                    //处理图片
                 }
                 else
                 {
@@ -108,8 +118,30 @@ public class DesignProblemActivity extends AppCompatActivity {
                 }
 
 
+                //处理图片
+                try
+                {
+                    FileOutputStream fileOutputStream = view.getContext().openFileOutput(Paths.getImageFileName(problem_name),MODE_PRIVATE);
+                    Bitmap bitmap = Utils.loadBitmapFromView(relativeLayout_DP_button);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,90,fileOutputStream);
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                    view.destroyDrawingCache();
+                }
+                catch (FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
                 Toast.makeText(DesignProblemActivity.this,"保存成功!",Toast.LENGTH_SHORT).show();
-                setResult(RESULT_OK);
+                //提醒刷新图片
+                Intent intent_back = new Intent();
+                intent_back.putExtra("position", problem_position);
+                setResult(RESULT_OK,intent_back);
                 finish();
             }
         });
@@ -262,7 +294,7 @@ public class DesignProblemActivity extends AppCompatActivity {
         }
 
         /*初始化布局对象*/
-        RelativeLayout layout = findViewById(R.id.relativeLayout_DP_button);
+        relativeLayout_DP_button = findViewById(R.id.relativeLayout_DP_button);
 
         /*获取Activity大小*/
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -271,10 +303,10 @@ public class DesignProblemActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
 
         /*动态改变布局对象属性*/
-        ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = relativeLayout_DP_button.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = width;
-        layout.setLayoutParams(layoutParams);
+        relativeLayout_DP_button.setLayoutParams(layoutParams);
 
         /*创建按钮对象*/
         int textView_size = 100;
@@ -290,7 +322,7 @@ public class DesignProblemActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams buttonParam = new RelativeLayout.LayoutParams(button_size, button_size);
                 buttonParam.leftMargin = textView_size + button_size * col; // 横坐标定位
                 buttonParam.topMargin = textView_size + button_size * row; // 纵坐标定位
-                layout.addView(buttons[row][col], buttonParam); // 将按钮放入layout组件
+                relativeLayout_DP_button.addView(buttons[row][col], buttonParam); // 将按钮放入layout组件
             }
         }
 
@@ -333,7 +365,7 @@ public class DesignProblemActivity extends AppCompatActivity {
             RelativeLayout.LayoutParams rowHintParams = new RelativeLayout.LayoutParams(textView_size, button_size);
             rowHintParams.rightMargin = 0;
             rowHintParams.topMargin = textView_size + button_size * i;
-            layout.addView(rowHint, rowHintParams);
+            relativeLayout_DP_button.addView(rowHint, rowHintParams);
 
             // 设置每一列的数字信息
             int colPaneCount = 0; // 该列的方格数量
@@ -362,7 +394,7 @@ public class DesignProblemActivity extends AppCompatActivity {
             RelativeLayout.LayoutParams colHintParams = new RelativeLayout.LayoutParams(button_size, textView_size);
             colHintParams.leftMargin = textView_size + button_size * i;
             colHintParams.bottomMargin = 0;
-            layout.addView(colHint, colHintParams);
+            relativeLayout_DP_button.addView(colHint, colHintParams);
         }
 
         /*渲染按钮颜色*/

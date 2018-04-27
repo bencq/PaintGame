@@ -1,4 +1,4 @@
-package com.example.deep.paintgame;
+package com.example.deep.paintgame.deprecated;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddProblemActivity extends AppCompatActivity {
+import com.example.deep.paintgame.DesignProblemActivity;
+import com.example.deep.paintgame.R;
 
+public class AddProblemActivity extends AppCompatActivity {
+    //弃用
     //debug 用fragment代替此activity
 
     public static final int MAX_SIZE = 12;
@@ -34,6 +37,8 @@ public class AddProblemActivity extends AppCompatActivity {
 
 
 
+
+
         //设置onClick事件
         button_MP_upSize.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +51,7 @@ public class AddProblemActivity extends AppCompatActivity {
                     str_size = Integer.toString(size);
                     editText_MP_size.setText(str_size);
                 }
+
             }
         });
 

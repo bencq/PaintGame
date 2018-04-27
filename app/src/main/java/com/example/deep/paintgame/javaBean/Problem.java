@@ -1,4 +1,4 @@
-package com.example.deep.paintgame;
+package com.example.deep.paintgame.javaBean;
 
 /**
  * Created by Bencq on 2018/04/15.
