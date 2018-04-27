@@ -269,9 +269,10 @@ public class PlayGameActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
 
         /*动态改变布局对象属性*/
+        int rightMargin = 50;
         ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
-        layoutParams.width = width;
-        layoutParams.height = width;
+        layoutParams.width = width / 20 * 19;
+        layoutParams.height = width / 20 * 19;
         layout.setLayoutParams(layoutParams);
 
         Log.i("PlayGameActivity", "Activity width is " + width);
