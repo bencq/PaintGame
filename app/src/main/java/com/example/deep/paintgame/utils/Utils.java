@@ -18,7 +18,7 @@ public class Utils {
         Canvas canvas = new Canvas(bmp);
 
         canvas.drawColor(Color.WHITE);
-        /** 如果不设置canvas画布为白色，则生成透明 */
+        /* 如果不设置canvas画布为白色，则生成透明 */
 
         view.layout(0, 0, width, height);
         view.draw(canvas);
