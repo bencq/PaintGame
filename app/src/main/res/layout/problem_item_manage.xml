@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+    <com.example.deep.paintgame.view.SquareImageView
+        android:id="@+id/imageView_PIM_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="start|top"
+        android:scaleType="centerCrop"
+        android:text="image" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_PIM_buttons"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/imageView_PIM_image"
+        android:layout_toRightOf="@id/imageView_PIM_image"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/imageView_PIM_image"
+        >
+
+        <Button
+            android:id="@+id/button_PIM_edit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:ems="1"
+            android:textSize="12sp"
+            android:text="edit" />
+
+
+        <Button
+            android:id="@+id/button_PIM_delete"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:ems="1"
+            android:textSize="12sp"
+            android:text="del" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_PIM_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@id/imageView_PIM_image"
+        android:layout_alignEnd="@id/imageView_PIM_image"
+        android:layout_below="@id/imageView_PIM_image"
+        android:textSize="20sp"
+        android:text="name"
+         />
+    
+    <TextView
+        android:id="@+id/textView_PIM_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_toRightOf="@id/textView_PIM_name"
+        android:layout_toEndOf="@id/textView_PIM_name"
+        android:layout_alignRight="@id/linearLayout_PIM_buttons"
+        android:layout_alignEnd="@id/linearLayout_PIM_buttons"
+        android:layout_below="@id/linearLayout_PIM_buttons"
+        android:textSize="20sp"
+        android:text="size"
+        />
+
+</RelativeLayout>
