@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.deep.paintgame.animation.Animation;
 
 
 public class PlayGameActivity extends AppCompatActivity {
@@ -183,22 +184,22 @@ public class PlayGameActivity extends AppCompatActivity {
                     case PANE_NOT_EXISTED:
                         drawable.setColor(Color.WHITE);
                         break;
-                    case PANE_DEFAULT:
+                    case DesignProblemActivity.COLOR_LTGRAY:
                         drawable.setColor(Color.LTGRAY);
                         break;
-                    case PANE_MARKED:
+                    case DesignProblemActivity.COLOR_GREEN:
                         drawable.setColor(Color.GREEN);
                         break;
-                    case PANE_ERROR:
+                    case DesignProblemActivity.COLOR_RED:
                         drawable.setColor(Color.RED);
                         break;
-                    case PANE_RIGHT:
+                    case DesignProblemActivity.COLOR_BLUE:
                         drawable.setColor(Color.BLUE);
                         break;
-                    case 5:
+                    case DesignProblemActivity.COLOR_BLACK:
                         drawable.setColor(Color.BLACK);
                         break;
-                    case 6:
+                    case DesignProblemActivity.COLOR_YELLOW:
                         drawable.setColor(Color.YELLOW);
                         break;
                     default:
@@ -460,6 +461,8 @@ public class PlayGameActivity extends AppCompatActivity {
                                     else
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_ERROR;
+                                        buttons[rowNumber][colNumber].startAnimation(Animation.animation_shake_1);
+
                                         ++errorCount;
                                         String errorCountString = Integer.toString(errorCount);
                                         textView_errorCount.setText(errorCountString);

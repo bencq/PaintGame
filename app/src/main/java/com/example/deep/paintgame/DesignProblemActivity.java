@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,13 @@ public class DesignProblemActivity extends AppCompatActivity {
     public static final int PANE_ERROR = 3;
     public static final int PANE_RIGHT = 4;
 
+    public static final int COLOR_LTGRAY = 1;
+    public static final int COLOR_GREEN = 2;
+    public static final int COLOR_RED = 3;
+    public static final int COLOR_BLUE = 4;
+    public static final int COLOR_BLACK = 5;
+    public static final int COLOR_YELLOW = 6;
+
     public static final int IS_FINISHED_TRUE = 1;
     public static final int IS_FINISHED_FALSE = 0;
 
@@ -47,11 +55,19 @@ public class DesignProblemActivity extends AppCompatActivity {
     private Button button_DP_confirm; //确认按钮
     private Button[][] buttons; // 按钮对象
     private int[][] problem_currentAnswer; // 当前玩家的答案
-    private int currentColor = PANE_RIGHT; // 当前的颜色，注意：0为不存在的方块，1为白色即默认方块颜色，2为绿色即标记颜色，3为红色即错误颜色
+    private int currentColor; // 当前的颜色，注意：0为不存在的方块，1为白色即默认方块颜色，2为绿色即标记颜色，3为红色即错误颜色
     private Thread buttonThread; // 按钮事件线程对象
 
 
     RelativeLayout relativeLayout_DP_button;
+
+
+    RadioButton radioButton_DPA_ltgray;
+    RadioButton radioButton_DPA_green;
+    RadioButton radioButton_DPA_red;
+    RadioButton radioButton_DPA_blue;
+    RadioButton radioButton_DPA_black;
+    RadioButton radioButton_DPA_yellow;
 
 
     @Override
@@ -62,6 +78,56 @@ public class DesignProblemActivity extends AppCompatActivity {
 
         //初始化组件
         button_DP_confirm = findViewById(R.id.button_DP_confirm);
+
+        radioButton_DPA_ltgray = findViewById(R.id.radioButton_DPA_ltgray);
+        radioButton_DPA_green = findViewById(R.id.radioButton_DPA_green);
+        radioButton_DPA_red = findViewById(R.id.radioButton_DPA_red);
+        radioButton_DPA_blue = findViewById(R.id.radioButton_DPA_blue);
+        radioButton_DPA_black = findViewById(R.id.radioButton_DPA_black);
+        radioButton_DPA_yellow = findViewById(R.id.radioButton_DPA_yellow);
+
+
+
+        radioButton_DPA_ltgray.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentColor = COLOR_LTGRAY;
+            }
+        });
+        radioButton_DPA_green.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentColor = COLOR_GREEN;
+            }
+        });
+        radioButton_DPA_red.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentColor = COLOR_RED;
+            }
+        });
+        radioButton_DPA_blue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentColor = COLOR_BLUE;
+            }
+        });
+        radioButton_DPA_black.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentColor = COLOR_BLACK;
+            }
+        });
+        radioButton_DPA_yellow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentColor = COLOR_YELLOW;
+            }
+        });
+
+
+
+
 
         //获取Intent传递信息
         Intent intent = getIntent();
@@ -184,17 +250,24 @@ public class DesignProblemActivity extends AppCompatActivity {
             case PANE_NOT_EXISTED:
                 drawable.setColor(Color.WHITE);
                 break;
-            case PANE_DEFAULT:
+            case COLOR_LTGRAY:
                 drawable.setColor(Color.LTGRAY);
                 break;
-            case PANE_MARKED:
+            case COLOR_GREEN:
                 drawable.setColor(Color.GREEN);
                 break;
-            case PANE_ERROR:
+            case COLOR_RED:
                 drawable.setColor(Color.RED);
                 break;
-            case PANE_RIGHT:
+            case COLOR_BLUE:
                 drawable.setColor(Color.BLUE);
+                break;
+            case COLOR_BLACK:
+                drawable.setColor(Color.BLACK);
+                break;
+            case COLOR_YELLOW:
+                drawable.setColor(Color.YELLOW);
+                break;
             default:
                 break;
         }
@@ -219,22 +292,22 @@ public class DesignProblemActivity extends AppCompatActivity {
                     case PANE_NOT_EXISTED:
                         drawable.setColor(Color.WHITE);
                         break;
-                    case PANE_DEFAULT:
+                    case COLOR_LTGRAY:
                         drawable.setColor(Color.LTGRAY);
                         break;
-                    case PANE_MARKED:
+                    case COLOR_GREEN:
                         drawable.setColor(Color.GREEN);
                         break;
-                    case PANE_ERROR:
+                    case COLOR_RED:
                         drawable.setColor(Color.RED);
                         break;
-                    case PANE_RIGHT:
+                    case COLOR_BLUE:
                         drawable.setColor(Color.BLUE);
                         break;
-                    case 5:
+                    case COLOR_BLACK:
                         drawable.setColor(Color.BLACK);
                         break;
-                    case 6:
+                    case COLOR_YELLOW:
                         drawable.setColor(Color.YELLOW);
                         break;
                     default:
@@ -431,35 +504,15 @@ public class DesignProblemActivity extends AppCompatActivity {
                             if (isInterrupted()) {
                                 return;
                             }
-                            switch (currentColor) {
-                                case PANE_DEFAULT:
-                                    // 默认状态
-                                    break;
-                                case PANE_MARKED:
-                                    // 标记状态
-                                    if (problem_currentAnswer[rowNumber][colNumber] == PANE_DEFAULT)
-                                    {
-                                        problem_currentAnswer[rowNumber][colNumber] = PANE_MARKED;
-                                    }
-                                    else if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED)
-                                    {
-                                        problem_currentAnswer[rowNumber][colNumber] = PANE_DEFAULT;
-                                    }
-                                    break;
-                                case PANE_RIGHT:
-                                    //设计状态
-                                    if (problem_currentAnswer[rowNumber][colNumber] == PANE_NOT_EXISTED)
-                                    {
-                                        problem_currentAnswer[rowNumber][colNumber] = PANE_RIGHT;
-                                    }
-                                    else if (problem_currentAnswer[rowNumber][colNumber] == PANE_RIGHT)
-                                    {
-                                        problem_currentAnswer[rowNumber][colNumber] = PANE_NOT_EXISTED;
-                                    }
-                                    break;
-                                default:
-                                    break;
+                            if(problem_currentAnswer[rowNumber][colNumber] == currentColor)
+                            {
+                                problem_currentAnswer[rowNumber][colNumber] = PANE_NOT_EXISTED;
                             }
+                            else
+                            {
+                                problem_currentAnswer[rowNumber][colNumber] = currentColor;
+                            }
+
                             drawSingleButtonByAnswer(rowNumber, colNumber);
                         }
                     });
