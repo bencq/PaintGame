@@ -123,7 +123,7 @@ public class DesignProblemActivity extends AppCompatActivity {
                 {
                     FileOutputStream fileOutputStream = view.getContext().openFileOutput(Paths.getImageFileName(problem_name),MODE_PRIVATE);
                     Bitmap bitmap = Utils.loadBitmapFromView(relativeLayout_DP_button);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG,90,fileOutputStream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,50,fileOutputStream);
                     fileOutputStream.flush();
                     fileOutputStream.close();
                     view.destroyDrawingCache();
