@@ -5,13 +5,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +37,12 @@ public class PlayGameActivity extends AppCompatActivity {
     private int problem_size; // 当前题目的尺寸大小
     private String problem_name; // 当前题目的名字
     private boolean isFinish = false; // 玩家是否完成当前题目
+
+    private int totalCorrectCount = 0;//总的需要涂色的方块
+    //private int remainCount = 0;//剩下需要涂色的方块
+    private int correctCount = 0;//正确数
+    private int totalPaneCount = 0;//总方格数
+
     private Button[][] buttons; // 按钮对象
     private int[][] problem_rightAnswer; // 当前题目的正确答案
     private int[][] problem_currentAnswer; // 当前玩家的答案
@@ -46,10 +52,14 @@ public class PlayGameActivity extends AppCompatActivity {
     private int time_second = 0; // 游戏时间的秒数
     private Button button_playGame_knock; // 敲打按钮对象
     private Button button_playGame_mark;  // 绘图按钮对象
-    private TextView textView_errorCount; // 错误数字文字对象
+    private TextView textView_errorCountNumber; // 错误数字文字对象
+    private TextView textView_remainCountNumber;
     private TextView textView_time; // 时间文字对象
     private Thread timeThread; // 计时器线程对象
     private Thread buttonThread; // 按钮事件线程对象
+
+
+
 
 
 
@@ -60,10 +70,12 @@ public class PlayGameActivity extends AppCompatActivity {
 
 
         //初始化组件
-        button_playGame_knock = (Button) findViewById(R.id.button_playGame_knock);
-        button_playGame_mark = (Button) findViewById(R.id.button_playGame_mark);
-        textView_errorCount = (TextView) findViewById(R.id.textView_playGame_ErrorCountNumber);
-        textView_time = (TextView) findViewById(R.id.textView_playGame_TimeNumber);
+        button_playGame_knock = findViewById(R.id.button_playGame_knock);
+        button_playGame_mark = findViewById(R.id.button_playGame_mark);
+        textView_errorCountNumber = findViewById(R.id.textView_playGame_ErrorCountNumber);
+        textView_remainCountNumber = findViewById(R.id.textView_playGame_RemainCountNumber);
+        textView_time = findViewById(R.id.textView_playGame_TimeNumber);
+
 
         //获取Intent传递信息
         Intent intent = getIntent();
@@ -214,15 +226,18 @@ public class PlayGameActivity extends AppCompatActivity {
      * 判断玩家当前是否完成游戏
      */
     public void judgeGameIsFinish() {
-        for (int row = 0; row < problem_size; ++row) {
+        /*for (int row = 0; row < problem_size; ++row) {
             for (int col = 0; col < problem_size; ++col) {
                 if (problem_rightAnswer[row][col] == 0 && problem_currentAnswer[row][col] != 0) {
                     return;
                 }
             }
+        }*/
+
+        if(errorCount >= totalCorrectCount || correctCount >= totalPaneCount - totalCorrectCount) {
+            isFinish = true;
+            Toast.makeText(PlayGameActivity.this, "游戏结束啦啦啦啦啦！", Toast.LENGTH_LONG).show();
         }
-        isFinish = true;
-        Toast.makeText(PlayGameActivity.this, "游戏结束啦啦啦啦啦！", Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -241,6 +256,8 @@ public class PlayGameActivity extends AppCompatActivity {
             finish();
         }
 
+        totalPaneCount = problem_size * problem_size;
+
         // 处理题目数据
         String[] problem_data_array = problem_data_string.split("#");
         problem_rightAnswer = new int[problem_size][problem_size];
@@ -248,9 +265,14 @@ public class PlayGameActivity extends AppCompatActivity {
         for (int i = 0; i < problem_size; ++i) {
             for (int j = 0; j < problem_size; ++j) {
                 problem_rightAnswer[i][j] = Character.getNumericValue(problem_data_array[i].charAt(j));
+                if(problem_rightAnswer[i][j] != PANE_NOT_EXISTED)
+                {
+                    ++totalCorrectCount;
+                }
                 problem_currentAnswer[i][j] = PANE_DEFAULT;
             }
         }
+
 
         for (int i = 0; i < problem_size; ++i) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -261,7 +283,7 @@ public class PlayGameActivity extends AppCompatActivity {
         }
 
         /*初始化布局对象*/
-        RelativeLayout layout = findViewById(R.id.relativeLayout_playGame_button);
+        RelativeLayout relativeLayout_playGame_button = findViewById(R.id.relativeLayout_playGame_button);
 
         /*获取Activity大小*/
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -271,10 +293,10 @@ public class PlayGameActivity extends AppCompatActivity {
 
         /*动态改变布局对象属性*/
         int rightMargin = 50;
-        ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = relativeLayout_playGame_button.getLayoutParams();
         layoutParams.width = width / 20 * 19;
         layoutParams.height = width / 20 * 19;
-        layout.setLayoutParams(layoutParams);
+        relativeLayout_playGame_button.setLayoutParams(layoutParams);
 
         Log.i("PlayGameActivity", "Activity width is " + width);
         Log.i("PlayGameActivity", "Activity height is " + height);
@@ -295,7 +317,7 @@ public class PlayGameActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams buttonParam = new RelativeLayout.LayoutParams(button_size, button_size);
                 buttonParam.leftMargin = textView_size + button_size * col; // 横坐标定位
                 buttonParam.topMargin = textView_size + button_size * row; // 纵坐标定位
-                layout.addView(buttons[row][col], buttonParam); // 将按钮放入layout组件
+                relativeLayout_playGame_button.addView(buttons[row][col], buttonParam); // 将按钮放入layout组件
             }
         }
 
@@ -335,7 +357,7 @@ public class PlayGameActivity extends AppCompatActivity {
             RelativeLayout.LayoutParams rowHintParams = new RelativeLayout.LayoutParams(textView_size, button_size);
             rowHintParams.rightMargin = 0;
             rowHintParams.topMargin = textView_size + button_size * i;
-            layout.addView(rowHint, rowHintParams);
+            relativeLayout_playGame_button.addView(rowHint, rowHintParams);
 
             // 设置每一列的数字信息
             int colPaneCount = 0; // 该列的方格数量
@@ -364,7 +386,7 @@ public class PlayGameActivity extends AppCompatActivity {
             RelativeLayout.LayoutParams colHintParams = new RelativeLayout.LayoutParams(button_size, textView_size);
             colHintParams.leftMargin = textView_size + button_size * i;
             colHintParams.bottomMargin = 0;
-            layout.addView(colHint, colHintParams);
+            relativeLayout_playGame_button.addView(colHint, colHintParams);
         }
 
         /*渲染按钮颜色*/
@@ -377,7 +399,11 @@ public class PlayGameActivity extends AppCompatActivity {
 
         /*设置文字互动*/
         String errorCountString = Integer.toString(errorCount);
-        textView_errorCount.setText(errorCountString);
+        textView_errorCountNumber.setText(errorCountString);
+
+        String remainCountString = Integer.toString(totalCorrectCount);
+        textView_remainCountNumber.setText(remainCountString) ;
+
         timeThread = new Thread(new TimeThread());
         timeThread.start();
     }
@@ -457,15 +483,26 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_rightAnswer[rowNumber][colNumber] == PANE_NOT_EXISTED)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_NOT_EXISTED;
+                                        ++correctCount;
                                     }
                                     else
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_ERROR;
-                                        buttons[rowNumber][colNumber].startAnimation(Animation.animation_shake_1);
+
+                                        //抖动动画
+                                        AnimationSet animationSet = new AnimationSet(true);
+                                        animationSet.addAnimation(Animation.animation_shake_1);
+                                        animationSet.addAnimation(Animation.animation_shake_2);
+                                        //buttons[rowNumber][colNumber].startAnimation();
+                                        //buttons[rowNumber][colNumber].startAnimation();
+                                        buttons[rowNumber][colNumber].startAnimation(animationSet);
 
                                         ++errorCount;
                                         String errorCountString = Integer.toString(errorCount);
-                                        textView_errorCount.setText(errorCountString);
+                                        textView_errorCountNumber.setText(errorCountString);
+
+                                        String remainCountString = Integer.toString(totalCorrectCount - errorCount);
+                                        textView_remainCountNumber.setText(remainCountString) ;
                                     }
                                     break;
                                 case PANE_DEFAULT:

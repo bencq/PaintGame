@@ -30,6 +30,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_playGame_ErrorCount" />
 
+    <TextView
+        android:id="@+id/textView_playGame_RemainCountNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_playGame_RemainCount"
+        app:layout_constraintStart_toEndOf="@+id/textView_playGame_RemainCount" />
+
+
+
     <Button
         android:id="@+id/button_playGame_knock"
         android:layout_width="wrap_content"
@@ -40,7 +53,9 @@
         android:text="敲打"
         app:layout_constraintEnd_toStartOf="@+id/button_playGame_mark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="88dp" />
 
     <Button
         android:id="@+id/button_playGame_mark"
@@ -52,6 +67,21 @@
         android:text="标记"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_playGame_RemainCount"
+        android:layout_width="108dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:text="剩余数："
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_playGame_ErrorCount"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="16dp" />
 
     <TextView
         android:id="@+id/textView_playGame_ErrorCount"
