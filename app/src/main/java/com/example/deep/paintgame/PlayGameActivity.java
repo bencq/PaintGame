@@ -3,11 +3,8 @@ package com.example.deep.paintgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorLong;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -16,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationSet;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +24,11 @@ import com.example.deep.paintgame.animation.Animation;
 public class PlayGameActivity extends AppCompatActivity {
     //
     private static final String TAG = "PlayGameActivity";
+
+
+    
+
+
     //方块状态
     public static final int PANE_NOT_EXISTED = 0;
     public static final int PANE_DEFAULT = 1;
@@ -46,7 +49,7 @@ public class PlayGameActivity extends AppCompatActivity {
     private int correctCount = 0;//正确数
     private int totalPaneCount = 0;//总方格数
 
-    private int border_width = 1;//stroke宽度
+    private int border_width = 1;//stroke宽度private int border_width = 1;//stroke宽度
 
     private Button[][] buttons; // 按钮对象
     private int[][] problem_rightAnswer; // 当前题目的正确答案
@@ -55,14 +58,13 @@ public class PlayGameActivity extends AppCompatActivity {
     private int errorCount = 0; // 当前的错误数
     private int time_minute = 0; // 游戏时间的分钟数
     private int time_second = 0; // 游戏时间的秒数
-    private Button button_playGame_knock; // 敲打按钮对象
-    private Button button_playGame_mark;  // 绘图按钮对象
+    private ImageButton imageButton_playGame_knock; // 敲打按钮对象
+    private ImageButton imageButton_playGame_mark;  // 绘图按钮对象
     private TextView textView_errorCountNumber; // 错误数字文字对象
     private TextView textView_remainCountNumber;
     private TextView textView_time; // 时间文字对象
     private Thread timeThread; // 计时器线程对象
     private Thread buttonThread; // 按钮事件线程对象
-
 
 
 
@@ -75,8 +77,8 @@ public class PlayGameActivity extends AppCompatActivity {
 
 
         //初始化组件
-        button_playGame_knock = findViewById(R.id.button_playGame_knock);
-        button_playGame_mark = findViewById(R.id.button_playGame_mark);
+        imageButton_playGame_knock = findViewById(R.id.imageButton_playGame_knock);
+        imageButton_playGame_mark = findViewById(R.id.imageButton_playGame_mark);
         textView_errorCountNumber = findViewById(R.id.textView_playGame_ErrorCountNumber);
         textView_remainCountNumber = findViewById(R.id.textView_playGame_RemainCountNumber);
         textView_time = findViewById(R.id.textView_playGame_TimeNumber);
@@ -91,38 +93,38 @@ public class PlayGameActivity extends AppCompatActivity {
         createGame();
 
         //按钮事件
-        button_playGame_knock.setOnClickListener(new View.OnClickListener() {
+        imageButton_playGame_knock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(currentColor == PANE_NOT_EXISTED)
                 {
                     currentColor = PANE_DEFAULT;
-                    button_playGame_knock.setBackgroundColor(Color.LTGRAY);
-                    button_playGame_mark.setBackgroundColor(Color.LTGRAY);
+                    imageButton_playGame_knock.setBackgroundColor(Color.LTGRAY);
+                    imageButton_playGame_mark.setBackgroundColor(Color.LTGRAY);
                 }
                 else
                 {
                     currentColor = PANE_NOT_EXISTED;
-                    button_playGame_knock.setBackgroundColor(Color.RED);
-                    button_playGame_mark.setBackgroundColor(Color.LTGRAY);
+                    imageButton_playGame_knock.setBackgroundColor(Color.RED);
+                    imageButton_playGame_mark.setBackgroundColor(Color.LTGRAY);
                 }
             }
         });
 
-        button_playGame_mark.setOnClickListener(new View.OnClickListener() {
+        imageButton_playGame_mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(currentColor == PANE_MARKED)
                 {
                     currentColor = PANE_DEFAULT;
-                    button_playGame_knock.setBackgroundColor(Color.LTGRAY);
-                    button_playGame_mark.setBackgroundColor(Color.LTGRAY);
+                    imageButton_playGame_knock.setBackgroundColor(Color.LTGRAY);
+                    imageButton_playGame_mark.setBackgroundColor(Color.LTGRAY);
                 }
                 else
                 {
                     currentColor = PANE_MARKED;
-                    button_playGame_knock.setBackgroundColor(Color.LTGRAY);
-                    button_playGame_mark.setBackgroundColor(Color.GREEN);
+                    imageButton_playGame_knock.setBackgroundColor(Color.LTGRAY);
+                    imageButton_playGame_mark.setBackgroundColor(Color.GREEN);
                 }
             }
         });
@@ -147,6 +149,7 @@ public class PlayGameActivity extends AppCompatActivity {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
         drawable.setStroke(border_width, Color.BLACK);
+
 
 
         // 若玩家已经完成题目，则渲染正确答案，否则渲染玩家的当前答案
@@ -182,12 +185,12 @@ public class PlayGameActivity extends AppCompatActivity {
      * 渲染全部答案按钮的对应颜色
      */
     public void drawButtonsByAnswer() {
-        int border_width = 1;
         for (int row = 0; row < problem_size; ++row) {
             for (int col = 0; col < problem_size; ++col) {
                 GradientDrawable drawable = new GradientDrawable();
                 drawable.setShape(GradientDrawable.RECTANGLE);
                 drawable.setStroke(border_width, Color.BLACK);
+
 
                 // 若玩家已经完成题目，则渲染正确答案，否则渲染玩家的当前答案
                 int targetAnswer;
@@ -322,12 +325,6 @@ public class PlayGameActivity extends AppCompatActivity {
 
                 // 设置按钮样式
                 RelativeLayout.LayoutParams buttonParam = new RelativeLayout.LayoutParams(button_size, button_size);
-                /*GradientDrawable drawable = new GradientDrawable();
-                drawable.setShape(GradientDrawable.RECTANGLE);
-                drawable.setColor(Color.LTGRAY);
-                drawable.setStroke(border_width,Color.BLACK);
-                drawable.setAlpha(0x7f);
-                buttons[row][col].setBackgroundDrawable(drawable);*/
                 buttonParam.leftMargin = textView_size + button_size * col; // 横坐标定位
                 buttonParam.topMargin = textView_size + button_size * row; // 纵坐标定位
                 relativeLayout_playGame_button.addView(buttons[row][col], buttonParam); // 将按钮放入layout组件

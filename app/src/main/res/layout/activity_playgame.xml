@@ -42,28 +42,25 @@
         app:layout_constraintStart_toEndOf="@+id/textView_playGame_RemainCount" />
 
 
-
-    <Button
-        android:id="@+id/button_playGame_knock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="88dp"
+    <ImageButton
+        android:id="@+id/imageButton_playGame_knock"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="16dp"
-        android:text="敲打"
-        app:layout_constraintEnd_toStartOf="@+id/button_playGame_mark"
+        android:scaleType="centerCrop"
+        android:src="@drawable/shovel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="88dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_playGame_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="88dp"
-        android:layout_marginRight="88dp"
+    <ImageButton
+        android:id="@+id/imageButton_playGame_mark"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/brush"
         android:text="标记"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
