@@ -3,8 +3,11 @@ package com.example.deep.paintgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorLong;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -42,6 +45,8 @@ public class PlayGameActivity extends AppCompatActivity {
     //private int remainCount = 0;//剩下需要涂色的方块
     private int correctCount = 0;//正确数
     private int totalPaneCount = 0;//总方格数
+
+    private int border_width = 1;//stroke宽度
 
     private Button[][] buttons; // 按钮对象
     private int[][] problem_rightAnswer; // 当前题目的正确答案
@@ -138,10 +143,11 @@ public class PlayGameActivity extends AppCompatActivity {
      * 渲染单个答案按钮的对应颜色
      */
     public void drawSingleButtonByAnswer(int row, int col) {
-        int border_width = 1;
+
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
         drawable.setStroke(border_width, Color.BLACK);
+
 
         // 若玩家已经完成题目，则渲染正确答案，否则渲染玩家的当前答案
         int targetAnswer;
@@ -313,8 +319,15 @@ public class PlayGameActivity extends AppCompatActivity {
                 // 设置按钮属性
                 buttons[row][col] = new Button(PlayGameActivity.this);
 
+
                 // 设置按钮样式
                 RelativeLayout.LayoutParams buttonParam = new RelativeLayout.LayoutParams(button_size, button_size);
+                /*GradientDrawable drawable = new GradientDrawable();
+                drawable.setShape(GradientDrawable.RECTANGLE);
+                drawable.setColor(Color.LTGRAY);
+                drawable.setStroke(border_width,Color.BLACK);
+                drawable.setAlpha(0x7f);
+                buttons[row][col].setBackgroundDrawable(drawable);*/
                 buttonParam.leftMargin = textView_size + button_size * col; // 横坐标定位
                 buttonParam.topMargin = textView_size + button_size * row; // 纵坐标定位
                 relativeLayout_playGame_button.addView(buttons[row][col], buttonParam); // 将按钮放入layout组件

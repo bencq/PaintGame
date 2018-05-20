@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Button button_main_StartGame = (Button) findViewById(R.id.button_main_StartGame);
         Button button_main_ManageProblem = (Button) findViewById(R.id.button_main_ManageProblem);
         Button button_main_GameHelp = (Button) findViewById(R.id.button_main_GameHelp);
+        Button button_main_Settings = findViewById(R.id.button_main_Settings);
 
         dealFirstTimeRunApp();
 
@@ -34,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, StartGameActivity.class);
                 startActivity(intent);
-
-
-
-
             }
         });
 
@@ -54,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //debug
                 // 启动游戏帮助Activity
+            }
+        });
+
+        button_main_Settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -109,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             //debug
             //处理题目初始图片
 
-           
+
 
         }
     }
