@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+
+    public static final String KEY_MUSIC_RADIO = "key_musicRadio";
+    public static final String KEY_MUSIC_SWITCH = "key_musicSwitch";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +102,11 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("problemNames",stringBuilder.toString());
             editor.putBoolean("isFirstTimeRunApp",false);//debug
             editor.apply();
+
+
+            //初始化设置
+            editor.putInt(KEY_MUSIC_RADIO,1);
+            editor.putBoolean(KEY_MUSIC_SWITCH,true);
 
 
             //SP记录具体每个题目的数据

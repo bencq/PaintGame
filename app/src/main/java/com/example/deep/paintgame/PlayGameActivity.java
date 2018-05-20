@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -26,7 +28,7 @@ public class PlayGameActivity extends AppCompatActivity {
     private static final String TAG = "PlayGameActivity";
 
 
-    
+
 
 
     //方块状态
@@ -38,6 +40,10 @@ public class PlayGameActivity extends AppCompatActivity {
 
     public static final int IS_FINISHED_TRUE = 1;
     public static final int IS_FINISHED_FALSE = 0;
+
+
+    //
+    MediaPlayer mediaPlayer;
 
 
     private int problem_size; // 当前题目的尺寸大小
@@ -82,6 +88,17 @@ public class PlayGameActivity extends AppCompatActivity {
         textView_errorCountNumber = findViewById(R.id.textView_playGame_ErrorCountNumber);
         textView_remainCountNumber = findViewById(R.id.textView_playGame_RemainCountNumber);
         textView_time = findViewById(R.id.textView_playGame_TimeNumber);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(PlayGameActivity.this);
+        //music
+        boolean musicSwitch = sharedPreferences.getBoolean(MainActivity.KEY_MUSIC_SWITCH,true);
+        int musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
+        if(musicSwitch)
+        {
+            mediaPlayer = MediaPlayer.create(PlayGameActivity.this,SettingsActivity.music_raw[musicRadio]);
+            mediaPlayer.start();
+        }
+
 
 
         //获取Intent传递信息
@@ -133,6 +150,17 @@ public class PlayGameActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+
+
+        if(mediaPlayer != null)
+        {
+            if(mediaPlayer.isPlaying())
+            {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            }
+        }
+
         buttons = null;
         problem_rightAnswer = null;
         problem_currentAnswer = null;
@@ -266,6 +294,9 @@ public class PlayGameActivity extends AppCompatActivity {
         }
 
         totalPaneCount = problem_size * problem_size;
+
+
+
 
         // 处理题目数据
         String[] problem_data_array = problem_data_string.split("#");
