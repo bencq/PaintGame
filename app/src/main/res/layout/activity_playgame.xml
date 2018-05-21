@@ -58,7 +58,8 @@
         android:scaleType="centerCrop"
         android:src="@drawable/shovel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="100dp" />
 
     <ImageButton
         android:id="@+id/imageButton_playGame_mark"
@@ -70,7 +71,8 @@
         android:src="@drawable/brush"
         android:text="标记"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="100dp" />
 
     <TextView
         android:id="@+id/textView_playGame_RemainCount"

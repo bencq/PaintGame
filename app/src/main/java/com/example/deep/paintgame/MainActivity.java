@@ -3,18 +3,11 @@ package com.example.deep.paintgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,14 +21,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageButton button_main_StartGame = findViewById(R.id.button_main_StartGame);
-        ImageButton button_main_ManageProblem = findViewById(R.id.button_main_ManageProblem);
-        ImageButton button_main_GameHelp = findViewById(R.id.button_main_GameHelp);
-        ImageButton button_main_Settings = findViewById(R.id.button_main_Settings);
+        ImageButton imageButton_main_StartGame = findViewById(R.id.imageButton_main_StartGame);
+        ImageButton imageButton_main_ManageProblem = findViewById(R.id.imageButton_main_ManageProblem);
+        ImageButton imageButton_main_GameHelp = findViewById(R.id.imageButton_main_GameHelp);
+        ImageButton imageButton_main_Settings = findViewById(R.id.imageButton_main_Settings);
 
         dealFirstTimeRunApp();
 
-        button_main_StartGame.setOnClickListener(new View.OnClickListener() {
+        imageButton_main_StartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, StartGameActivity.class);
@@ -43,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button_main_ManageProblem.setOnClickListener(new View.OnClickListener() {
+        imageButton_main_ManageProblem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ManageProblemActivity.class);
@@ -51,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button_main_GameHelp.setOnClickListener(new View.OnClickListener() {
+        imageButton_main_GameHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //debug
@@ -59,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button_main_Settings.setOnClickListener(new View.OnClickListener() {
+        imageButton_main_Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
