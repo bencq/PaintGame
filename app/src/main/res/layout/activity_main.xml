@@ -6,68 +6,84 @@
     android:layout_height="match_parent"
     tools:context="com.example.deep.paintgame.MainActivity">
 
-    <Button
+    <ImageView
+        android:id="@+id/background_Main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_main"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/background_Main"
+        app:srcCompat="@drawable/title" />
+
+    <ImageButton
         android:id="@+id/button_main_StartGame"
-        android:layout_width="167dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="32dp"
-        android:text="开始游戏"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_startgame"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/button_main_ManageProblem"
-        app:layout_constraintDimensionRatio="h,"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/button_startgame" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_main_ManageProblem"
-        android:layout_width="167dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="32dp"
-        android:text="管理题目库"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_manageproblem"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/button_main_Settings"
-        app:layout_constraintDimensionRatio="h,"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/button_manageproblem" />
 
-    <Button
-        android:id="@+id/button_main_GameHelp"
-        android:layout_width="167dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="80dp"
-        android:text="游戏帮助"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="h,"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
+    <ImageButton
         android:id="@+id/button_main_Settings"
-        android:layout_width="167dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="32dp"
-        android:text="游戏设置"
-        app:layout_constraintBottom_toTopOf="@id/button_main_GameHelp"
-        app:layout_constraintDimensionRatio="h,"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <CheckedTextView
-        android:id="@+id/text_main_Title"
-        android:layout_width="232dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="246dp"
-        android:layout_marginTop="58dp"
-        android:text="绘图游戏"
-        android:textAlignment="center"
-        android:textSize="42sp"
-        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_setting"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/button_main_GameHelp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:srcCompat="@drawable/button_setting" />
+
+    <ImageButton
+        android:id="@+id/button_main_GameHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="240dp"
+        android:background="@drawable/button_gamehelp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:srcCompat="@drawable/button_gamehelp" />
 
 </android.support.constraint.ConstraintLayout>

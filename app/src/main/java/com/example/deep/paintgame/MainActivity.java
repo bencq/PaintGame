@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -27,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button_main_StartGame = (Button) findViewById(R.id.button_main_StartGame);
-        Button button_main_ManageProblem = (Button) findViewById(R.id.button_main_ManageProblem);
-        Button button_main_GameHelp = (Button) findViewById(R.id.button_main_GameHelp);
-        Button button_main_Settings = findViewById(R.id.button_main_Settings);
+        ImageButton button_main_StartGame = findViewById(R.id.button_main_StartGame);
+        ImageButton button_main_ManageProblem = findViewById(R.id.button_main_ManageProblem);
+        ImageButton button_main_GameHelp = findViewById(R.id.button_main_GameHelp);
+        ImageButton button_main_Settings = findViewById(R.id.button_main_Settings);
 
         dealFirstTimeRunApp();
 

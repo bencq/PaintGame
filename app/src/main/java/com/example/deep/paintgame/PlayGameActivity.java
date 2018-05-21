@@ -3,6 +3,7 @@ package com.example.deep.paintgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -36,7 +37,9 @@ public class PlayGameActivity extends AppCompatActivity {
     public static final int PANE_DEFAULT = 1;
     public static final int PANE_MARKED = 2;
     public static final int PANE_ERROR = 3;
-    public static final int PANE_RIGHT = 4;
+    public static final int PANE_BLUE = 4;
+    public static final int PANE_BLACK = 5;
+    public static final int PANE_YELLOW = 6;
 
     public static final int IS_FINISHED_TRUE = 1;
     public static final int IS_FINISHED_FALSE = 0;
@@ -51,7 +54,7 @@ public class PlayGameActivity extends AppCompatActivity {
     private boolean isFinish = false; // 玩家是否完成当前题目
 
     private int totalCorrectCount = 0;//总的需要涂色的方块
-    //private int remainCount = 0;//剩下需要涂色的方块
+    private int remainCount = 0;//剩下需要涂色的方块
     private int correctCount = 0;//正确数
     private int totalPaneCount = 0;//总方格数
 
@@ -173,40 +176,36 @@ public class PlayGameActivity extends AppCompatActivity {
      * 渲染单个答案按钮的对应颜色
      */
     public void drawSingleButtonByAnswer(int row, int col) {
-
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setStroke(border_width, Color.BLACK);
-
-
-
         // 若玩家已经完成题目，则渲染正确答案，否则渲染玩家的当前答案
-        int targetAnswer;
-        if (isFinish)
-        {
-            targetAnswer = problem_rightAnswer[row][col];
-        }
-        else
-        {
-            targetAnswer = problem_currentAnswer[row][col];
-        }
+        int targetAnswer = isFinish ? problem_rightAnswer[row][col] : problem_currentAnswer[row][col];
+
+        // 设置颜色
+        int drawable = 0;
         switch (targetAnswer) {
             case PANE_NOT_EXISTED:
-                drawable.setColor(Color.WHITE);
                 break;
             case PANE_DEFAULT:
-                drawable.setColor(Color.LTGRAY);
+                drawable = R.drawable.gray;
                 break;
             case PANE_MARKED:
-                drawable.setColor(Color.GREEN);
+                drawable = R.drawable.green;
                 break;
             case PANE_ERROR:
-                drawable.setColor(Color.RED);
+                drawable = isFinish ? R.drawable.red : R.drawable.wrong;
+                break;
+            case PANE_BLUE:
+                drawable = R.drawable.green;
+                break;
+            case PANE_BLACK:
+                drawable = R.drawable.green;
+                break;
+            case PANE_YELLOW:
+                drawable = R.drawable.yellow;
                 break;
             default:
                 break;
         }
-        buttons[row][col].setBackgroundDrawable(drawable);
+        buttons[row][col].setBackgroundResource(drawable);
     }
 
     /**
@@ -215,46 +214,36 @@ public class PlayGameActivity extends AppCompatActivity {
     public void drawButtonsByAnswer() {
         for (int row = 0; row < problem_size; ++row) {
             for (int col = 0; col < problem_size; ++col) {
-                GradientDrawable drawable = new GradientDrawable();
-                drawable.setShape(GradientDrawable.RECTANGLE);
-                drawable.setStroke(border_width, Color.BLACK);
-
-
                 // 若玩家已经完成题目，则渲染正确答案，否则渲染玩家的当前答案
-                int targetAnswer;
-                if (isFinish) {
-                    targetAnswer = problem_rightAnswer[row][col];
-                }
-                else
-                {
-                    targetAnswer = problem_currentAnswer[row][col];
-                }
+                int targetAnswer = isFinish ? problem_rightAnswer[row][col] : problem_currentAnswer[row][col];
+
+                // 设置颜色
+                int drawable = 0;
                 switch (targetAnswer) {
                     case PANE_NOT_EXISTED:
-                        drawable.setColor(Color.WHITE);
                         break;
-                    case DesignProblemActivity.COLOR_LTGRAY:
-                        drawable.setColor(Color.LTGRAY);
+                    case PANE_DEFAULT:
+                        drawable = R.drawable.gray;
                         break;
-                    case DesignProblemActivity.COLOR_GREEN:
-                        drawable.setColor(Color.GREEN);
+                    case PANE_MARKED:
+                        drawable = R.drawable.green;
                         break;
-                    case DesignProblemActivity.COLOR_RED:
-                        drawable.setColor(Color.RED);
+                    case PANE_ERROR:
+                        drawable = isFinish ? R.drawable.red : R.drawable.wrong;
                         break;
-                    case DesignProblemActivity.COLOR_BLUE:
-                        drawable.setColor(Color.BLUE);
+                    case PANE_BLUE:
+                        drawable = R.drawable.green;
                         break;
-                    case DesignProblemActivity.COLOR_BLACK:
-                        drawable.setColor(Color.BLACK);
+                    case PANE_BLACK:
+                        drawable = R.drawable.green;
                         break;
-                    case DesignProblemActivity.COLOR_YELLOW:
-                        drawable.setColor(Color.YELLOW);
+                    case PANE_YELLOW:
+                        drawable = R.drawable.yellow;
                         break;
                     default:
                         break;
                 }
-                buttons[row][col].setBackgroundDrawable(drawable);
+                buttons[row][col].setBackgroundResource(drawable);
             }
         }
     }
@@ -273,7 +262,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
         if(errorCount >= totalCorrectCount || correctCount >= totalPaneCount - totalCorrectCount) {
             isFinish = true;
-            Toast.makeText(PlayGameActivity.this, "游戏结束啦啦啦啦啦！", Toast.LENGTH_LONG).show();
+            Toast.makeText(PlayGameActivity.this, "游戏结束啦！", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -312,6 +301,7 @@ public class PlayGameActivity extends AppCompatActivity {
                 problem_currentAnswer[i][j] = PANE_DEFAULT;
             }
         }
+        remainCount = problem_size * problem_size - totalCorrectCount;
 
 
         for (int i = 0; i < problem_size; ++i) {
@@ -442,8 +432,7 @@ public class PlayGameActivity extends AppCompatActivity {
         String errorCountString = Integer.toString(errorCount);
         textView_errorCountNumber.setText(errorCountString);
 
-        String remainCountString = Integer.toString(totalCorrectCount);
-        textView_remainCountNumber.setText(remainCountString) ;
+        textView_remainCountNumber.setText("" + totalCorrectCount) ;
 
         timeThread = new Thread(new TimeThread());
         timeThread.start();
@@ -525,6 +514,8 @@ public class PlayGameActivity extends AppCompatActivity {
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_NOT_EXISTED;
                                         ++correctCount;
+                                        --remainCount;
+                                        textView_remainCountNumber.setText("" + remainCount) ;
                                     }
                                     else
                                     {
@@ -541,9 +532,6 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++errorCount;
                                         String errorCountString = Integer.toString(errorCount);
                                         textView_errorCountNumber.setText(errorCountString);
-
-                                        String remainCountString = Integer.toString(totalCorrectCount - errorCount);
-                                        textView_remainCountNumber.setText(remainCountString) ;
                                     }
                                     break;
                                 case PANE_DEFAULT:

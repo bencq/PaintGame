@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/background_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/background"
         android:scaleType="centerCrop"
-        />
+        android:src="@drawable/background_main" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_startGame"
