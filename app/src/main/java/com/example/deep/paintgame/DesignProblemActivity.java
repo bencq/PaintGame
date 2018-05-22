@@ -62,6 +62,7 @@ public class DesignProblemActivity extends AppCompatActivity {
     RelativeLayout relativeLayout_DP_button;
 
 
+    RadioButton radioButton_DPA_white;
     RadioButton radioButton_DPA_ltgray;
     RadioButton radioButton_DPA_green;
     RadioButton radioButton_DPA_red;
@@ -79,6 +80,7 @@ public class DesignProblemActivity extends AppCompatActivity {
         //初始化组件
         button_DP_confirm = findViewById(R.id.button_DP_confirm);
 
+        radioButton_DPA_white = findViewById(R.id.radioButton_DPA_white);
         radioButton_DPA_ltgray = findViewById(R.id.radioButton_DPA_ltgray);
         radioButton_DPA_green = findViewById(R.id.radioButton_DPA_green);
         radioButton_DPA_red = findViewById(R.id.radioButton_DPA_red);
@@ -88,6 +90,12 @@ public class DesignProblemActivity extends AppCompatActivity {
 
 
 
+        radioButton_DPA_white.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentColor = PANE_NOT_EXISTED;
+            }
+        });
         radioButton_DPA_ltgray.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
