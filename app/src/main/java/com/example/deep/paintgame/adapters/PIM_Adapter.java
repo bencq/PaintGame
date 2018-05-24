@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -154,7 +155,35 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
         }
 
         holder.textView_PIM_name.setText(problem.getName());
-        holder.textView_PIM_size.setText(String.valueOf(problem.getSize()));
+        int size = problem.getSize();
+        holder.textView_PIM_size.setText(String.valueOf(size));
+        switch (size)
+        {
+            case 6:
+                holder.textView_PIM_size.setTextColor(Color.RED);
+                break;
+            case 7:
+                //orange
+                holder.textView_PIM_size.setTextColor(0xffa500);
+                break;
+            case 8:
+                holder.textView_PIM_size.setTextColor(Color.YELLOW);
+                break;
+            case 9:
+                holder.textView_PIM_size.setTextColor(Color.GREEN);
+                break;
+            case 10:
+                holder.textView_PIM_size.setTextColor(Color.CYAN);
+                break;
+            case 11:
+                holder.textView_PIM_size.setTextColor(Color.BLUE);
+                break;
+            case 12:
+                //purple
+                holder.textView_PIM_size.setTextColor(0x8800ff);
+                break;
+        }
+
     }
 
     @Override

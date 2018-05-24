@@ -83,7 +83,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
-        android:text="剩余数："
+        android:text="余空白："
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/textView_playGame_ErrorCount"
         app:layout_constraintStart_toStartOf="parent"

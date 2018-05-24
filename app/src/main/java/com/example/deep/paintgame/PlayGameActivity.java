@@ -70,7 +70,7 @@ public class PlayGameActivity extends AppCompatActivity {
     private ImageButton imageButton_playGame_knock; // 敲打按钮对象
     private ImageButton imageButton_playGame_mark;  // 绘图按钮对象
     private TextView textView_errorCountNumber; // 错误数字文字对象
-    private TextView textView_remainCountNumber;
+    private TextView textView_remainCountNumber; //剩余空白数
     private TextView textView_time; // 时间文字对象
     private Thread timeThread; // 计时器线程对象
     private Thread buttonThread; // 按钮事件线程对象
@@ -206,7 +206,6 @@ public class PlayGameActivity extends AppCompatActivity {
                 break;
         }
         buttons[row][col].setBackgroundResource(drawable);
-
     }
 
     /**
