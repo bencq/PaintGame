@@ -74,6 +74,7 @@ public class PlayGameActivity extends AppCompatActivity {
     private ImageButton imageButton_playGame_mark;  // 绘图按钮对象
     private TextView textView_errorCountNumber; // 错误数字文字对象
     private TextView textView_remainCountNumber; //剩余空白数
+    private TextView textView_playGame_TotalCorrectNumber;
     private TextView textView_time; // 时间文字对象
     private Thread timeThread; // 计时器线程对象
     private Thread buttonThread; // 按钮事件线程对象
@@ -93,6 +94,7 @@ public class PlayGameActivity extends AppCompatActivity {
         imageButton_playGame_mark = findViewById(R.id.imageButton_playGame_mark);
         textView_errorCountNumber = findViewById(R.id.textView_playGame_ErrorCountNumber);
         textView_remainCountNumber = findViewById(R.id.textView_playGame_RemainCountNumber);
+        textView_playGame_TotalCorrectNumber = findViewById(R.id.textView_playGame_TotalCorrectNumber);
         textView_time = findViewById(R.id.textView_playGame_TimeNumber);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(PlayGameActivity.this);
@@ -444,7 +446,8 @@ public class PlayGameActivity extends AppCompatActivity {
         String errorCountString = Integer.toString(errorCount);
         textView_errorCountNumber.setText(errorCountString);
 
-        textView_remainCountNumber.setText(String.valueOf(totalCorrectCount)) ;
+        textView_remainCountNumber.setText(String.valueOf(remainCount));
+        textView_playGame_TotalCorrectNumber.setText(String.valueOf(totalCorrectCount));
 
         timeThread = new Thread(new TimeThread());
         timeThread.start();

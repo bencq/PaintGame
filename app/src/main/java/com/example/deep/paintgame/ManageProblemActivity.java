@@ -44,7 +44,7 @@ public class ManageProblemActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK)
                 {
                     Log.d(TAG, "onActivityResult: " + "add notify pic suc");
-                    problemList.add(new Problem(addProblemFragment.str_name,addProblemFragment.size,null,R.drawable.questionmark_small));
+                    problemList.add(new Problem(addProblemFragment.str_name,addProblemFragment.size,null,R.drawable.question_mark));
                     pim_adapter.notifyItemChanged(problemList.size() - 1);
                 }
                 break;
