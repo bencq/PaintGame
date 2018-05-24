@@ -3,8 +3,6 @@ package com.example.deep.paintgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -23,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.deep.paintgame.animation.Animation;
-
-import java.util.HashMap;
 
 
 public class PlayGameActivity extends AppCompatActivity {
@@ -107,10 +103,10 @@ public class PlayGameActivity extends AppCompatActivity {
         }
         soundPool = new SoundPool(4, 0, 5);
         musicId = new int[4];
-        musicId[0] = soundPool.load(this, R.raw.brush, 1);
-        musicId[1] = soundPool.load(this, R.raw.broken, 1);
-        musicId[2] = soundPool.load(this, R.raw.wrong, 1);
-        musicId[3] = soundPool.load(this, R.raw.hint, 1);
+        musicId[0] = soundPool.load(this, R.raw.SoundEffect_brush, 1);
+        musicId[1] = soundPool.load(this, R.raw.SoundEffect_broken, 1);
+        musicId[2] = soundPool.load(this, R.raw.SoundEffect_wrong, 1);
+        musicId[3] = soundPool.load(this, R.raw.SoundEffect_hint, 1);
 
 
 
