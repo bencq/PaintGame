@@ -411,6 +411,8 @@ public class DesignProblemActivity extends AppCompatActivity {
         //debug
         // 更新文字提示信息
         /*创建提示数字信息*/
+
+
         int textSize;
         if (problem_size >= 11) {
             textSize = 12;
@@ -477,6 +479,8 @@ public class DesignProblemActivity extends AppCompatActivity {
             colHintParams.bottomMargin = 0;
             relativeLayout_DP_button.addView(colHint, colHintParams);
         }
+
+
 
         /*渲染按钮颜色*/
         drawButtonsByAnswer();

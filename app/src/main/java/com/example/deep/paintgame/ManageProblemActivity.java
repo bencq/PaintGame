@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.deep.paintgame.adapters.PIM_Adapter;
@@ -28,6 +30,9 @@ public class ManageProblemActivity extends AppCompatActivity {
     public List<Problem> problemList;
     public RecyclerView recyclerView_MP;
     public AddProblemFragment addProblemFragment;
+
+
+    FloatingActionButton floatingActionButton_MP_addProblem;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -69,6 +74,7 @@ public class ManageProblemActivity extends AppCompatActivity {
         }
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar,menu);
@@ -88,6 +94,7 @@ public class ManageProblemActivity extends AppCompatActivity {
         }
         return true;
     }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +103,14 @@ public class ManageProblemActivity extends AppCompatActivity {
 
         addProblemFragment = (AddProblemFragment)(getSupportFragmentManager().findFragmentById(R.id.fragment_MP_addProblem));
         drawerLayout = findViewById(R.id.drawerLayout_MP);
+
+        floatingActionButton_MP_addProblem = findViewById(R.id.floatingActionButton_MP_addProblem);
+        floatingActionButton_MP_addProblem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.END);
+            }
+        });
 
         problemList = getProblemList();
         if(problemList == null)
