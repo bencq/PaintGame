@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.deep.paintgame.animation.Animation;
+
+import java.util.HashMap;
 
 
 public class PlayGameActivity extends AppCompatActivity {
@@ -47,7 +50,8 @@ public class PlayGameActivity extends AppCompatActivity {
 
     //
     MediaPlayer mediaPlayer;
-
+    int[] musicId;
+    SoundPool soundPool;
 
     private int problem_size; // 当前题目的尺寸大小
     private String problem_name; // 当前题目的名字
@@ -101,6 +105,12 @@ public class PlayGameActivity extends AppCompatActivity {
             mediaPlayer = MediaPlayer.create(PlayGameActivity.this,SettingsActivity.music_raw[musicRadio]);
             mediaPlayer.start();
         }
+        soundPool = new SoundPool(4, 0, 5);
+        musicId = new int[4];
+        musicId[0] = soundPool.load(this, R.raw.brush, 1);
+        musicId[1] = soundPool.load(this, R.raw.broken, 1);
+        musicId[2] = soundPool.load(this, R.raw.wrong, 1);
+        musicId[3] = soundPool.load(this, R.raw.hint, 1);
 
 
 
@@ -508,6 +518,10 @@ public class PlayGameActivity extends AppCompatActivity {
                                     // 敲打状态
                                     // 若为非默认色，则敲打失败
                                     if (problem_currentAnswer[rowNumber][colNumber] != PANE_DEFAULT) {
+                                        if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED ||
+                                                problem_currentAnswer[rowNumber][colNumber] == PANE_ERROR) {
+                                            soundPool.play(musicId[3],1,1, 0, 0, 1);
+                                        }
                                         break;
                                     }
                                     if (problem_rightAnswer[rowNumber][colNumber] == PANE_NOT_EXISTED)
@@ -516,6 +530,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++correctCount;
                                         --remainCount;
                                         textView_remainCountNumber.setText("" + remainCount) ;
+                                        soundPool.play(musicId[1],1,1, 0, 0, 1);
                                     }
                                     else
                                     {
@@ -532,6 +547,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++errorCount;
                                         String errorCountString = Integer.toString(errorCount);
                                         textView_errorCountNumber.setText(errorCountString);
+                                        soundPool.play(musicId[2],1,1, 0, 0, 1);
                                     }
                                     break;
                                 case PANE_DEFAULT:
@@ -542,10 +558,12 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] == PANE_DEFAULT)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_MARKED;
+                                        soundPool.play(musicId[0],1,1, 0, 0, 1);
                                     }
                                     else if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_DEFAULT;
+                                        soundPool.play(musicId[0],1,1, 0, 0, 1);
                                     }
                                     break;
                                 default:
