@@ -143,7 +143,7 @@ public class ManageProblemActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences_problem = getSharedPreferences("problem_" + names[i],MODE_PRIVATE);
                     int size = sharedPreferences_problem.getInt("size",0);
                     String data = sharedPreferences_problem.getString("data",null);
-                    Problem problem = new Problem(names[i],size,data,R.drawable.questionmark_small);
+                    Problem problem = new Problem(names[i],size,data,R.drawable.question_mark);
                     problemList.add(problem);
                 }
             }

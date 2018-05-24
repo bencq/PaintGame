@@ -1,8 +1,12 @@
 package com.example.deep.paintgame.utils;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
 
 /**
@@ -26,3 +30,4 @@ public class Utils {
         return bmp;
     }
 }
+

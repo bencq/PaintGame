@@ -3,6 +3,7 @@ package com.example.deep.paintgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -42,6 +43,9 @@ public class PlayGameActivity extends AppCompatActivity {
 
     public static final int IS_FINISHED_TRUE = 1;
     public static final int IS_FINISHED_FALSE = 0;
+
+    public static final int[] RAW_SOUND_EFFECT = {R.raw.soundeffect_brush, R.raw.soundeffect_broken,R.raw.soundeffect_wrong,R.raw.soundeffect_hint};
+
 
 
     //
@@ -98,14 +102,17 @@ public class PlayGameActivity extends AppCompatActivity {
         if(musicSwitch)
         {
             mediaPlayer = MediaPlayer.create(PlayGameActivity.this,SettingsActivity.music_raw[musicRadio]);
+            mediaPlayer.setLooping(true);
             mediaPlayer.start();
         }
-        soundPool = new SoundPool(4, 0, 5);
-        musicId = new int[4];
-        musicId[0] = soundPool.load(this, R.raw.soundeffect_brush, 1);
-        musicId[1] = soundPool.load(this, R.raw.soundeffect_broken, 1);
-        musicId[2] = soundPool.load(this, R.raw.soundeffect_wrong, 1);
-        musicId[3] = soundPool.load(this, R.raw.soundeffect_hint, 1);
+        soundPool = new SoundPool(4, AudioManager.STREAM_SYSTEM, 5);
+
+
+        musicId = new int[RAW_SOUND_EFFECT.length];
+        for(int i = 0; i < RAW_SOUND_EFFECT.length; ++i)
+        {
+            musicId[i] = soundPool.load(this, RAW_SOUND_EFFECT[i], 1);
+        }
 
 
 
