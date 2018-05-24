@@ -70,7 +70,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            app:cardElevation="5dip"
+            app:cardElevation="2dip"
             android:layout_margin="5dip"
             >
 
@@ -93,7 +93,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:cardElevation="5dip"
+            app:cardElevation="2dip"
             android:layout_margin="5dip"
 
             >
