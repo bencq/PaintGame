@@ -194,10 +194,10 @@ public class PlayGameActivity extends AppCompatActivity {
                 drawable = isFinish ? R.drawable.red : R.drawable.wrong;
                 break;
             case PANE_BLUE:
-                drawable = R.drawable.green;
+                drawable = R.drawable.blue;
                 break;
             case PANE_BLACK:
-                drawable = R.drawable.green;
+                drawable = R.drawable.black;
                 break;
             case PANE_YELLOW:
                 drawable = R.drawable.yellow;
@@ -206,6 +206,7 @@ public class PlayGameActivity extends AppCompatActivity {
                 break;
         }
         buttons[row][col].setBackgroundResource(drawable);
+
     }
 
     /**
@@ -232,10 +233,10 @@ public class PlayGameActivity extends AppCompatActivity {
                         drawable = isFinish ? R.drawable.red : R.drawable.wrong;
                         break;
                     case PANE_BLUE:
-                        drawable = R.drawable.green;
+                        drawable = R.drawable.blue;
                         break;
                     case PANE_BLACK:
-                        drawable = R.drawable.green;
+                        drawable = R.drawable.black;
                         break;
                     case PANE_YELLOW:
                         drawable = R.drawable.yellow;
@@ -432,7 +433,7 @@ public class PlayGameActivity extends AppCompatActivity {
         String errorCountString = Integer.toString(errorCount);
         textView_errorCountNumber.setText(errorCountString);
 
-        textView_remainCountNumber.setText("" + totalCorrectCount) ;
+        textView_remainCountNumber.setText(String.valueOf(totalCorrectCount)) ;
 
         timeThread = new Thread(new TimeThread());
         timeThread.start();
@@ -515,7 +516,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_NOT_EXISTED;
                                         ++correctCount;
                                         --remainCount;
-                                        textView_remainCountNumber.setText("" + remainCount) ;
+                                        textView_remainCountNumber.setText(String.valueOf(remainCount)) ;
                                     }
                                     else
                                     {
