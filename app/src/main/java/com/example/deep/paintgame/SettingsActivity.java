@@ -21,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
     RadioButton radioButton_SA_music3;
     Switch switch_SA_music;
 
-    public static final int[] music_raw = {-1 ,R.raw.BGM_soccer,R.raw.BGM_soccer,R.raw.BGM_soccer};
+    public static final int[] music_raw = {-1 ,R.raw.bgm_soccer,R.raw.bgm_soccer,R.raw.bgm_soccer};
 
     @Override
     protected void onDestroy() {

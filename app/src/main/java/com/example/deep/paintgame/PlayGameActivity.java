@@ -57,7 +57,6 @@ public class PlayGameActivity extends AppCompatActivity {
     private int remainCount = 0;//剩下需要涂色的方块
     private int correctCount = 0;//正确数
     private int totalPaneCount = 0;//总方格数
-
     private int border_width = 1;//stroke宽度private int border_width = 1;//stroke宽度
 
     private Button[][] buttons; // 按钮对象
@@ -103,10 +102,10 @@ public class PlayGameActivity extends AppCompatActivity {
         }
         soundPool = new SoundPool(4, 0, 5);
         musicId = new int[4];
-        musicId[0] = soundPool.load(this, R.raw.SoundEffect_brush, 1);
-        musicId[1] = soundPool.load(this, R.raw.SoundEffect_broken, 1);
-        musicId[2] = soundPool.load(this, R.raw.SoundEffect_wrong, 1);
-        musicId[3] = soundPool.load(this, R.raw.SoundEffect_hint, 1);
+        musicId[0] = soundPool.load(this, R.raw.soundeffect_brush, 1);
+        musicId[1] = soundPool.load(this, R.raw.soundeffect_broken, 1);
+        musicId[2] = soundPool.load(this, R.raw.soundeffect_wrong, 1);
+        musicId[3] = soundPool.load(this, R.raw.soundeffect_hint, 1);
 
 
 
@@ -525,12 +524,8 @@ public class PlayGameActivity extends AppCompatActivity {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_NOT_EXISTED;
                                         ++correctCount;
                                         --remainCount;
-<<<<<<< HEAD
                                         textView_remainCountNumber.setText(String.valueOf(remainCount)) ;
-=======
-                                        textView_remainCountNumber.setText("" + remainCount) ;
                                         soundPool.play(musicId[1],1,1, 0, 0, 1);
->>>>>>> 6d4d9af9fe32306e2f20dd3c69bfb15253ed9e8c
                                     }
                                     else
                                     {

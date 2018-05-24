@@ -164,7 +164,7 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
                 break;
             case 7:
                 //orange
-                holder.textView_PIM_size.setTextColor(0xffa500);
+                holder.textView_PIM_size.setTextColor(Color.rgb(255,165,0));
                 break;
             case 8:
                 holder.textView_PIM_size.setTextColor(Color.YELLOW);
@@ -180,7 +180,7 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
                 break;
             case 12:
                 //purple
-                holder.textView_PIM_size.setTextColor(0x8800ff);
+                holder.textView_PIM_size.setTextColor(Color.rgb(139,0,255));
                 break;
         }
 
