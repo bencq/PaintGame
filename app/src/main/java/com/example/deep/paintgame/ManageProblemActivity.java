@@ -161,4 +161,9 @@ public class ManageProblemActivity extends AppCompatActivity {
         }
         return problemList;
     }
+
+    public void showToast(CharSequence text, int duration)
+    {
+        Toast.makeText(ManageProblemActivity.this,text,duration).show();
+    }
 }

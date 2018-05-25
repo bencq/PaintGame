@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -77,12 +78,12 @@ public class StartGameActivity extends AppCompatActivity {
                                     .build();
                             client.newCall(request).enqueue(new Callback() {
                                 @Override
-                                public void onFailure(Call call, IOException e) {
-
+                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    e.printStackTrace();
                                 }
 
                                 @Override
-                                public void onResponse(Call call, Response response) throws IOException {
+                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                                     Log.d(TAG, "onResponse: ");
                                     try
                                     {

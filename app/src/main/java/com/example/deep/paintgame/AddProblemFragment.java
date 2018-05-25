@@ -189,7 +189,7 @@ public class AddProblemFragment extends Fragment{
             public void onClick(DialogInterface dialogInterface, int i) {
                 //调用按钮的onClick函数防止BUG
                 PIM_Adapter.ViewHolder viewHolder = (PIM_Adapter.ViewHolder) activity.recyclerView_MP.findViewHolderForAdapterPosition(position);
-                viewHolder.button_PIM_edit.callOnClick();
+                viewHolder.imageButton_PIM_edit.callOnClick();
             }
         });
 
