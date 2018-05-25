@@ -23,7 +23,6 @@ public class SettingsActivity extends AppCompatActivity {
     Switch switch_SA_music;
     Switch switch_sound_effect;
     public static final int[] music_raw = {-1 ,R.raw.bgm_soccer,R.raw.bgm_karma,R.raw.bgm_zelda,R.raw.bgm_zeldaa,R.raw.bgm_quweigongfang,R.raw.bgm_heilmittel};
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

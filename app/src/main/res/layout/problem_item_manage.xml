@@ -33,22 +33,41 @@
         app:layout_constraintLeft_toRightOf="@id/cardView_PIM_image"
         >
 
-        <Button
-            android:id="@+id/button_PIM_edit"
+        <ImageButton
+            android:id="@+id/imageButton_PIM_edit"
             android:layout_width="30dip"
-            android:layout_height="80dip"
+            android:layout_height="50dip"
             android:ems="1"
             android:textSize="12sp"
-            android:text="edit" />
+            android:text="edit"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_edit"
+            android:contentDescription="edit" />
 
-
-        <Button
-            android:id="@+id/button_PIM_delete"
+        <ImageButton
+            android:id="@+id/imageButton_PIM_upload"
             android:layout_width="30dip"
-            android:layout_height="80dip"
+            android:layout_height="50dip"
+            android:layout_marginTop="5dip"
+            android:layout_marginBottom="5dip"
             android:ems="1"
             android:textSize="12sp"
-            android:text="del" />
+            android:text="upload"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_upload"
+            android:contentDescription="upload" />
+
+
+        <ImageButton
+            android:id="@+id/imageButton_PIM_delete"
+            android:layout_width="30dip"
+            android:layout_height="50dip"
+            android:ems="1"
+            android:textSize="12sp"
+            android:text="del"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_delete"
+            android:contentDescription="del" />
 
     </LinearLayout>
 
@@ -59,24 +78,25 @@
         android:id="@+id/linearLayout_MP_text"
         android:layout_width="180dip"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dip"
-        android:layout_marginTop="8dip"
+        android:layout_marginBottom="2dip"
+        android:layout_marginTop="2dip"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/cardView_PIM_image"
         >
+
 
         <android.support.v7.widget.CardView
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            app:cardElevation="5dip"
-            android:layout_marginEnd="5dip"
-            android:layout_marginRight="5dip">
+            app:cardElevation="2dip"
+            android:layout_margin="5dip"
+            >
 
             <TextView
                 android:id="@+id/textView_PIM_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="3dip"
                 android:paddingRight="1dip"
                 android:paddingEnd="1dip"
@@ -92,15 +112,16 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:cardElevation="5dip"
+            app:cardElevation="2dip"
+            android:layout_margin="5dip"
+
             >
 
             <TextView
                 android:layout_gravity="center"
                 android:id="@+id/textView_PIM_size"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:gravity="center"
                 android:text="12"
                 android:textSize="20sp" />

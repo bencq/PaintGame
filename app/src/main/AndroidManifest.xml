@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.deep.paintgame">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,7 +25,7 @@
         <activity android:name=".PlayGameActivity" />
         <activity android:name=".deprecated.AddProblemActivity" />
         <activity android:name=".DesignProblemActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity"/>
     </application>
 
 </manifest>

@@ -1,9 +1,19 @@
 package com.example.deep.paintgame.utils;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
+
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Bencq on 2018/04/26.
@@ -25,4 +35,16 @@ public class Utils {
 
         return bmp;
     }
+
+    public static String getOkHttpResponseBodyString(String address) throws IOException {
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(address)
+                .build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
 }
+

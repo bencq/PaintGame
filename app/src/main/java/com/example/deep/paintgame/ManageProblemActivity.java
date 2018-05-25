@@ -44,7 +44,7 @@ public class ManageProblemActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK)
                 {
                     Log.d(TAG, "onActivityResult: " + "add notify pic suc");
-                    problemList.add(new Problem(addProblemFragment.str_name,addProblemFragment.size,null,R.drawable.questionmark_small));
+                    problemList.add(new Problem(addProblemFragment.str_name,addProblemFragment.size,null,R.drawable.question_mark));
                     pim_adapter.notifyItemChanged(problemList.size() - 1);
                 }
                 break;
@@ -135,7 +135,7 @@ public class ManageProblemActivity extends AppCompatActivity {
         {
             if(!problemNames.equals(""))
             {
-                String names[] = problemNames.split("#");
+                String names[] = problemNames.split("\\*");
                 int problemCount = names.length;
                 problemList = new ArrayList<>(problemCount);
                 for(int i = 0; i < problemCount; ++i)
@@ -143,7 +143,7 @@ public class ManageProblemActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences_problem = getSharedPreferences("problem_" + names[i],MODE_PRIVATE);
                     int size = sharedPreferences_problem.getInt("size",0);
                     String data = sharedPreferences_problem.getString("data",null);
-                    Problem problem = new Problem(names[i],size,data,R.drawable.questionmark_small);
+                    Problem problem = new Problem(names[i],size,data,R.drawable.question_mark);
                     problemList.add(problem);
                 }
             }
@@ -160,5 +160,10 @@ public class ManageProblemActivity extends AppCompatActivity {
             finish();
         }
         return problemList;
+    }
+
+    public void showToast(CharSequence text, int duration)
+    {
+        Toast.makeText(ManageProblemActivity.this,text,duration).show();
     }
 }

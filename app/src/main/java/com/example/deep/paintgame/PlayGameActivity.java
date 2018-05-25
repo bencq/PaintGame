@@ -3,13 +3,13 @@ package com.example.deep.paintgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,8 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.deep.paintgame.animation.Animation;
-
-import java.util.HashMap;
 
 
 public class PlayGameActivity extends AppCompatActivity {
@@ -44,8 +42,10 @@ public class PlayGameActivity extends AppCompatActivity {
     public static final int PANE_BLACK = 5;
     public static final int PANE_YELLOW = 6;
 
-    public static final int IS_FINISHED_TRUE = 1;
-    public static final int IS_FINISHED_FALSE = 0;
+    public static final int SOURCE_LOCAL = 0;
+    public static final int SOURCE_NETWORK = 1;
+
+    public static final int[] RAW_SOUND_EFFECT = {R.raw.soundeffect_brush, R.raw.soundeffect_broken,R.raw.soundeffect_wrong,R.raw.soundeffect_hint};
 
 
     //
@@ -55,13 +55,15 @@ public class PlayGameActivity extends AppCompatActivity {
 
     private int problem_size; // 当前题目的尺寸大小
     private String problem_name; // 当前题目的名字
+    private String problem_data; // 题目数据
+    private int problem_source; // 题目来源
+
     private boolean isFinish = false; // 玩家是否完成当前题目
 
     private int totalCorrectCount = 0;//总的需要涂色的方块
     private int remainCount = 0;//剩下需要涂色的方块
     private int correctCount = 0;//正确数
     private int totalPaneCount = 0;//总方格数
-
     private int border_width = 1;//stroke宽度private int border_width = 1;//stroke宽度
 
     private Button[][] buttons; // 按钮对象
@@ -74,7 +76,8 @@ public class PlayGameActivity extends AppCompatActivity {
     private ImageButton imageButton_playGame_knock; // 敲打按钮对象
     private ImageButton imageButton_playGame_mark;  // 绘图按钮对象
     private TextView textView_errorCountNumber; // 错误数字文字对象
-    private TextView textView_remainCountNumber;
+    private TextView textView_remainCountNumber; //剩余空白数
+    private TextView textView_playGame_TotalCorrectNumber;
     private TextView textView_time; // 时间文字对象
     private Thread timeThread; // 计时器线程对象
     private Thread buttonThread; // 按钮事件线程对象
@@ -94,6 +97,7 @@ public class PlayGameActivity extends AppCompatActivity {
         imageButton_playGame_mark = findViewById(R.id.imageButton_playGame_mark);
         textView_errorCountNumber = findViewById(R.id.textView_playGame_ErrorCountNumber);
         textView_remainCountNumber = findViewById(R.id.textView_playGame_RemainCountNumber);
+        textView_playGame_TotalCorrectNumber = findViewById(R.id.textView_playGame_TotalCorrectNumber);
         textView_time = findViewById(R.id.textView_playGame_TimeNumber);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(PlayGameActivity.this);
@@ -104,22 +108,21 @@ public class PlayGameActivity extends AppCompatActivity {
         {
             /*
             mediaPlayer = MediaPlayer.create(PlayGameActivity.this,SettingsActivity.music_raw[musicRadio]);
+            mediaPlayer.setLooping(true);
             mediaPlayer.start();
             */
         }
-        soundPool = new SoundPool(4, 0, 5);
-        musicId = new int[4];
-        musicId[0] = soundPool.load(this, R.raw.brush, 1);
-        musicId[1] = soundPool.load(this, R.raw.broken, 1);
-        musicId[2] = soundPool.load(this, R.raw.wrong, 1);
-        musicId[3] = soundPool.load(this, R.raw.hint, 1);
+        soundPool = new SoundPool(4, AudioManager.STREAM_SYSTEM, 5);
+
+
+        musicId = new int[RAW_SOUND_EFFECT.length];
+        for(int i = 0; i < RAW_SOUND_EFFECT.length; ++i)
+        {
+            musicId[i] = soundPool.load(this, RAW_SOUND_EFFECT[i], 1);
+        }
 
 
 
-        //获取Intent传递信息
-        Intent intent = getIntent();
-        problem_name = intent.getStringExtra("name");
-        problem_size = intent.getIntExtra("size", 0);
 
         //开始游戏
         createGame();
@@ -208,10 +211,10 @@ public class PlayGameActivity extends AppCompatActivity {
                 drawable = isFinish ? R.drawable.red : R.drawable.wrong;
                 break;
             case PANE_BLUE:
-                drawable = R.drawable.green;
+                drawable = R.drawable.blue;
                 break;
             case PANE_BLACK:
-                drawable = R.drawable.green;
+                drawable = R.drawable.black;
                 break;
             case PANE_YELLOW:
                 drawable = R.drawable.yellow;
@@ -246,10 +249,10 @@ public class PlayGameActivity extends AppCompatActivity {
                         drawable = isFinish ? R.drawable.red : R.drawable.wrong;
                         break;
                     case PANE_BLUE:
-                        drawable = R.drawable.green;
+                        drawable = R.drawable.blue;
                         break;
                     case PANE_BLACK:
-                        drawable = R.drawable.green;
+                        drawable = R.drawable.black;
                         break;
                     case PANE_YELLOW:
                         drawable = R.drawable.yellow;
@@ -287,11 +290,54 @@ public class PlayGameActivity extends AppCompatActivity {
 
         /*初始化游戏属性*/
 
-        // 获取题目数据
-        SharedPreferences sharedPreferences = getSharedPreferences("problem_" + problem_name, MODE_PRIVATE);
-        problem_size = sharedPreferences.getInt("size", 0);
-        String problem_data_string = sharedPreferences.getString("data", "");
-        if (problem_size == 0 || problem_data_string.equals("")) {
+
+        //获取Intent传递信息
+
+
+
+        //判断题目来源
+        Intent intent = getIntent();
+        problem_source = intent.getIntExtra("source",-1);
+        problem_name = intent.getStringExtra("name");
+
+
+        switch (problem_source)
+        {
+            case SOURCE_LOCAL:
+
+                // 获取题目数据
+                SharedPreferences sharedPreferences = getSharedPreferences("problem_" + problem_name, MODE_PRIVATE);
+
+                problem_size = sharedPreferences.getInt("size", 0);
+                problem_data = sharedPreferences.getString("data", "");
+
+                break;
+            case SOURCE_NETWORK:
+
+                problem_size = intent.getIntExtra("size", 0);
+                problem_data = intent.getStringExtra("data");
+
+                break;
+
+            default:
+
+                Toast.makeText(PlayGameActivity.this,"似乎出了点问题",Toast.LENGTH_SHORT).show();
+                finish();
+
+                break;
+        }
+        Log.d(TAG, "createGame: " + "problem_source: " + problem_source);
+        Log.d(TAG, "createGame: " + "problem_name: " + problem_name);
+        Log.d(TAG, "createGame: " + "problem_size: " + problem_size);
+        Log.d(TAG, "createGame: " + "problem_data: " + problem_data);
+
+
+
+
+
+
+
+        if (problem_size == 0 || TextUtils.isEmpty(problem_data)) {
             Toast.makeText(PlayGameActivity.this, "读取题目数据失败！", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -302,7 +348,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
 
         // 处理题目数据
-        String[] problem_data_array = problem_data_string.split("#");
+        String[] problem_data_array = problem_data.split("\\*");
         problem_rightAnswer = new int[problem_size][problem_size];
         problem_currentAnswer = new int[problem_size][problem_size];
         for (int i = 0; i < problem_size; ++i) {
@@ -446,7 +492,8 @@ public class PlayGameActivity extends AppCompatActivity {
         String errorCountString = Integer.toString(errorCount);
         textView_errorCountNumber.setText(errorCountString);
 
-        textView_remainCountNumber.setText("" + totalCorrectCount) ;
+        textView_remainCountNumber.setText(String.valueOf(remainCount));
+        textView_playGame_TotalCorrectNumber.setText(String.valueOf(totalCorrectCount));
 
         timeThread = new Thread(new TimeThread());
         timeThread.start();
@@ -534,7 +581,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_NOT_EXISTED;
                                         ++correctCount;
                                         --remainCount;
-                                        textView_remainCountNumber.setText("" + remainCount) ;
+                                        textView_remainCountNumber.setText(String.valueOf(remainCount)) ;
                                         if(MainsActivity.soundEffect)
                                         soundPool.play(musicId[1],1,1, 0, 0, 1);
                                     }
