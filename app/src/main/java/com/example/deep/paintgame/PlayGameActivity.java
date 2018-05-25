@@ -85,7 +85,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayoutPG;
 
-    public setBGMFragment setbgmFragment;
+    public SetBGMFragment setbgmFragment;
 
 
     @Override
@@ -93,7 +93,7 @@ public class PlayGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playgame);
 
-        setbgmFragment=(setBGMFragment)(getSupportFragmentManager().findFragmentById(R.id.drawerLayout_PG)) ;
+        setbgmFragment=(SetBGMFragment)(getSupportFragmentManager().findFragmentById(R.id.drawerLayout_PG)) ;
 
         //初始化组件
         imageButton_playGame_knock = findViewById(R.id.imageButton_playGame_knock);
@@ -124,7 +124,7 @@ public class PlayGameActivity extends AppCompatActivity {
             mediaPlayer.setLooping(true);
             mediaPlayer.start();
         }
-        soundPool = new SoundPool(4, AudioManager.STREAM_SYSTEM, 5);
+        soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 5);
 
 
         musicId = new int[RAW_SOUND_EFFECT.length];

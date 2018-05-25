@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +16,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
-import static android.content.ContentValues.TAG;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link setBGMFragment.OnFragmentInteractionListener} interface
+ * {@link SetBGMFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link setBGMFragment#newInstance} factory method to
+ * Use the {@link SetBGMFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class setBGMFragment extends Fragment {
+public class SetBGMFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
@@ -48,7 +45,7 @@ public class setBGMFragment extends Fragment {
     private PlayGameActivity activity;
     private OnFragmentInteractionListener mListener;
 
-    public setBGMFragment() {
+    public SetBGMFragment() {
         // Required empty public constructor
     }
 
@@ -58,11 +55,11 @@ public class setBGMFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment setBGMFragment.
+     * @return A new instance of fragment SetBGMFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static setBGMFragment newInstance(String param1, String param2) {
-        setBGMFragment fragment = new setBGMFragment();
+    public static SetBGMFragment newInstance(String param1, String param2) {
+        SetBGMFragment fragment = new SetBGMFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -88,8 +85,8 @@ public class setBGMFragment extends Fragment {
         radioButton_SA_music_List[3]= view.findViewById(R.id.radioButton_SA_music4_f);
         radioButton_SA_music_List[4] = view.findViewById(R.id.radioButton_SA_music5_f);
         radioButton_SA_music_List[5] = view.findViewById(R.id.radioButton_SA_music6_f);
-        switch_SA_music =(Switch) view.findViewById(R.id.switch_SA_music_f);
-        switch_sound_effect=(Switch) view.findViewById(R.id.switch_sound_effect_f);
+        switch_SA_music = view.findViewById(R.id.switch_SA_music_f);
+        switch_sound_effect = view.findViewById(R.id.switch_sound_effect_f);
 
 
         return view;
@@ -129,12 +126,12 @@ public class setBGMFragment extends Fragment {
         radioButton_SA_music_List[musicRadio-1].setChecked(true);
         if(musicSwitch)
         {
-            if(activity.mediaPlayer!=null)
+            if(PlayGameActivity.mediaPlayer !=null)
             {
-                activity.mediaPlayer.stop();
+                PlayGameActivity.mediaPlayer.stop();
             }
-            activity.mediaPlayer=MediaPlayer.create(activity, music_raw[musicRadio]);
-            activity.mediaPlayer.start();
+            PlayGameActivity.mediaPlayer =MediaPlayer.create(activity, music_raw[musicRadio]);
+            PlayGameActivity.mediaPlayer.start();
 
         }
 
@@ -144,12 +141,12 @@ public class setBGMFragment extends Fragment {
 
                 radioGroup_SA_music2.clearCheck();
                 music_no=0;
-                if(activity.mediaPlayer!=null)
+                if(PlayGameActivity.mediaPlayer !=null)
                 {
-                    activity.mediaPlayer.stop();
+                    PlayGameActivity.mediaPlayer.stop();
                 }
-                activity.mediaPlayer=MediaPlayer.create(activity, music_raw[1]);
-                activity.mediaPlayer.start();
+                PlayGameActivity.mediaPlayer =MediaPlayer.create(activity, music_raw[1]);
+                PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,1);
                 editor.apply();
             }
@@ -159,12 +156,12 @@ public class setBGMFragment extends Fragment {
             public void onClick(View view) {
                 radioGroup_SA_music2.clearCheck();
                 music_no=1;
-                if(activity.mediaPlayer!=null)
+                if(PlayGameActivity.mediaPlayer!=null)
                 {
-                    activity.mediaPlayer.stop();
+                    PlayGameActivity.mediaPlayer.stop();
                 }
-                activity.mediaPlayer=MediaPlayer.create(activity, music_raw[2]);
-                activity.mediaPlayer.start();
+                PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[2]);
+                PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,2);
                 editor.apply();
             }
@@ -174,12 +171,12 @@ public class setBGMFragment extends Fragment {
             public void onClick(View view) {
                 radioGroup_SA_music2.clearCheck();
                 music_no=2;
-                if(activity.mediaPlayer!=null)
+                if(PlayGameActivity.mediaPlayer!=null)
                 {
-                    activity.mediaPlayer.stop();
+                    PlayGameActivity.mediaPlayer.stop();
                 }
-                activity.mediaPlayer=MediaPlayer.create(activity, music_raw[3]);
-                activity.mediaPlayer.start();
+                PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[3]);
+                PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,3);
                 editor.apply();
             }
@@ -189,12 +186,12 @@ public class setBGMFragment extends Fragment {
             public void onClick(View view) {
                 radioGroup_SA_music1.clearCheck();
                 music_no=3;
-                if(activity.mediaPlayer!=null)
+                if(PlayGameActivity.mediaPlayer!=null)
                 {
-                    activity.mediaPlayer.stop();
+                    PlayGameActivity.mediaPlayer.stop();
                 }
-                activity.mediaPlayer=MediaPlayer.create(activity, music_raw[4]);
-                activity.mediaPlayer.start();
+                PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[4]);
+                PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,4);
                 editor.apply();
             }
@@ -204,12 +201,12 @@ public class setBGMFragment extends Fragment {
             public void onClick(View view) {
                 radioGroup_SA_music1.clearCheck();
                 music_no=4;
-                if(activity.mediaPlayer!=null)
+                if(PlayGameActivity.mediaPlayer!=null)
                 {
-                    activity.mediaPlayer.stop();
+                    PlayGameActivity.mediaPlayer.stop();
                 }
-                activity.mediaPlayer=MediaPlayer.create(activity, music_raw[5]);
-                activity.mediaPlayer.start();
+                PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[5]);
+                PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,5);
                 editor.apply();
             }
@@ -219,12 +216,12 @@ public class setBGMFragment extends Fragment {
             public void onClick(View view) {
                 radioGroup_SA_music1.clearCheck();
                 music_no=5;
-                if(activity.mediaPlayer!=null)
+                if(PlayGameActivity.mediaPlayer!=null)
                 {
-                    activity.mediaPlayer.stop();
+                    PlayGameActivity.mediaPlayer.stop();
                 }
-                activity.mediaPlayer=MediaPlayer.create(activity, music_raw[6]);
-                activity.mediaPlayer.start();
+                PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[6]);
+                PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,6);
                 editor.apply();
             }
@@ -238,8 +235,8 @@ public class setBGMFragment extends Fragment {
                     {
                         radioButton_SA_music_List[i].setEnabled(true);
                     }
-                    activity.mediaPlayer = MediaPlayer.create(activity, music_raw[music_no]);
-                    activity.mediaPlayer.start();
+                    PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[music_no]);
+                    PlayGameActivity.mediaPlayer.start();
                     editor.putBoolean(MainActivity.KEY_MUSIC_SWITCH,true);
                     editor.apply();
                 }
@@ -250,11 +247,11 @@ public class setBGMFragment extends Fragment {
                     {
                         radioButton_SA_music_List[i].setEnabled(false);
                     }
-                    if(activity.mediaPlayer != null)
+                    if(PlayGameActivity.mediaPlayer != null)
                     {
-                        if(activity.mediaPlayer.isPlaying())
+                        if(PlayGameActivity.mediaPlayer.isPlaying())
                         {
-                            activity.mediaPlayer.stop();
+                            PlayGameActivity.mediaPlayer.stop();
                         }
                     }
                     editor.putBoolean(MainActivity.KEY_MUSIC_SWITCH,false);
