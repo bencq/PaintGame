@@ -49,7 +49,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
 
     //
-    MediaPlayer mediaPlayer;
+    //MediaPlayer mediaPlayer;
     int[] musicId;
     SoundPool soundPool;
 
@@ -102,8 +102,10 @@ public class PlayGameActivity extends AppCompatActivity {
         int musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
         if(musicSwitch)
         {
+            /*
             mediaPlayer = MediaPlayer.create(PlayGameActivity.this,SettingsActivity.music_raw[musicRadio]);
             mediaPlayer.start();
+            */
         }
         soundPool = new SoundPool(4, 0, 5);
         musicId = new int[4];
@@ -163,17 +165,19 @@ public class PlayGameActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
+        /*
 
         if(mediaPlayer != null)
         {
             if(mediaPlayer.isPlaying())
             {
+
                 mediaPlayer.stop();
                 mediaPlayer.release();
+
             }
         }
-
+*/
         buttons = null;
         problem_rightAnswer = null;
         problem_currentAnswer = null;
@@ -520,6 +524,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] != PANE_DEFAULT) {
                                         if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED ||
                                                 problem_currentAnswer[rowNumber][colNumber] == PANE_ERROR) {
+                                            if(MainsActivity.soundEffect)
                                             soundPool.play(musicId[3],1,1, 0, 0, 1);
                                         }
                                         break;
@@ -530,6 +535,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++correctCount;
                                         --remainCount;
                                         textView_remainCountNumber.setText("" + remainCount) ;
+                                        if(MainsActivity.soundEffect)
                                         soundPool.play(musicId[1],1,1, 0, 0, 1);
                                     }
                                     else
@@ -547,6 +553,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++errorCount;
                                         String errorCountString = Integer.toString(errorCount);
                                         textView_errorCountNumber.setText(errorCountString);
+                                        if(MainsActivity.soundEffect)
                                         soundPool.play(musicId[2],1,1, 0, 0, 1);
                                     }
                                     break;
@@ -558,11 +565,13 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] == PANE_DEFAULT)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_MARKED;
+                                        if(MainsActivity.soundEffect)
                                         soundPool.play(musicId[0],1,1, 0, 0, 1);
                                     }
                                     else if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_DEFAULT;
+                                        if(MainsActivity.soundEffect)
                                         soundPool.play(musicId[0],1,1, 0, 0, 1);
                                     }
                                     break;

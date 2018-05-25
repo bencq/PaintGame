@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
+    public static final String KEY_SOUND_EFFECT = "key_soundEffect";
     public static final String KEY_MUSIC_RADIO = "key_musicRadio";
     public static final String KEY_MUSIC_SWITCH = "key_musicSwitch";
 
@@ -99,9 +99,10 @@ public class MainActivity extends AppCompatActivity {
 
 
             //初始化设置
-            editor.putInt(KEY_MUSIC_RADIO,1);
-            editor.putBoolean(KEY_MUSIC_SWITCH,true);
 
+            editor.putInt(KEY_SOUND_EFFECT,0);
+            editor.putBoolean(KEY_MUSIC_SWITCH,true);
+            editor.putBoolean(KEY_MUSIC_RADIO,false);
 
             //SP记录具体每个题目的数据
             for (int i = 0; i < problemNames.length; ++i)
