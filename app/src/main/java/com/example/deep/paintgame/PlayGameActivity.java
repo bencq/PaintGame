@@ -50,8 +50,11 @@ public class PlayGameActivity extends AppCompatActivity {
     public static final int[] RAW_SOUND_EFFECT = {R.raw.soundeffect_brush, R.raw.soundeffect_broken,R.raw.soundeffect_wrong,R.raw.soundeffect_hint};
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 9fe90f56fd746e1e5358aadfb9e4fe5f2b3ec767
     //
     static MediaPlayer mediaPlayer;
     int[] musicId;

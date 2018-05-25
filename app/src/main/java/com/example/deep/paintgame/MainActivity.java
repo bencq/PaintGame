@@ -1,5 +1,7 @@
 package com.example.deep.paintgame;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Animation animation_alpha = new AlphaAnimation(0.1f,1.0f);
+                Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
                 animation_alpha.setRepeatMode(Animation.REVERSE);
@@ -159,8 +161,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(intent);
+                        //debug
+                        //Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        //startActivity(intent);
                     }
 
                     @Override
@@ -204,10 +207,10 @@ public class MainActivity extends AppCompatActivity {
             //题目数据
             String problemData[] =
                     {
-                            "04040400#04040400#44444444#04040400#04040400#04444440#04444440#04444440#",
-                            "4444444444#4444444444#4444444444#4444444444#4444444444#0000000000#0000000000#0000000000#0000000000#0000000000#",
-                            "040404#040404#040404#040404#040404#040404#",
-                            "040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#"
+                            "04040400*04040400*44444444*04040400*04040400*04444440*04444440*04444440*",
+                            "4444444444*4444444444*4444444444*4444444444*4444444444*0000000000*0000000000*0000000000*0000000000*0000000000*",
+                            "040404*040404*040404*040404*040404*040404*",
+                            "040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*"
                     };
 
 
@@ -215,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
             StringBuilder stringBuilder = new StringBuilder();
 
             for (String problemName : problemNames) {
-                stringBuilder.append(problemName).append("#");
+                stringBuilder.append(problemName).append("*");
             }
             editor.putString("problemNames",stringBuilder.toString());
             editor.putBoolean("isFirstTimeRunApp",false);//debug

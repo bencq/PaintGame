@@ -7,8 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".setBGMFragment">
 
+<<<<<<< HEAD
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+=======
+
+    <ImageView
+        android:id="@+id/background_startGame"
+>>>>>>> 9fe90f56fd746e1e5358aadfb9e4fe5f2b3ec767
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_main"
