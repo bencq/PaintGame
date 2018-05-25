@@ -8,6 +8,8 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -48,8 +50,7 @@ public class PlayGameActivity extends AppCompatActivity {
     public static final int[] RAW_SOUND_EFFECT = {R.raw.soundeffect_brush, R.raw.soundeffect_broken,R.raw.soundeffect_wrong,R.raw.soundeffect_hint};
 
 
-    //
-    MediaPlayer mediaPlayer;
+    static MediaPlayer mediaPlayer;
     int[] musicId;
     SoundPool soundPool;
 
@@ -82,8 +83,9 @@ public class PlayGameActivity extends AppCompatActivity {
     private Thread timeThread; // 计时器线程对象
     private Thread buttonThread; // 按钮事件线程对象
 
+    DrawerLayout drawerLayoutPG;
 
-
+    public setBGMFragment setbgmFragment;
 
 
     @Override
@@ -91,6 +93,7 @@ public class PlayGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playgame);
 
+        setbgmFragment=(setBGMFragment)(getSupportFragmentManager().findFragmentById(R.id.drawerLayout_PG)) ;
 
         //初始化组件
         imageButton_playGame_knock = findViewById(R.id.imageButton_playGame_knock);
@@ -99,6 +102,17 @@ public class PlayGameActivity extends AppCompatActivity {
         textView_remainCountNumber = findViewById(R.id.textView_playGame_RemainCountNumber);
         textView_playGame_TotalCorrectNumber = findViewById(R.id.textView_playGame_TotalCorrectNumber);
         textView_time = findViewById(R.id.textView_playGame_TimeNumber);
+
+        drawerLayoutPG=(DrawerLayout)findViewById(R.id.drawerLayout_PG);
+        Button bttest=(Button)findViewById(R.id.gotosettings);
+
+        bttest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayoutPG.openDrawer(GravityCompat.END);
+            }
+        });
+
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(PlayGameActivity.this);
         //music
@@ -567,6 +581,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] != PANE_DEFAULT) {
                                         if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED ||
                                                 problem_currentAnswer[rowNumber][colNumber] == PANE_ERROR) {
+                                            if(SettingsActivity.soundEffect)
                                             soundPool.play(musicId[3],1,1, 0, 0, 1);
                                         }
                                         break;
@@ -577,6 +592,8 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++correctCount;
                                         --remainCount;
                                         textView_remainCountNumber.setText(String.valueOf(remainCount)) ;
+
+                                        if(SettingsActivity.soundEffect)
                                         soundPool.play(musicId[1],1,1, 0, 0, 1);
                                     }
                                     else
@@ -594,6 +611,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++errorCount;
                                         String errorCountString = Integer.toString(errorCount);
                                         textView_errorCountNumber.setText(errorCountString);
+                                        if(SettingsActivity.soundEffect)
                                         soundPool.play(musicId[2],1,1, 0, 0, 1);
                                     }
                                     break;
@@ -605,11 +623,13 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] == PANE_DEFAULT)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_MARKED;
+                                        if(SettingsActivity.soundEffect)
                                         soundPool.play(musicId[0],1,1, 0, 0, 1);
                                     }
                                     else if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_DEFAULT;
+                                        if(SettingsActivity.soundEffect)
                                         soundPool.play(musicId[0],1,1, 0, 0, 1);
                                     }
                                     break;
@@ -631,6 +651,28 @@ public class PlayGameActivity extends AppCompatActivity {
                 }
             }
 
+        }
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if(mediaPlayer != null)
+        {
+            if(mediaPlayer.isPlaying())
+            {
+                mediaPlayer.pause();
+            }
+        }
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(mediaPlayer != null)
+        {
+            if(!mediaPlayer.isPlaying())
+            {
+                mediaPlayer.start();
+            }
         }
     }
 }

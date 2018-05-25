@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String KEY_MUSIC_RADIO = "key_musicRadio";
     public static final String KEY_MUSIC_SWITCH = "key_musicSwitch";
+    public static final String KEY_SOUND_EFFECT="key_soundeffect";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,9 +225,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             //初始化设置
-            editor.putInt(KEY_MUSIC_RADIO,1);
+            editor.putInt(KEY_MUSIC_RADIO,4);
             editor.putBoolean(KEY_MUSIC_SWITCH,true);
-
+            editor.putBoolean(KEY_SOUND_EFFECT,true);
 
             //SP记录具体每个题目的数据
             for (int i = 0; i < problemNames.length; ++i)
