@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.deep.paintgame.SettingsActivity">
+    tools:context=".setBGMFragment">
 
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     <LinearLayout
 =======
+=======
+<<<<<<< HEAD
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+=======
+
+>>>>>>> zzy
     <ImageView
         android:id="@+id/background_startGame"
 >>>>>>> 9fe90f56fd746e1e5358aadfb9e4fe5f2b3ec767
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_main"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="114dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:gravity="center"
-        android:layout_marginBottom="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="150dp"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="100dp">
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:id="@+id/linearLayout_SA_defaultMusic"
@@ -147,18 +153,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        tools:layout_editor_absoluteY="20dp"
-        android:gravity="center">
+        android:layout_height="100dp"
+
+        android:gravity="center"
+        tools:layout_editor_absoluteY="300dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            tools:layout_editor_absoluteY="300dp">
 
             <TextView
                 android:layout_width="178dp"
@@ -170,17 +175,12 @@
 
             <Switch
                 android:id="@+id/switch_sound_effect"
+
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="20dp"
                 android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 
-            <!--View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#ff000000"
-                /-->
 
-
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>
