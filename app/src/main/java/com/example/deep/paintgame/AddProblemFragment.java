@@ -51,7 +51,7 @@ public class AddProblemFragment extends Fragment{
                 if(resultCode == RESULT_OK)
                 {
                     Log.d(TAG, "onActivityResult: " + "add notify pic suc");
-                    activity.problemList.add(new Problem(str_name,size,null,R.drawable.questionmark_small));
+                    activity.problemList.add(new Problem(str_name,size,null,R.drawable.question_mark));
                     activity.pim_adapter.notifyItemChanged(activity.problemList.size() - 1);
                 }
                 break;

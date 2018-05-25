@@ -2,61 +2,169 @@ package com.example.deep.paintgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
+
+import java.util.Timer;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    static MediaPlayer mediaPlayer;
 
     public static final String KEY_MUSIC_RADIO = "key_musicRadio";
     public static final String KEY_MUSIC_SWITCH = "key_musicSwitch";
+    public static final String KEY_SOUND_EFFECT="key_soundeffect";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageButton imageButton_main_StartGame = findViewById(R.id.imageButton_main_StartGame);
-        ImageButton imageButton_main_ManageProblem = findViewById(R.id.imageButton_main_ManageProblem);
-        ImageButton imageButton_main_GameHelp = findViewById(R.id.imageButton_main_GameHelp);
-        ImageButton imageButton_main_Settings = findViewById(R.id.imageButton_main_Settings);
+        final ImageButton imageButton_main_StartGame = findViewById(R.id.imageButton_main_StartGame);
+        final ImageButton imageButton_main_ManageProblem = findViewById(R.id.imageButton_main_ManageProblem);
+        final ImageButton imageButton_main_GameHelp = findViewById(R.id.imageButton_main_GameHelp);
+        final ImageButton imageButton_main_Settings = findViewById(R.id.imageButton_main_Settings);
 
         dealFirstTimeRunApp();
 
         imageButton_main_StartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, StartGameActivity.class);
-                startActivity(intent);
+                Animation animation_alpha = new AlphaAnimation(0.1f,1.0f);
+                animation_alpha.setDuration(100);
+                animation_alpha.setRepeatCount(4);
+                animation_alpha.setRepeatMode(Animation.REVERSE);
+
+                animation_alpha.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Intent intent = new Intent(MainActivity.this, StartGameActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                imageButton_main_StartGame.startAnimation(animation_alpha);
+
+
             }
         });
 
         imageButton_main_ManageProblem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ManageProblemActivity.class);
-                startActivity(intent);
+
+                Animation animation_alpha = new AlphaAnimation(0.1f,1.0f);
+                animation_alpha.setDuration(100);
+                animation_alpha.setRepeatCount(4);
+                animation_alpha.setRepeatMode(Animation.REVERSE);
+
+                animation_alpha.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Intent intent = new Intent(MainActivity.this, ManageProblemActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                imageButton_main_ManageProblem.startAnimation(animation_alpha);
+
+
             }
         });
 
         imageButton_main_GameHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //debug
-                // 启动游戏帮助Activity
+
+
+                Animation animation_alpha = new AlphaAnimation(0.1f,1.0f);
+                animation_alpha.setDuration(100);
+                animation_alpha.setRepeatCount(4);
+                animation_alpha.setRepeatMode(Animation.REVERSE);
+
+                animation_alpha.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                        //debug
+                        // 启动游戏帮助Activity
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                imageButton_main_GameHelp.startAnimation(animation_alpha);
+
             }
         });
 
         imageButton_main_Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(intent);
+
+                Animation animation_alpha = new AlphaAnimation(0.1f,1.0f);
+                animation_alpha.setDuration(100);
+                animation_alpha.setRepeatCount(4);
+                animation_alpha.setRepeatMode(Animation.REVERSE);
+
+                animation_alpha.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                imageButton_main_Settings.startAnimation(animation_alpha);
             }
         });
     }
@@ -99,9 +207,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             //初始化设置
-            editor.putInt(KEY_MUSIC_RADIO,1);
+            editor.putInt(KEY_MUSIC_RADIO,4);
             editor.putBoolean(KEY_MUSIC_SWITCH,true);
-
+            editor.putBoolean(KEY_SOUND_EFFECT,true);
 
             //SP记录具体每个题目的数据
             for (int i = 0; i < problemNames.length; ++i)

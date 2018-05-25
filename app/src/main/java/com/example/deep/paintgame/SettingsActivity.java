@@ -1,5 +1,6 @@
 package com.example.deep.paintgame;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
@@ -12,17 +13,16 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
-
-    MediaPlayer mediaPlayer;
-
+    static MediaPlayer mediaPlayer;
+    static Boolean soundEffect=false;
     RadioGroup radioGroup_SA_music1;
     RadioGroup radioGroup_SA_music2;
     int music_Number=6;
     static int music_no=0;
     RadioButton []radioButton_SA_music_List=new RadioButton[6];
     Switch switch_SA_music;
-
-    public static final int[] music_raw = {-1 ,R.raw.soccer,R.raw.karma,R.raw.zelda,R.raw.zeldaa,R.raw.quweigongfang,R.raw.heilmittel};
+    Switch switch_sound_effect;
+    public static final int[] music_raw = {-1 ,R.raw.bgm_soccer,R.raw.bgm_karma,R.raw.bgm_zelda,R.raw.bgm_zeldaa,R.raw.bgm_quweigongfang,R.raw.bgm_heilmittel};
 
     @Override
     protected void onDestroy() {
@@ -32,8 +32,9 @@ public class SettingsActivity extends AppCompatActivity {
         {
             if(mediaPlayer.isPlaying())
             {
-                mediaPlayer.stop();
+               /* mediaPlayer.stop();
                 mediaPlayer.release();
+                */
             }
         }
 
@@ -53,24 +54,18 @@ public class SettingsActivity extends AppCompatActivity {
         radioButton_SA_music_List[4] = findViewById(R.id.radioButton_SA_music5);
         radioButton_SA_music_List[5] = findViewById(R.id.radioButton_SA_music6);
         switch_SA_music = findViewById(R.id.switch_SA_music);
-
+        switch_sound_effect=findViewById(R.id.switch_sound_effect);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
         boolean musicSwitch = sharedPreferences.getBoolean(MainActivity.KEY_MUSIC_SWITCH,true);
         int musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
+        soundEffect = sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, false);
 
         switch_SA_music.setChecked(musicSwitch);
+        switch_sound_effect.setChecked(soundEffect);
         if(!musicSwitch)
         {
-            /*
-            radioButton_SA_music1.setEnabled(false);
-            radioButton_SA_music2.setEnabled(false);
-            radioButton_SA_music3.setEnabled(false);
-            radioButton_SA_music4.setEnabled(false);
-            radioButton_SA_music5.setEnabled(false);
-            radioButton_SA_music6.setEnabled(false);
-            */
             for(int i=0;i<music_Number;i++)
             {
                 radioButton_SA_music_List[i].setEnabled(false);
@@ -78,44 +73,18 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         radioButton_SA_music_List[musicRadio-1].setChecked(true);
-        /*switch (musicRadio)
-        {
-            case 1:
-                radioButton_SA_music1.setChecked(true);
-                break;
-
-            case 2:
-                radioButton_SA_music2.setChecked(true);
-                break;
-
-            case 3:
-                radioButton_SA_music3.setChecked(true);
-                break;
-        }
-        */
-/*
-        for(int i =0;i<music_Number;i++)
-        {
-            music_no=musicRadio-1;
-            radioButton_SA_music_List[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(mediaPlayer != null)
-                    {
-                        if(mediaPlayer.isPlaying())
-                        {
-                            mediaPlayer.stop();
-                        }
-                    }
-
-                    mediaPlayer = MediaPlayer.create(SettingsActivity.this, music_raw[1]);
-                    mediaPlayer.start();
-                    editor.putInt(MainActivity.KEY_MUSIC_RADIO,music_no+1);
-                    editor.apply();
+        if(musicSwitch&&musicRadio>0&&musicRadio<7) {
+            if(mediaPlayer != null)
+            {
+                if(mediaPlayer.isPlaying())
+                {
+                    mediaPlayer.stop();
                 }
-            });
+            }
+            mediaPlayer = MediaPlayer.create(SettingsActivity.this, music_raw[musicRadio]);
+            mediaPlayer.start();
         }
-        */
+
         radioButton_SA_music_List[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -224,59 +193,7 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.apply();
             }
         });
-        /*
-        radioButton_SA_music1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mediaPlayer != null)
-                {
-                    if(mediaPlayer.isPlaying())
-                    {
-                        mediaPlayer.stop();
-                    }
-                }
 
-
-                mediaPlayer = MediaPlayer.create(SettingsActivity.this, music_raw[1]);
-                mediaPlayer.start();
-                editor.putInt(MainActivity.KEY_MUSIC_RADIO,1);
-                editor.apply();
-            }
-        });
-        radioButton_SA_music2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mediaPlayer != null)
-                {
-                    if(mediaPlayer.isPlaying())
-                    {
-                        mediaPlayer.stop();
-                    }
-                }
-
-                mediaPlayer = MediaPlayer.create(SettingsActivity.this, music_raw[2]);
-                mediaPlayer.start();
-                editor.putInt(MainActivity.KEY_MUSIC_RADIO,2);
-                editor.apply();
-            }
-        });
-        radioButton_SA_music3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mediaPlayer != null)
-                {
-                    if(mediaPlayer.isPlaying())
-                    {
-                        mediaPlayer.stop();
-                    }
-                }
-                mediaPlayer = MediaPlayer.create(SettingsActivity.this, music_raw[3]);
-                mediaPlayer.start();
-                editor.putInt(MainActivity.KEY_MUSIC_RADIO,3);
-                editor.apply();
-            }
-        });
-        */
         switch_SA_music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -310,6 +227,45 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+        switch_sound_effect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked())
+                {
+                    soundEffect=true;
+                    editor.putBoolean(MainActivity.KEY_SOUND_EFFECT,true);
+                    editor.apply();
+                }
+                else
+                {
 
+                    soundEffect=false;
+                    editor.putBoolean(MainActivity.KEY_SOUND_EFFECT,false);
+                    editor.apply();
+                }
+            }
+        });
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if(mediaPlayer != null)
+        {
+            if(mediaPlayer.isPlaying())
+            {
+                mediaPlayer.pause();
+            }
+        }
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(mediaPlayer != null)
+        {
+            if(!mediaPlayer.isPlaying())
+            {
+                mediaPlayer.start();
+            }
+        }
+    }
 }

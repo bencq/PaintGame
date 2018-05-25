@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +24,12 @@
         <activity android:name=".PlayGameActivity" />
         <activity android:name=".deprecated.AddProblemActivity" />
         <activity android:name=".DesignProblemActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+
+        <service
+            android:name=".bgmService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

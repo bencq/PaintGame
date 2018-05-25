@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_main"
+        android:background="#9fffffff"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
@@ -27,7 +27,7 @@
         tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
-            android:id="@+id/linearLayout_SA_defaultMusic"
+            android:id="@+id/linearLayout_SA_defaultMusic_f"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -46,7 +46,7 @@
                     android:textStyle="bold" />
 
                 <Switch
-                    android:id="@+id/switch_SA_music"
+                    android:id="@+id/switch_SA_music_f"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
@@ -61,17 +61,16 @@
                 android:orientation="horizontal">
 
                 <RadioGroup
-                    android:id="@+id/radioGroup_SA_music1"
+                    android:id="@+id/radioGroup_SA_music1_f"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
                     android:gravity="center"
                     android:orientation="vertical">
 
 
                     <RadioButton
-                        android:id="@+id/radioButton_SA_music1"
+                        android:id="@+id/radioButton_SA_music1_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -79,7 +78,7 @@
                         android:text="1" />
 
                     <RadioButton
-                        android:id="@+id/radioButton_SA_music2"
+                        android:id="@+id/radioButton_SA_music2_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -88,7 +87,7 @@
                         android:text="2" />
 
                     <RadioButton
-                        android:id="@+id/radioButton_SA_music3"
+                        android:id="@+id/radioButton_SA_music3_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -98,7 +97,7 @@
                 </RadioGroup>
 
                 <RadioGroup
-                    android:id="@+id/radioGroup_SA_music2"
+                    android:id="@+id/radioGroup_SA_music2_f"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -106,7 +105,7 @@
                     android:orientation="vertical">
 
                     <RadioButton
-                        android:id="@+id/radioButton_SA_music4"
+                        android:id="@+id/radioButton_SA_music4_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -114,7 +113,7 @@
                         android:text="4" />
 
                     <RadioButton
-                        android:id="@+id/radioButton_SA_music5"
+                        android:id="@+id/radioButton_SA_music5_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -123,7 +122,7 @@
                         android:text="5" />
 
                     <RadioButton
-                        android:id="@+id/radioButton_SA_music6"
+                        android:id="@+id/radioButton_SA_music6_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -161,7 +160,7 @@
                 android:textStyle="bold" />
 
             <Switch
-                android:id="@+id/switch_sound_effect"
+                android:id="@+id/switch_sound_effect_f"
 
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"

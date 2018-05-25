@@ -3,6 +3,7 @@ package com.example.deep.paintgame.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -34,3 +35,5 @@ public class SquareImageView extends ImageView{
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }
+
+

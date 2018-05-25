@@ -1,8 +1,10 @@
 package com.example.deep.paintgame;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     private static final String TAG = "StartGameActivity";
     List<Problem> problemList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class StartGameActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences_problem = getSharedPreferences("problem_" + names[i],MODE_PRIVATE);
                 int size = sharedPreferences_problem.getInt("size",0);
                 String data = sharedPreferences_problem.getString("data",null);
-                Problem problem = new Problem(names[i],size,data,R.drawable.questionmark_small);
+                Problem problem = new Problem(names[i],size,data,R.drawable.question_mark);
                 problemList.add(problem);
             }
         }
