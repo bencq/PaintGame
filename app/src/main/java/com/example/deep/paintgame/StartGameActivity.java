@@ -2,10 +2,12 @@ package com.example.deep.paintgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.deep.paintgame.adapters.PIS_Adapter;
 import com.example.deep.paintgame.javaBean.Problem;
+import com.example.deep.paintgame.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
