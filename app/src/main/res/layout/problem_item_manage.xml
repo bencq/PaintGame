@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -7,22 +7,20 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView_PIM_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        >
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:layout_margin="5dip"
+        app:cardCornerRadius="5dip"
+        app:cardElevation="5dip"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.example.deep.paintgame.view.SquareImageView
             android:id="@+id/imageView_PIM_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="start|top"
             android:scaleType="centerCrop"
             android:text="image" />
+
 
     </android.support.v7.widget.CardView>
 
@@ -32,62 +30,106 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@id/cardView_PIM_image"
-        android:layout_toRightOf="@id/cardView_PIM_image"
-        android:layout_alignParentTop="true"
-        android:layout_alignBottom="@id/cardView_PIM_image"
+        app:layout_constraintLeft_toRightOf="@id/cardView_PIM_image"
         >
 
-        <Button
-            android:id="@+id/button_PIM_edit"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
+        <ImageButton
+            android:id="@+id/imageButton_PIM_edit"
+            android:layout_width="30dip"
+            android:layout_height="50dip"
             android:ems="1"
             android:textSize="12sp"
-            android:text="edit" />
+            android:text="edit"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_edit"
+            android:contentDescription="edit" />
 
-
-        <Button
-            android:id="@+id/button_PIM_delete"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
+        <ImageButton
+            android:id="@+id/imageButton_PIM_upload"
+            android:layout_width="30dip"
+            android:layout_height="50dip"
+            android:layout_marginTop="5dip"
+            android:layout_marginBottom="5dip"
             android:ems="1"
             android:textSize="12sp"
-            android:text="del" />
+            android:text="upload"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_upload"
+            android:contentDescription="upload" />
+
+
+        <ImageButton
+            android:id="@+id/imageButton_PIM_delete"
+            android:layout_width="30dip"
+            android:layout_height="50dip"
+            android:ems="1"
+            android:textSize="12sp"
+            android:text="del"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_delete"
+            android:contentDescription="del" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView_PIM_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|bottom"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@id/cardView_PIM_image"
-        android:layout_alignEnd="@id/cardView_PIM_image"
-        android:layout_below="@id/cardView_PIM_image"
-        android:textSize="20sp"
-        android:text="name"
-         />
-    
-    <TextView
-        android:id="@+id/textView_PIM_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_toRightOf="@id/textView_PIM_name"
-        android:layout_toEndOf="@id/textView_PIM_name"
-        android:layout_alignRight="@id/linearLayout_PIM_buttons"
-        android:layout_alignEnd="@id/linearLayout_PIM_buttons"
-        android:layout_below="@id/linearLayout_PIM_buttons"
-        android:textSize="20sp"
-        android:text="size"
-        />
 
-</RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout_MP_text"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dip"
+        android:layout_marginTop="2dip"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/cardView_PIM_image"
+        >
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            app:cardElevation="2dip"
+            android:layout_margin="5dip"
+            >
+
+            <TextView
+                android:id="@+id/textView_PIM_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dip"
+                android:paddingRight="1dip"
+                android:paddingEnd="1dip"
+                android:text="name"
+                android:textSize="20sp"
+                android:paddingStart="3dip" />
+
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:cardElevation="2dip"
+            android:layout_margin="5dip"
+
+            >
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/textView_PIM_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="12"
+                android:textSize="20sp" />
+
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

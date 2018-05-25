@@ -164,7 +164,7 @@ public class DesignProblemActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        editor.putString("problemNames",problemNames + problem_name + "#");
+                        editor.putString("problemNames",problemNames + problem_name + "*");
                         editor.apply();
 
 
@@ -229,7 +229,7 @@ public class DesignProblemActivity extends AppCompatActivity {
             {
                 stringBuilder.append(problem_currentAnswer[i][j]);
             }
-            stringBuilder.append("#");
+            stringBuilder.append("*");
         }
         return stringBuilder.toString();
     }
@@ -340,7 +340,7 @@ public class DesignProblemActivity extends AppCompatActivity {
             for (int i = 0; i < problem_size; ++i) {
                 stringBuilder_row.append(PANE_NOT_EXISTED);
             }
-            stringBuilder_row.append("#");
+            stringBuilder_row.append("*");
             String string_row = stringBuilder_row.toString();
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < problem_size; ++i) {
@@ -366,7 +366,7 @@ public class DesignProblemActivity extends AppCompatActivity {
         }
 
         // 处理题目数据
-        String[] problem_data_array = problem_data_string.split("#");
+        String[] problem_data_array = problem_data_string.split("\\*");
         problem_currentAnswer = new int[problem_size][problem_size];
         for (int i = 0; i < problem_size; ++i) {
             for (int j = 0; j < problem_size; ++j) {
@@ -411,6 +411,8 @@ public class DesignProblemActivity extends AppCompatActivity {
         //debug
         // 更新文字提示信息
         /*创建提示数字信息*/
+
+
         int textSize;
         if (problem_size >= 11) {
             textSize = 12;
@@ -477,6 +479,8 @@ public class DesignProblemActivity extends AppCompatActivity {
             colHintParams.bottomMargin = 0;
             relativeLayout_DP_button.addView(colHint, colHintParams);
         }
+
+
 
         /*渲染按钮颜色*/
         drawButtonsByAnswer();

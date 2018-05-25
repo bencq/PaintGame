@@ -7,13 +7,14 @@
 
 
     <ImageView
-        android:id="@+id/background_main"
+        android:id="@+id/background_startGame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/background_main"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <LinearLayout
         android:id="@+id/linearLayout_DPA_color"
@@ -111,12 +112,13 @@
         >
 
         <RadioButton
-        android:id="@+id/radioButton_DPA_white"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:button="@drawable/radio_button_style"
+            android:id="@+id/radioButton_DPA_white"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:button="@drawable/radio_button_style"
+            android:background="@drawable/radio_button_white_background"
         />
 
         <RadioButton
@@ -125,7 +127,7 @@
             android:layout_height="42dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:button="@drawable/radio_button_style" />
+            android:button="@drawable/radio_button_style_2" />
 
         <RadioButton
             android:id="@+id/radioButton_DPA_green"
@@ -141,7 +143,7 @@
             android:layout_height="42dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:button="@drawable/radio_button_style"
+            android:button="@drawable/radio_button_style_2"
             />
 
         <RadioButton
@@ -159,7 +161,7 @@
             android:layout_height="42dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:button="@drawable/radio_button_style"
+            android:button="@drawable/radio_button_style_2"
             />
 
         <RadioButton

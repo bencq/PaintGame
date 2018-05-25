@@ -9,6 +9,8 @@
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="5dp"
     >
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -19,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             app:cardCornerRadius="5dp"
+            app:cardElevation="5dp"
             >
 
             <com.example.deep.paintgame.view.SquareImageView
@@ -43,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
+                app:cardElevation="5dp"
                 >
 
                 <TextView
@@ -61,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:layout_margin="1dp"
+                app:cardElevation="5dp"
                 >
 
                 <TextView

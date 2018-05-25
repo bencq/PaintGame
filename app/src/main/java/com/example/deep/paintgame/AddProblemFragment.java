@@ -51,7 +51,7 @@ public class AddProblemFragment extends Fragment{
                 if(resultCode == RESULT_OK)
                 {
                     Log.d(TAG, "onActivityResult: " + "add notify pic suc");
-                    activity.problemList.add(new Problem(str_name,size,null,R.drawable.questionmark_small));
+                    activity.problemList.add(new Problem(str_name,size,null,R.drawable.question_mark));
                     activity.pim_adapter.notifyItemChanged(activity.problemList.size() - 1);
                 }
                 break;
@@ -189,7 +189,7 @@ public class AddProblemFragment extends Fragment{
             public void onClick(DialogInterface dialogInterface, int i) {
                 //调用按钮的onClick函数防止BUG
                 PIM_Adapter.ViewHolder viewHolder = (PIM_Adapter.ViewHolder) activity.recyclerView_MP.findViewHolderForAdapterPosition(position);
-                viewHolder.button_PIM_edit.callOnClick();
+                viewHolder.imageButton_PIM_edit.callOnClick();
             }
         });
 
