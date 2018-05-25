@@ -151,8 +151,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(intent);
+                        //debug
+                        //Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        //startActivity(intent);
                     }
 
                     @Override
@@ -184,10 +185,10 @@ public class MainActivity extends AppCompatActivity {
             //题目数据
             String problemData[] =
                     {
-                            "04040400#04040400#44444444#04040400#04040400#04444440#04444440#04444440#",
-                            "4444444444#4444444444#4444444444#4444444444#4444444444#0000000000#0000000000#0000000000#0000000000#0000000000#",
-                            "040404#040404#040404#040404#040404#040404#",
-                            "040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#040440400440#"
+                            "04040400*04040400*44444444*04040400*04040400*04444440*04444440*04444440*",
+                            "4444444444*4444444444*4444444444*4444444444*4444444444*0000000000*0000000000*0000000000*0000000000*0000000000*",
+                            "040404*040404*040404*040404*040404*040404*",
+                            "040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*"
                     };
 
 
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             StringBuilder stringBuilder = new StringBuilder();
 
             for (String problemName : problemNames) {
-                stringBuilder.append(problemName).append("#");
+                stringBuilder.append(problemName).append("*");
             }
             editor.putString("problemNames",stringBuilder.toString());
             editor.putBoolean("isFirstTimeRunApp",false);//debug

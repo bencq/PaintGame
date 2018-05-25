@@ -9,6 +9,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -41,11 +42,10 @@ public class PlayGameActivity extends AppCompatActivity {
     public static final int PANE_BLACK = 5;
     public static final int PANE_YELLOW = 6;
 
-    public static final int IS_FINISHED_TRUE = 1;
-    public static final int IS_FINISHED_FALSE = 0;
+    public static final int SOURCE_LOCAL = 0;
+    public static final int SOURCE_NETWORK = 1;
 
     public static final int[] RAW_SOUND_EFFECT = {R.raw.soundeffect_brush, R.raw.soundeffect_broken,R.raw.soundeffect_wrong,R.raw.soundeffect_hint};
-
 
 
     //
@@ -55,6 +55,9 @@ public class PlayGameActivity extends AppCompatActivity {
 
     private int problem_size; // 当前题目的尺寸大小
     private String problem_name; // 当前题目的名字
+    private String problem_data; // 题目数据
+    private int problem_source; // 题目来源
+
     private boolean isFinish = false; // 玩家是否完成当前题目
 
     private int totalCorrectCount = 0;//总的需要涂色的方块
@@ -118,10 +121,6 @@ public class PlayGameActivity extends AppCompatActivity {
 
 
 
-        //获取Intent传递信息
-        Intent intent = getIntent();
-        problem_name = intent.getStringExtra("name");
-        problem_size = intent.getIntExtra("size", 0);
 
         //开始游戏
         createGame();
@@ -287,11 +286,54 @@ public class PlayGameActivity extends AppCompatActivity {
 
         /*初始化游戏属性*/
 
-        // 获取题目数据
-        SharedPreferences sharedPreferences = getSharedPreferences("problem_" + problem_name, MODE_PRIVATE);
-        problem_size = sharedPreferences.getInt("size", 0);
-        String problem_data_string = sharedPreferences.getString("data", "");
-        if (problem_size == 0 || problem_data_string.equals("")) {
+
+        //获取Intent传递信息
+
+
+
+        //判断题目来源
+        Intent intent = getIntent();
+        problem_source = intent.getIntExtra("source",-1);
+        problem_name = intent.getStringExtra("name");
+
+
+        switch (problem_source)
+        {
+            case SOURCE_LOCAL:
+
+                // 获取题目数据
+                SharedPreferences sharedPreferences = getSharedPreferences("problem_" + problem_name, MODE_PRIVATE);
+
+                problem_size = sharedPreferences.getInt("size", 0);
+                problem_data = sharedPreferences.getString("data", "");
+
+                break;
+            case SOURCE_NETWORK:
+
+                problem_size = intent.getIntExtra("size", 0);
+                problem_data = intent.getStringExtra("data");
+
+                break;
+
+            default:
+
+                Toast.makeText(PlayGameActivity.this,"似乎出了点问题",Toast.LENGTH_SHORT).show();
+                finish();
+
+                break;
+        }
+        Log.d(TAG, "createGame: " + "problem_source: " + problem_source);
+        Log.d(TAG, "createGame: " + "problem_name: " + problem_name);
+        Log.d(TAG, "createGame: " + "problem_size: " + problem_size);
+        Log.d(TAG, "createGame: " + "problem_data: " + problem_data);
+
+
+
+
+
+
+
+        if (problem_size == 0 || TextUtils.isEmpty(problem_data)) {
             Toast.makeText(PlayGameActivity.this, "读取题目数据失败！", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -302,7 +344,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
 
         // 处理题目数据
-        String[] problem_data_array = problem_data_string.split("#");
+        String[] problem_data_array = problem_data.split("\\*");
         problem_rightAnswer = new int[problem_size][problem_size];
         problem_currentAnswer = new int[problem_size][problem_size];
         for (int i = 0; i < problem_size; ++i) {

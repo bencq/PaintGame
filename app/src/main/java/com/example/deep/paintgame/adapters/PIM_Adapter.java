@@ -80,7 +80,7 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder>{
                             for(int j = 0; j < problemList.size(); ++j)
                             {
                                 Problem problem_append = problemList.get(j);
-                                stringBuilder.append(problem_append.getName()).append("#");
+                                stringBuilder.append(problem_append.getName()).append("*");
                             }
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("problemNames",stringBuilder.toString());

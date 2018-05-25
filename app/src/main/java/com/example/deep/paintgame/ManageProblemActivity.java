@@ -135,7 +135,7 @@ public class ManageProblemActivity extends AppCompatActivity {
         {
             if(!problemNames.equals(""))
             {
-                String names[] = problemNames.split("#");
+                String names[] = problemNames.split("\\*");
                 int problemCount = names.length;
                 problemList = new ArrayList<>(problemCount);
                 for(int i = 0; i < problemCount; ++i)
