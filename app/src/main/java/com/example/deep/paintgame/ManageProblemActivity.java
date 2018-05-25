@@ -135,7 +135,7 @@ public class ManageProblemActivity extends AppCompatActivity {
         {
             if(!problemNames.equals(""))
             {
-                String names[] = problemNames.split("#");
+                String names[] = problemNames.split("\\*");
                 int problemCount = names.length;
                 problemList = new ArrayList<>(problemCount);
                 for(int i = 0; i < problemCount; ++i)
@@ -160,5 +160,10 @@ public class ManageProblemActivity extends AppCompatActivity {
             finish();
         }
         return problemList;
+    }
+
+    public void showToast(CharSequence text, int duration)
+    {
+        Toast.makeText(ManageProblemActivity.this,text,duration).show();
     }
 }

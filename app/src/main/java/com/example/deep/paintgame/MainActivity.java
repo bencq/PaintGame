@@ -2,10 +2,12 @@ package com.example.deep.paintgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +16,10 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 
+import com.example.deep.paintgame.utils.SHA1;
+
+import java.util.Date;
+import java.util.Random;
 import java.util.Timer;
 
 
@@ -21,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    static MediaPlayer mediaPlayer;
 
     public static final String KEY_MUSIC_RADIO = "key_musicRadio";
     public static final String KEY_MUSIC_SWITCH = "key_musicSwitch";
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         imageButton_main_StartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animation animation_alpha = new AlphaAnimation(0.1f,1.0f);
+                Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
                 animation_alpha.setRepeatMode(Animation.REVERSE);
@@ -74,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Animation animation_alpha = new AlphaAnimation(0.1f,1.0f);
+                Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
                 animation_alpha.setRepeatMode(Animation.REVERSE);
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                Animation animation_alpha = new AlphaAnimation(0.1f,1.0f);
+                Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
                 animation_alpha.setRepeatMode(Animation.REVERSE);
@@ -171,15 +176,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     //初始化游戏数据 完成后将该函数debug处putBoolean 改为false
-    public void dealFirstTimeRunApp()
-    {
+    public void dealFirstTimeRunApp() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        boolean isFirstTimeRunApp = sharedPreferences.getBoolean("isFirstTimeRunApp",true);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        boolean isFirstTimeRunApp = sharedPreferences.getBoolean("isFirstTimeRunApp", true);
         Log.d(TAG, "dealFirstTimeRunApp: " + "isFirstTimeRunApp: " + isFirstTimeRunApp);
 
         //第一次启动程序
-        if(isFirstTimeRunApp)
-        {
+        if (isFirstTimeRunApp) {
+
+            //生成sha-1
+            Date date = new Date();
+            Random random = new Random();
+            int random_number = random.nextInt();
+
+            String identity = SHA1.encode(String.valueOf(date) + random_number);
+            Log.d(TAG, "dealFirstTimeRunApp: " + "identity: " + identity);
+            editor.putString("identity",identity);
+            editor.apply();
+
+
+
             //题目名
             String problemNames[] = {"test","origin_1","origin_2","origin_3"};
             //题目尺寸
@@ -195,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
 
 
             //处理题目名字放到SP中
-            SharedPreferences.Editor editor = sharedPreferences.edit();
             StringBuilder stringBuilder = new StringBuilder();
 
             for (String problemName : problemNames) {

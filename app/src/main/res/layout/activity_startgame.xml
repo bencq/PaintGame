@@ -4,8 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton_StartGame_getProblemFromWeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:src="@android:drawable/btn_star_big_on"
+        />
+
     <ImageView
-        android:id="@+id/background_main"
+        android:id="@+id/background_startGame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"

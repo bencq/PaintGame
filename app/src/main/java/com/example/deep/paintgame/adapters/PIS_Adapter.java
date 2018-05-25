@@ -53,6 +53,7 @@ public class PIS_Adapter extends RecyclerView.Adapter<PIS_Adapter.ViewHolder>{
                 Problem problem = problemList.get(position);
                 intent.putExtra("name",problem.getName());
                 intent.putExtra("size",problem.getSize());
+                intent.putExtra("source",PlayGameActivity.SOURCE_LOCAL);
                 parent.getContext().startActivity(intent);
             }
         });
