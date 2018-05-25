@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         imageButton_main_GameHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //debug
-                // 启动游戏帮助Activity
+                Intent intent = new Intent(MainActivity.this, GameHelpActivity.class);
+                startActivity(intent);
             }
         });
 

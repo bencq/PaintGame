@@ -23,7 +23,8 @@
         <activity android:name=".PlayGameActivity" />
         <activity android:name=".deprecated.AddProblemActivity" />
         <activity android:name=".DesignProblemActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".GameHelpActivity"></activity>
     </application>
 
 </manifest>
