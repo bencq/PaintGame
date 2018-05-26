@@ -22,6 +22,7 @@
         android:id="@+id/button_front"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginBottom="68dp"
         android:background="@drawable/left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -30,6 +31,7 @@
         android:id="@+id/button_next"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginBottom="68dp"
         android:background="@drawable/right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
