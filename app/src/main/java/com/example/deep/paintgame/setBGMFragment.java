@@ -144,10 +144,6 @@ public class SetBGMFragment extends Fragment {
         {
             if(PlayGameActivity.mediaPlayer != null)
             {
-                if(PlayGameActivity.mediaPlayer.isPlaying())
-                {
-                    PlayGameActivity.mediaPlayer.stop();
-                }
                 PlayGameActivity.mediaPlayer.release();
             }
             PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[musicRadio]);
@@ -288,10 +284,6 @@ public class SetBGMFragment extends Fragment {
                     }
                     if(PlayGameActivity.mediaPlayer != null)
                     {
-                        if(PlayGameActivity.mediaPlayer.isPlaying())
-                        {
-                            PlayGameActivity.mediaPlayer.stop();
-                        }
                         PlayGameActivity.mediaPlayer.release();
                     }
                     PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[music_number]);
