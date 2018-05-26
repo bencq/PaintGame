@@ -157,87 +157,107 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-                new Thread() {
+
+                final int position = viewHolder.getAdapterPosition();
+                final Problem problem = problemList.get(position);
+
+
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("确认要上传 " + problem.getName() + " ?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "确认", new DialogInterface.OnClickListener() {
                     @Override
-                    public void run() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-
-                        final int position = viewHolder.getAdapterPosition();
-                        final Problem problem = problemList.get(position);
-
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-                        String identity = sharedPreferences.getString("identity","");
-                        if (identity.equals(""))
-                        {
-                            identity = "No id";
-                        }
-
-
-                        FormBody formBody = new FormBody.Builder()
-                                .add("name",problem.getName())
-                                .add("size", String.valueOf(problem.getSize()))
-                                .add("data",problem.getData())
-                                .add("identity",identity)
-                                .build();
-
-                        OkHttpClient okHttpClient = new OkHttpClient();
-
-
-                        Request request = new Request.Builder()
-                                .url(URL_UPLOAD_PROBLEM)
-                                .put(formBody)
-                                .build();
-
-
-                        okHttpClient.newCall(request).enqueue(new Callback() {
+                        Thread getNetworkProblem = new Thread() {
                             @Override
-                            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                Log.d(TAG, "onFailure: ");
-                                Toast.makeText(context,"发送请求失败!",Toast.LENGTH_SHORT).show();
-                                e.printStackTrace();
-                            }
-                            
-                            
-                            @Override
-                            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                            public void run() {
 
-                                Looper.prepare();
-
-                                Log.d(TAG, "onResponse: ");
-                                String bodyString = response.body().string();
-                                try
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                                String identity = sharedPreferences.getString("identity","");
+                                if (identity.equals(""))
                                 {
-                                    JSONObject jsonObject_all = new JSONObject(bodyString);
-                                    int errCode = jsonObject_all.getInt("errcode");
-                                    String errMsg = jsonObject_all.getString("errmsg");
-                                    Log.d(TAG, "onResponse: " + "errCode: " + errCode);
-                                    Log.d(TAG, "onResponse: " + "errMsg: " + errMsg);
-                                    if(jsonObject_all.has("data"))
-                                    {
-                                        Object object = jsonObject_all.get("data");
-
-                                        Log.d(TAG, "onResponse: " + "respString: " + object);
-                                    }
-                                    if(errCode != 0 || !errMsg.equals(""))
-                                    {
-                                        Log.d(TAG, "onResponse: " + "题目上传失败!" + "\n返回信息: " + errMsg);
-                                        Toast.makeText(context,"题目上传失败!" + "\n返回信息: " + errMsg,Toast.LENGTH_SHORT).show();
-                                    }
-                                    else
-                                    {
-                                        Log.d(TAG, "onResponse: " + "题目 " + problem.getName() + " 上传成功!");
-                                        Toast.makeText(context,"题目 " + problem.getName() + " 上传成功!",Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    Looper.loop();
+                                    identity = "No id";
                                 }
-                                catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+
+
+                                FormBody formBody = new FormBody.Builder()
+                                        .add("name",problem.getName())
+                                        .add("size", String.valueOf(problem.getSize()))
+                                        .add("data",problem.getData())
+                                        .add("identity",identity)
+                                        .build();
+
+                                OkHttpClient okHttpClient = new OkHttpClient();
+
+
+                                Request request = new Request.Builder()
+                                        .url(URL_UPLOAD_PROBLEM)
+                                        .put(formBody)
+                                        .build();
+
+
+                                okHttpClient.newCall(request).enqueue(new Callback() {
+                                    @Override
+                                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                        Log.d(TAG, "onFailure: ");
+                                        Toast.makeText(context,"发送请求失败!",Toast.LENGTH_SHORT).show();
+                                        e.printStackTrace();
+                                    }
+
+
+                                    @Override
+                                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+                                        Looper.prepare();
+
+                                        Log.d(TAG, "onResponse: ");
+                                        String bodyString = response.body().string();
+                                        try
+                                        {
+                                            JSONObject jsonObject_all = new JSONObject(bodyString);
+                                            int errCode = jsonObject_all.getInt("errcode");
+                                            String errMsg = jsonObject_all.getString("errmsg");
+                                            Log.d(TAG, "onResponse: " + "errCode: " + errCode);
+                                            Log.d(TAG, "onResponse: " + "errMsg: " + errMsg);
+                                            if(jsonObject_all.has("data"))
+                                            {
+                                                Object object = jsonObject_all.get("data");
+
+                                                Log.d(TAG, "onResponse: " + "respString: " + object);
+                                            }
+                                            if(errCode != 0 || !errMsg.equals(""))
+                                            {
+                                                Log.d(TAG, "onResponse: " + "题目上传失败!" + "\n返回信息: " + errMsg);
+                                                Toast.makeText(context,"题目上传失败!" + "\n返回信息: " + errMsg,Toast.LENGTH_SHORT).show();
+                                            }
+                                            else
+                                            {
+                                                Log.d(TAG, "onResponse: " + "题目 " + problem.getName() + " 上传成功!");
+                                                Toast.makeText(context,"题目 " + problem.getName() + " 上传成功!",Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            Looper.loop();
+                                        }
+                                        catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
-                        });
+                        };
+
+                        getNetworkProblem.start();
                     }
-                }.start();
+                });
+
+                alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alertDialog.show();
+
 
             }
         });

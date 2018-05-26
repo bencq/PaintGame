@@ -14,7 +14,7 @@ import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
     static MediaPlayer mediaPlayer;
-    static Boolean soundEffect=false;
+    static Boolean soundEffect = false;
     RadioGroup radioGroup_SA_music1;
     RadioGroup radioGroup_SA_music2;
     int music_Number=6;

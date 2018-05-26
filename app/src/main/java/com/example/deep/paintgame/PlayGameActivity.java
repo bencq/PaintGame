@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationSet;
@@ -54,6 +55,9 @@ public class PlayGameActivity extends AppCompatActivity {
     int[] musicId;
     SoundPool soundPool;
 
+    public float volume_soundEffect = 1.0f;
+    public float volume_BGM = 1.0f;
+
     private int problem_size; // 当前题目的尺寸大小
     private String problem_name; // 当前题目的名字
     private String problem_data; // 题目数据
@@ -76,6 +80,7 @@ public class PlayGameActivity extends AppCompatActivity {
     private int time_second = 0; // 游戏时间的秒数
     private ImageButton imageButton_playGame_knock; // 敲打按钮对象
     private ImageButton imageButton_playGame_mark;  // 绘图按钮对象
+    private ImageButton imageButton_gotoSettings; //音乐设置按钮
     private TextView textView_errorCountNumber; // 错误数字文字对象
     private TextView textView_remainCountNumber; //剩余空白数
     private TextView textView_playGame_TotalCorrectNumber;
@@ -103,15 +108,16 @@ public class PlayGameActivity extends AppCompatActivity {
         textView_playGame_TotalCorrectNumber = findViewById(R.id.textView_playGame_TotalCorrectNumber);
         textView_time = findViewById(R.id.textView_playGame_TimeNumber);
 
-        drawerLayoutPG=(DrawerLayout)findViewById(R.id.drawerLayout_PG);
-        Button bttest=(Button)findViewById(R.id.gotosettings);
+        drawerLayoutPG = findViewById(R.id.drawerLayout_PG);
+        imageButton_gotoSettings = findViewById(R.id.imageButton_gotoSettings);
 
-        bttest.setOnClickListener(new View.OnClickListener() {
+        imageButton_gotoSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayoutPG.openDrawer(GravityCompat.END);
             }
         });
+
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(PlayGameActivity.this);
@@ -582,7 +588,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED ||
                                                 problem_currentAnswer[rowNumber][colNumber] == PANE_ERROR) {
                                             if(SettingsActivity.soundEffect)
-                                            soundPool.play(musicId[3],1,1, 0, 0, 1);
+                                            soundPool.play(musicId[3],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                         }
                                         break;
                                     }
@@ -594,7 +600,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         textView_remainCountNumber.setText(String.valueOf(remainCount)) ;
 
                                         if(SettingsActivity.soundEffect)
-                                        soundPool.play(musicId[1],1,1, 0, 0, 1);
+                                        soundPool.play(musicId[1],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     else
                                     {
@@ -612,7 +618,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         String errorCountString = Integer.toString(errorCount);
                                         textView_errorCountNumber.setText(errorCountString);
                                         if(SettingsActivity.soundEffect)
-                                        soundPool.play(musicId[2],1,1, 0, 0, 1);
+                                        soundPool.play(musicId[2],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     break;
                                 case PANE_DEFAULT:
@@ -630,7 +636,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_DEFAULT;
                                         if(SettingsActivity.soundEffect)
-                                        soundPool.play(musicId[0],1,1, 0, 0, 1);
+                                        soundPool.play(musicId[0],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     break;
                                 default:

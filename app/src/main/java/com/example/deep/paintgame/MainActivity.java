@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton imageButton_main_StartGame = findViewById(R.id.imageButton_main_StartGame);
         final ImageButton imageButton_main_ManageProblem = findViewById(R.id.imageButton_main_ManageProblem);
         final ImageButton imageButton_main_GameHelp = findViewById(R.id.imageButton_main_GameHelp);
-        final ImageButton imageButton_main_Settings = findViewById(R.id.imageButton_main_Settings);
+        //final ImageButton imageButton_main_Settings = findViewById(R.id.imageButton_main_Settings);
 
         dealFirstTimeRunApp();
 
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         imageButton_main_Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,7 +175,9 @@ public class MainActivity extends AppCompatActivity {
                 imageButton_main_Settings.startAnimation(animation_alpha);
             }
         });
+        */
     }
+
 
 
     //初始化游戏数据 完成后将该函数debug处putBoolean 改为false

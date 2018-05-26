@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="70dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -36,31 +36,32 @@
         android:id="@+id/imageButton_main_StartGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/button_startgame"
         android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton_main_ManageProblem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_main_title"
         app:srcCompat="@drawable/button_startgame" />
 
     <ImageButton
         android:id="@+id/imageButton_main_ManageProblem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/button_manageproblem"
         android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton_main_Settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_main_StartGame"
         app:srcCompat="@drawable/button_manageproblem" />
 
-    <ImageButton
+    <!--ImageButton
+        android:visibility="gone"
         android:id="@+id/imageButton_main_Settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,7 +73,7 @@
         app:layout_constraintBottom_toTopOf="@+id/imageButton_main_GameHelp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/button_setting" />
+        app:srcCompat="@drawable/button_setting" /-->
 
     <ImageButton
         android:id="@+id/imageButton_main_GameHelp"
@@ -80,12 +81,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/button_gamehelp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_main_title"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_main_ManageProblem"
         app:srcCompat="@drawable/button_gamehelp" />
 
 </android.support.constraint.ConstraintLayout>

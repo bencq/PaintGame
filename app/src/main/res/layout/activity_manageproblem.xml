@@ -6,11 +6,12 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/background_startGame"
+        android:id="@+id/background_MP"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/background_main" />
+        android:src="@drawable/background_main"
+        android:contentDescription="background" />
 
     <FrameLayout
         android:orientation="vertical"
@@ -46,6 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        android:focusable="true"
+        android:clickable="true"
         />
 
 

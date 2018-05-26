@@ -2,18 +2,21 @@ package com.example.deep.paintgame;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Switch;
 
 
@@ -30,17 +33,22 @@ public class SetBGMFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     // TODO: Rename and change types of parameters
-    static boolean soundEffect=false;
+    static boolean soundEffect = false;
     RadioGroup radioGroup_SA_music1;
     RadioGroup radioGroup_SA_music2;
-    int music_Number=6;
-    static int music_no=0;
+    int music_Number = 6;
+    static int music_no = 0;
     RadioButton[]radioButton_SA_music_List=new RadioButton[6];
     Switch switch_SA_music;
     Switch switch_sound_effect;
+
+    SeekBar seekBar_BGM;
+    SeekBar seekBar_soundEffect;
+
+
     public static final int[] music_raw = {-1 ,R.raw.bgm_soccer,R.raw.bgm_karma,R.raw.bgm_zelda,R.raw.bgm_zeldaa,R.raw.bgm_quweigongfang,R.raw.bgm_heilmittel};
 
-    static int musicRadio=1;
+    static int musicRadio = 1;
 
     private PlayGameActivity activity;
     private OnFragmentInteractionListener mListener;
@@ -87,8 +95,10 @@ public class SetBGMFragment extends Fragment {
         radioButton_SA_music_List[5] = view.findViewById(R.id.radioButton_SA_music6_f);
         switch_SA_music = view.findViewById(R.id.switch_SA_music_f);
         switch_sound_effect = view.findViewById(R.id.switch_sound_effect_f);
+        seekBar_BGM = view.findViewById(R.id.seekBar_BGM);
+        seekBar_soundEffect = view.findViewById(R.id.seekBar_soundEffect);
 
-
+        view.setClickable(true);
         return view;
     }
 
@@ -105,6 +115,12 @@ public class SetBGMFragment extends Fragment {
         //获取Activity
         activity = (PlayGameActivity)getActivity();
 
+
+        //
+        seekBar_soundEffect.setProgress(100);
+        seekBar_BGM.setProgress(100);
+
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 
         final SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -112,7 +128,7 @@ public class SetBGMFragment extends Fragment {
         musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
 
         SettingsActivity.soundEffect=sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, false);
-        music_no=musicRadio;
+        music_no = musicRadio;
         switch_SA_music.setChecked(musicSwitch);
         switch_sound_effect.setChecked(SettingsActivity.soundEffect);
         if(!musicSwitch)
@@ -126,11 +142,12 @@ public class SetBGMFragment extends Fragment {
         radioButton_SA_music_List[musicRadio-1].setChecked(true);
         if(musicSwitch)
         {
-            if(PlayGameActivity.mediaPlayer !=null)
+            if(PlayGameActivity.mediaPlayer != null)
             {
                 PlayGameActivity.mediaPlayer.stop();
             }
             PlayGameActivity.mediaPlayer =MediaPlayer.create(activity, music_raw[musicRadio]);
+            PlayGameActivity.mediaPlayer.setLooping(true);
             PlayGameActivity.mediaPlayer.start();
 
         }
@@ -146,6 +163,7 @@ public class SetBGMFragment extends Fragment {
                     PlayGameActivity.mediaPlayer.stop();
                 }
                 PlayGameActivity.mediaPlayer =MediaPlayer.create(activity, music_raw[1]);
+                PlayGameActivity.mediaPlayer.setLooping(true);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,1);
                 editor.apply();
@@ -161,6 +179,7 @@ public class SetBGMFragment extends Fragment {
                     PlayGameActivity.mediaPlayer.stop();
                 }
                 PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[2]);
+                PlayGameActivity.mediaPlayer.setLooping(true);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,2);
                 editor.apply();
@@ -176,6 +195,7 @@ public class SetBGMFragment extends Fragment {
                     PlayGameActivity.mediaPlayer.stop();
                 }
                 PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[3]);
+                PlayGameActivity.mediaPlayer.setLooping(true);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,3);
                 editor.apply();
@@ -191,6 +211,7 @@ public class SetBGMFragment extends Fragment {
                     PlayGameActivity.mediaPlayer.stop();
                 }
                 PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[4]);
+                PlayGameActivity.mediaPlayer.setLooping(true);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,4);
                 editor.apply();
@@ -206,6 +227,7 @@ public class SetBGMFragment extends Fragment {
                     PlayGameActivity.mediaPlayer.stop();
                 }
                 PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[5]);
+                PlayGameActivity.mediaPlayer.setLooping(true);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,5);
                 editor.apply();
@@ -221,6 +243,7 @@ public class SetBGMFragment extends Fragment {
                     PlayGameActivity.mediaPlayer.stop();
                 }
                 PlayGameActivity.mediaPlayer=MediaPlayer.create(activity, music_raw[6]);
+                PlayGameActivity.mediaPlayer.setLooping(true);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,6);
                 editor.apply();
@@ -236,6 +259,7 @@ public class SetBGMFragment extends Fragment {
                         radioButton_SA_music_List[i].setEnabled(true);
                     }
                     PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[music_no]);
+                    PlayGameActivity.mediaPlayer.setLooping(true);
                     PlayGameActivity.mediaPlayer.start();
                     editor.putBoolean(MainActivity.KEY_MUSIC_SWITCH,true);
                     editor.apply();
@@ -276,6 +300,44 @@ public class SetBGMFragment extends Fragment {
                 }
             }
         });
+
+        seekBar_BGM.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                activity.volume_BGM = (float)(i) / 100;
+                PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        seekBar_soundEffect.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                activity.volume_soundEffect = (float)(i) / 100;
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
 
 
 

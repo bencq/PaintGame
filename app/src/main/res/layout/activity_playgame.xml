@@ -19,8 +19,9 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/background_main"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="backgroud" />
 
     <TextView
         android:id="@+id/textView_playGame_TotalCorrectNumber"
@@ -70,17 +71,18 @@
         app:layout_constraintStart_toEndOf="@+id/textView_playGame_RemainCount" />
 
 
-        <ImageButton
-            android:id="@+id/imageButton_playGame_knock"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/shovel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/imageButton_playGame_knock"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/shovel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="knock" />
 
     <ImageButton
         android:id="@+id/imageButton_playGame_mark"
@@ -93,52 +95,53 @@
         android:text="标记"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="100dp" />
-
-    <TextView
-        android:id="@+id/textView_playGame_RemainCount"
-        android:layout_width="108dp"
-        android:layout_height="32dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:text="余空白："
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_playGame_ErrorCount"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="16dp" />
+        android:layout_marginRight="100dp"
+        android:contentDescription="mark" />
 
         <TextView
-            android:id="@+id/textView_playGame_ErrorCount"
+            android:id="@+id/textView_playGame_RemainCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp"
-            android:text="错误数："
+            android:text="余空白："
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/textView_playGame_ErrorCount"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="16dp" />
 
     <TextView
-        android:id="@+id/textView_playGame_TotalCorrect"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:id="@+id/textView_playGame_ErrorCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="92dp"
-        android:text="总色块："
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="错误数："
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_playGame_Time"
-        app:layout_constraintStart_toEndOf="@+id/textView_playGame_RemainCount"
-        android:layout_marginLeft="92dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_playGame_TotalCorrect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="92dp"
+            android:text="总色块："
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/textView_playGame_Time"
+            app:layout_constraintStart_toEndOf="@+id/textView_playGame_RemainCount"
+            android:layout_marginLeft="92dp" />
 
     <TextView
         android:id="@+id/textView_playGame_Time"
@@ -155,14 +158,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_playGame_ErrorCount" />
 
-        <Button
-            android:id="@+id/gotosettings"
-            android:layout_width="73dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="设置"
-            tools:layout_editor_absoluteX="295dp"
-            tools:layout_editor_absoluteY="16dp" />
+        <ImageButton
+            android:id="@+id/imageButton_gotoSettings"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:background="#00ffffff"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_music"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout_playGame_button"
@@ -181,17 +188,20 @@
         app:layout_constraintVertical_weight="1"
         >
 
-
     </RelativeLayout>
 
-
     </android.support.constraint.ConstraintLayout>
-<fragment
-    android:id="@+id/fragment_set_bgm"
-    android:name="com.example.deep.paintgame.SetBGMFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="end">
 
-</fragment>
+    <fragment
+        android:id="@+id/fragment_set_bgm"
+        android:name="com.example.deep.paintgame.SetBGMFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:focusable="true"
+        android:clickable="true"
+        >
+
+    </fragment>
+
 </android.support.v4.widget.DrawerLayout>

@@ -85,6 +85,8 @@ public class AddProblemFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.fragment_add_problem, container, false);
 
         //初始化组件
@@ -95,6 +97,7 @@ public class AddProblemFragment extends Fragment{
         editText_MPF_name = view.findViewById(R.id.editText_MPF_name);
         editText_MPF_size = view.findViewById(R.id.editText_MPF_size);
 
+        view.setClickable(true);
         return view;
     }
 

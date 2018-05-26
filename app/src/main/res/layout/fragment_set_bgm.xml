@@ -1,30 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SetBGMFragment">
+    tools:context=".SetBGMFragment"
+    >
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#9fffffff"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
 
+    <LinearLayout
+        android:id="@+id/linearLayout_SBGMF_seekBar_soundEffect"
+        android:layout_width="match_parent"
+        android:layout_height="80dip"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout_SBGMF_soundEffect"
+        >
+
+        <SeekBar
+            android:id="@+id/seekBar_soundEffect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dip"
+            android:layout_marginStart="40dip"
+            android:layout_marginRight="40dip"
+            android:layout_marginEnd="40dip"
+
+            />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_SBGMF_soundEffect"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dip"
+
         android:gravity="center"
-        android:layout_marginTop="150dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteY="300dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dip"
+            android:gravity="center"
+            tools:layout_editor_absoluteY="300dip">
+
+            <TextView
+                android:layout_width="178dip"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColor="@color/colorAccent"
+                android:text="音效"
+                android:textStyle="bold"
+                android:layout_marginStart="10dip" />
+
+            <Switch
+                android:id="@+id/switch_sound_effect_f"
+
+                android:layout_width="wrap_content"
+                android:layout_height="20dip"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_SBGMF_BGM"
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:gravity="center"
+        android:layout_marginTop="250dip"
+        tools:layout_editor_absoluteX="0dip"
+        tools:layout_editor_absoluteY="0dip">
 
         <LinearLayout
             android:id="@+id/linearLayout_SA_defaultMusic_f"
@@ -38,10 +87,12 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="178dp"
+                    android:layout_width="178dip"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="24sp"
                     android:text="背景音乐"
                     android:textStyle="bold" />
 
@@ -73,26 +124,29 @@
                         android:id="@+id/radioButton_SA_music1_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dip"
+                        android:layout_marginRight="20dip"
+                        android:textColor="@color/colorAccent"
                         android:text="1" />
 
                     <RadioButton
                         android:id="@+id/radioButton_SA_music2_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="20dip"
+                        android:layout_marginRight="20dip"
+                        android:layout_marginTop="40dip"
+                        android:textColor="@color/colorAccent"
                         android:text="2" />
 
                     <RadioButton
                         android:id="@+id/radioButton_SA_music3_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="20dip"
+                        android:layout_marginRight="20dip"
+                        android:layout_marginTop="40dip"
+                        android:textColor="@color/colorAccent"
                         android:text="3" />
                 </RadioGroup>
 
@@ -108,26 +162,29 @@
                         android:id="@+id/radioButton_SA_music4_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dip"
+                        android:layout_marginRight="20dip"
+                        android:textColor="@color/colorAccent"
                         android:text="4" />
 
                     <RadioButton
                         android:id="@+id/radioButton_SA_music5_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="20dip"
+                        android:layout_marginRight="20dip"
+                        android:layout_marginTop="40dip"
+                        android:textColor="@color/colorAccent"
                         android:text="5" />
 
                     <RadioButton
                         android:id="@+id/radioButton_SA_music6_f"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="20dip"
+                        android:layout_marginRight="20dip"
+                        android:layout_marginTop="40dip"
+                        android:textColor="@color/colorAccent"
                         android:text="6" />
 
                 </RadioGroup>
@@ -138,35 +195,24 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_SBGMF_seekBar_BGM"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dip"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout_SBGMF_BGM"
+        >
 
-        android:gravity="center"
-        tools:layout_editor_absoluteY="300dp">
-
-        <LinearLayout
+        <SeekBar
+            android:id="@+id/seekBar_BGM"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            tools:layout_editor_absoluteY="300dp">
+            android:layout_marginLeft="40dip"
+            android:layout_marginStart="40dip"
+            android:layout_marginRight="40dip"
+            android:layout_marginEnd="40dip"
+            />
 
-            <TextView
-                android:layout_width="178dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:text="音效"
-                android:textStyle="bold" />
-
-            <Switch
-                android:id="@+id/switch_sound_effect_f"
-
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_weight="1" />
-        </LinearLayout>
     </LinearLayout>
 
 
-</FrameLayout>
+</RelativeLayout>
