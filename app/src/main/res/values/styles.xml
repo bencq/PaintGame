@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--Finish dialog-->
+    <style name="LocatonDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item> <!-- 背景透明 -->
+        <item name="android:windowAnimationStyle">@android:style/Theme.InputMethod</item>
+    </style>
 </resources>
