@@ -15,7 +15,6 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationSet;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.deep.paintgame.animation.Animation;
+import com.example.deep.paintgame.deprecated.SettingsActivity;
 
 
 public class PlayGameActivity extends AppCompatActivity {
@@ -52,6 +52,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
 
     static MediaPlayer mediaPlayer;
+    public static boolean soundEffect;
     int[] musicId;
     SoundPool soundPool;
 
@@ -126,9 +127,19 @@ public class PlayGameActivity extends AppCompatActivity {
         int musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
         if(musicSwitch)
         {
-            mediaPlayer = MediaPlayer.create(PlayGameActivity.this,SettingsActivity.music_raw[musicRadio]);
-            mediaPlayer.setLooping(true);
-            mediaPlayer.start();
+            if(mediaPlayer != null)
+            {
+                if(!mediaPlayer.isPlaying())
+                {
+                    mediaPlayer.start();
+                }
+            }
+            else
+            {
+                mediaPlayer = MediaPlayer.create(PlayGameActivity.this, SettingsActivity.music_raw[musicRadio]);
+                mediaPlayer.setLooping(true);
+                mediaPlayer.start();
+            }
         }
         soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 5);
 
@@ -193,8 +204,8 @@ public class PlayGameActivity extends AppCompatActivity {
             if(mediaPlayer.isPlaying())
             {
                 mediaPlayer.stop();
-                mediaPlayer.release();
             }
+            mediaPlayer.release();
         }
 
         buttons = null;
@@ -587,7 +598,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] != PANE_DEFAULT) {
                                         if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED ||
                                                 problem_currentAnswer[rowNumber][colNumber] == PANE_ERROR) {
-                                            if(SettingsActivity.soundEffect)
+                                            if(PlayGameActivity.soundEffect)
                                             soundPool.play(musicId[3],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                         }
                                         break;
@@ -599,7 +610,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         --remainCount;
                                         textView_remainCountNumber.setText(String.valueOf(remainCount)) ;
 
-                                        if(SettingsActivity.soundEffect)
+                                        if(PlayGameActivity.soundEffect)
                                         soundPool.play(musicId[1],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     else
@@ -617,7 +628,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++errorCount;
                                         String errorCountString = Integer.toString(errorCount);
                                         textView_errorCountNumber.setText(errorCountString);
-                                        if(SettingsActivity.soundEffect)
+                                        if(PlayGameActivity.soundEffect)
                                         soundPool.play(musicId[2],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     break;
@@ -629,13 +640,13 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] == PANE_DEFAULT)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_MARKED;
-                                        if(SettingsActivity.soundEffect)
+                                        if(PlayGameActivity.soundEffect)
                                         soundPool.play(musicId[0],1,1, 0, 0, 1);
                                     }
                                     else if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_DEFAULT;
-                                        if(SettingsActivity.soundEffect)
+                                        if(PlayGameActivity.soundEffect)
                                         soundPool.play(musicId[0],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     break;

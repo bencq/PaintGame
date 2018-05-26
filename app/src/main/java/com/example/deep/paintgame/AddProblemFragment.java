@@ -135,7 +135,7 @@ public class AddProblemFragment extends Fragment{
                         intent.putExtra("size", size);
                         intent.putExtra("name", str_name);
                         intent.putExtra("mode", DesignProblemActivity.MODE_ADD);
-                        startActivityForResult(intent,DesignProblemActivity.MODE_ADD);
+                        activity.startActivityForResult(intent,DesignProblemActivity.MODE_ADD);
 
                         activity.drawerLayout.closeDrawers();
                     }

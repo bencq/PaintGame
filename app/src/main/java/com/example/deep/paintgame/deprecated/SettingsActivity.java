@@ -1,6 +1,5 @@
-package com.example.deep.paintgame;
+package com.example.deep.paintgame.deprecated;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
@@ -12,6 +11,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
+import com.example.deep.paintgame.MainActivity;
+import com.example.deep.paintgame.R;
+
 public class SettingsActivity extends AppCompatActivity {
     static MediaPlayer mediaPlayer;
     static Boolean soundEffect = false;
@@ -22,7 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
     RadioButton []radioButton_SA_music_List=new RadioButton[6];
     Switch switch_SA_music;
     Switch switch_sound_effect;
-    public static final int[] music_raw = {-1 ,R.raw.bgm_soccer,R.raw.bgm_karma,R.raw.bgm_zelda,R.raw.bgm_zeldaa,R.raw.bgm_quweigongfang,R.raw.bgm_heilmittel};
+    public static final int[] music_raw = {-1 , R.raw.bgm_soccer,R.raw.bgm_karma,R.raw.bgm_zelda,R.raw.bgm_zeldaa,R.raw.bgm_quweigongfang,R.raw.bgm_heilmittel};
     @Override
     protected void onDestroy() {
         super.onDestroy();

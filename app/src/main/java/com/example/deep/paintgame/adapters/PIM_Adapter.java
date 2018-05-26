@@ -14,6 +14,7 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
@@ -178,12 +179,12 @@ public class PIM_Adapter extends RecyclerView.Adapter<PIM_Adapter.ViewHolder> {
                                 {
                                     identity = "No id";
                                 }
-
-
+                                SharedPreferences sharedPreferences_problem = context.getSharedPreferences("problem_" + problem.getName(), Context.MODE_PRIVATE);
+                                String problem_data = sharedPreferences_problem.getString("data", "");
                                 FormBody formBody = new FormBody.Builder()
                                         .add("name",problem.getName())
                                         .add("size", String.valueOf(problem.getSize()))
-                                        .add("data",problem.getData())
+                                        .add("data",problem_data)
                                         .add("identity",identity)
                                         .build();
 
