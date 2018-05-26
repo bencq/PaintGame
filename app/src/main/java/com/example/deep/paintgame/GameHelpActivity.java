@@ -41,7 +41,7 @@ public class GameHelpActivity extends AppCompatActivity {
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( picture_number != 9)
+                if( picture_number != 10)
                     picture_number++;
                 ChangePicture();
             }
@@ -75,8 +75,10 @@ public class GameHelpActivity extends AppCompatActivity {
                 imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_edit));
                 break;
             case 9:
-                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_create));
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_create_setting));
                 break;
+            case 10:
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_create));
             default:
         }
     }
