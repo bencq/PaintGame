@@ -17,6 +17,7 @@ public class Animation {
     public static final TranslateAnimation animation_swing = new TranslateAnimation(-10, 10, 0 ,0);
     public static final TranslateAnimation animation_shake_1 = new TranslateAnimation(-5, 5, 0 ,0);
     public static final TranslateAnimation animation_shake_2 = new TranslateAnimation(0, 0, -5 ,5);
+    public static final RotateAnimation animation_rotate = new RotateAnimation(-10,10,RotateAnimation.RELATIVE_TO_SELF,0.5f,RotateAnimation.RELATIVE_TO_SELF,0.5f);
 
     public static final AnimatorSet animation_shake = new AnimatorSet();
     static
@@ -35,6 +36,11 @@ public class Animation {
         animation_shake_2.setDuration(50);
         animation_shake_2.setRepeatCount(2);
         animation_shake_2.setRepeatMode(android.view.animation.Animation.REVERSE);
+
+        animation_rotate.setInterpolator(new OvershootInterpolator());
+        animation_rotate.setDuration(200);
+        animation_rotate.setRepeatCount(android.view.animation.Animation.INFINITE);
+        animation_rotate.setRepeatMode(android.view.animation.Animation.REVERSE);
 
 
         //animation_shake.playSequentially(animation_shake_1,animation_shake_2);

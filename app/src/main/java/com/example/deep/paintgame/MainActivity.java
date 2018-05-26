@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String KEY_MUSIC_SWITCH = "key_musicSwitch";
     public static final String KEY_SOUND_EFFECT="key_soundeffect";
 
+    //题目名
+    public static final String problemNames[] = {"heart","mario","tortoise","mushroom"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton imageButton_main_GameHelp = findViewById(R.id.imageButton_main_GameHelp);
         //final ImageButton imageButton_main_Settings = findViewById(R.id.imageButton_main_Settings);
 
-        dealFirstTimeRunApp();
+        dealFirstTimeRunApp(MainActivity.this);
         //checkPermission();
 
 
@@ -204,14 +207,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     //初始化游戏数据 完成后将该函数debug处putBoolean 改为false
-    public void dealFirstTimeRunApp() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+    static public void dealFirstTimeRunApp(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         boolean isFirstTimeRunApp = sharedPreferences.getBoolean("isFirstTimeRunApp", true);
         Log.d(TAG, "dealFirstTimeRunApp: " + "isFirstTimeRunApp: " + isFirstTimeRunApp);
 
         //第一次启动程序
         if (isFirstTimeRunApp) {
+
+            editor.putBoolean("isFirstTimeRunApp",false);
 
             //生成sha-1
             Date date = new Date();
@@ -223,85 +228,12 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("identity",identity);
             editor.apply();
 
-
-
-            //题目名
-            String problemNames[] = {"heart","mario","tortoise","mushroom"};
-            int drawableId[] = {R.drawable.img_heart,R.drawable.img_mario,R.drawable.img_tortoise,R.drawable.img_mushroom};
-            //题目尺寸
-            int problemSizes[] = {9,12,10,12};
-            //题目数据
-            String problemData[] =
-                    {
-                            "003000300*030303030*333333333*333333333*333333333*033333330*003333300*000333000*000030000*",
-                            "000333330000*003333333330*001116656000*016166656660*016116661666*011666611110*000666666600*003343330000*033343343330*333344443333*663634436366*666444444666*",
-                            "0000000000*0000000000*0022200222*0244420262*2422242222*2222222220*0222220000*0230230000*0000000000*0000000000*",
-                            "000336633000*003366663300*033666666330*033663366330*366633336663*336333333633*336333333633*366663366663*666151151666*011111111110*001111111100*000111111000*"
-                    };
-
-
-
-
-
-
-            //处理题目名字放到SP中
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (String problemName : problemNames) {
-                stringBuilder.append(problemName).append("*");
-            }
-            editor.putString("problemNames",stringBuilder.toString());
-            editor.putBoolean("isFirstTimeRunApp",false);//debug
-            editor.apply();
-
-
             //初始化设置
             editor.putInt(KEY_MUSIC_RADIO,4);
             editor.putBoolean(KEY_MUSIC_SWITCH,true);
             editor.putBoolean(KEY_SOUND_EFFECT,true);
 
-            //SP记录具体每个题目的数据
-
-            for (int i = 0; i < problemNames.length; ++i)
-            {
-                String name = problemNames[i];
-                SharedPreferences sharedPreferences_problem = getSharedPreferences("problem_" + name, MODE_PRIVATE);
-                SharedPreferences.Editor editor_problem = sharedPreferences_problem.edit();
-                editor_problem.putInt("size", problemSizes[i]);
-                editor_problem.putString("data", problemData[i]);
-                editor_problem.apply();
-
-                //处理题目初始图片
-
-                try {
-                    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(openFileOutput(Paths.getImageFileName(problemNames[i]),MODE_PRIVATE));
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(MainActivity.this.getResources().openRawResource(drawableId[i]));
-                    byte[] bytes = new byte[1024];
-                    Log.d(TAG, "dealFirstTimeRunApp: " + "bufferedInputStream.available(): " + bufferedInputStream.available());
-                    int len = 0;
-                    while((len = bufferedInputStream.read(bytes)) > 0)
-                    {
-                        bufferedOutputStream.write(bytes,0,len);
-                    }
-                    bufferedInputStream.close();
-                    bufferedOutputStream.flush();
-                    bufferedOutputStream.close();
-
-
-                    FileInputStream fileInputStream = openFileInput(Paths.getImageFileName(problemNames[i]));
-                    Log.d(TAG, "dealFirstTimeRunApp: " + fileInputStream.available());
-
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-
-
+            initProblems(context);
 
         }
     }
@@ -324,4 +256,96 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     */
+
+    public static void initProblems(Context context)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+        int drawableId[] = {R.drawable.img_heart,R.drawable.img_mario,R.drawable.img_tortoise,R.drawable.img_mushroom};
+        //题目尺寸
+        int problemSizes[] = {9,12,10,12};
+        //题目数据
+        String problemData[] =
+                {
+                        "003000300*030303030*333333333*333333333*333333333*033333330*003333300*000333000*000030000*",
+                        "000333330000*003333333330*001116656000*016166656660*016116661666*011666611110*000666666600*003343330000*033343343330*333344443333*663634436366*666444444666*",
+                        "0000000000*0000000000*0022200222*0244420262*2422242222*2222222220*0222220000*0230230000*0000000000*0000000000*",
+                        "000336633000*003366663300*033666666330*033663366330*366633336663*336333333633*336333333633*366663366663*666151151666*011111111110*001111111100*000111111000*"
+                };
+
+
+
+        //处理题目名字放到SP中
+        StringBuilder stringBuilder = new StringBuilder();
+
+        String existedProblemNames = sharedPreferences.getString("problemNames","");
+        String existedNames[] = existedProblemNames.split("\\*");
+
+
+        for (String problemName : problemNames) {
+            stringBuilder.append(problemName).append("*");
+        }
+        for(int i = 0; i < existedNames.length; ++i)
+        {
+            boolean defaultName = false;
+            for(int j = 0; j < MainActivity.problemNames.length; ++j)
+            {
+                if(existedNames[i].equals(MainActivity.problemNames[j]))
+                {
+                    defaultName = true;
+                    break;
+                }
+            }
+            if(!defaultName)
+            {
+                stringBuilder.append(existedNames[i]).append("*");
+            }
+        }
+        editor.putString("problemNames",stringBuilder.toString());
+        editor.apply();
+
+
+        //SP记录具体每个题目的数据
+
+        for (int i = 0; i < problemNames.length; ++i)
+        {
+            String name = problemNames[i];
+            SharedPreferences sharedPreferences_problem = context.getSharedPreferences("problem_" + name, MODE_PRIVATE);
+            SharedPreferences.Editor editor_problem = sharedPreferences_problem.edit();
+            editor_problem.putInt("size", problemSizes[i]);
+            editor_problem.putString("data", problemData[i]);
+            editor_problem.apply();
+
+            //处理题目初始图片
+
+            try {
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(context.openFileOutput(Paths.getImageFileName(problemNames[i]),MODE_PRIVATE));
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(context.getResources().openRawResource(drawableId[i]));
+                byte[] bytes = new byte[1024];
+                Log.d(TAG, "dealFirstTimeRunApp: " + "bufferedInputStream.available(): " + bufferedInputStream.available());
+                int len = 0;
+                while((len = bufferedInputStream.read(bytes)) > 0)
+                {
+                    bufferedOutputStream.write(bytes,0,len);
+                }
+                bufferedInputStream.close();
+                bufferedOutputStream.flush();
+                bufferedOutputStream.close();
+
+                    /*
+                    FileInputStream fileInputStream = openFileInput(Paths.getImageFileName(problemNames[i]));
+                    Log.d(TAG, "dealFirstTimeRunApp: " + fileInputStream.available());
+                    */
+
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
 }
