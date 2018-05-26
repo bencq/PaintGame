@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.example.deep.paintgame.utils.Paths;
 import com.example.deep.paintgame.utils.Utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -196,22 +198,24 @@ public class DesignProblemActivity extends AppCompatActivity {
                 try
                 {
                     FileOutputStream fileOutputStream = view.getContext().openFileOutput(Paths.getImageFileName(problem_name),MODE_PRIVATE);
+                    //FileOutputStream debugStream = new FileOutputStream(new File(Environment.getExternalStorageDirectory(),Paths.getImageFileName(problem_name)));
                     Bitmap bitmap = Utils.loadBitmapFromView(relativeLayout_DP_button);
                     bitmap.compress(Bitmap.CompressFormat.JPEG,50,fileOutputStream);
+                    //bitmap.compress(Bitmap.CompressFormat.JPEG,50,debugStream);
                     fileOutputStream.flush();
                     fileOutputStream.close();
+                    //debugStream.flush();
+                    //debugStream.close();
                     view.destroyDrawingCache();
-                }
-                catch (FileNotFoundException e)
-                {
-                    e.printStackTrace();
+                    Toast.makeText(DesignProblemActivity.this,"保存成功!",Toast.LENGTH_SHORT).show();
                 }
                 catch (IOException e) {
+                    Toast.makeText(DesignProblemActivity.this,"保存失败!",Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 
 
-                Toast.makeText(DesignProblemActivity.this,"保存成功!",Toast.LENGTH_SHORT).show();
+
                 //提醒刷新图片
                 Intent intent_back = new Intent();
                 intent_back.putExtra("position", problem_position);

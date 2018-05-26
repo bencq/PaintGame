@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +19,18 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.example.deep.paintgame.utils.Paths;
 import com.example.deep.paintgame.utils.SHA1;
+import com.example.deep.paintgame.utils.Utils;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
@@ -44,6 +55,17 @@ public class MainActivity extends AppCompatActivity {
         //final ImageButton imageButton_main_Settings = findViewById(R.id.imageButton_main_Settings);
 
         dealFirstTimeRunApp();
+
+
+
+
+        //debug
+
+
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String identity = sharedPreferences.getString("identity","No id");
+        Log.d(TAG, "dealFirstTimeRunApp: " + "identity: " + identity);
 
         imageButton_main_StartGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,24 +218,29 @@ public class MainActivity extends AppCompatActivity {
             int random_number = random.nextInt();
 
             String identity = SHA1.encode(String.valueOf(date) + random_number);
-            Log.d(TAG, "dealFirstTimeRunApp: " + "identity: " + identity);
+
             editor.putString("identity",identity);
             editor.apply();
 
 
 
             //题目名
-            String problemNames[] = {"test","origin_1","origin_2","origin_3"};
+            String problemNames[] = {"heart","mario","tortoise","mushroom"};
+            int drawableId[] = {R.drawable.img_heart,R.drawable.img_mario,R.drawable.img_tortoise,R.drawable.img_mushroom};
             //题目尺寸
-            int problemSizes[] = {8,10,6,12};
+            int problemSizes[] = {9,12,10,12};
             //题目数据
             String problemData[] =
                     {
-                            "04040400*04040400*44444444*04040400*04040400*04444440*04444440*04444440*",
-                            "4444444444*4444444444*4444444444*4444444444*4444444444*0000000000*0000000000*0000000000*0000000000*0000000000*",
-                            "040404*040404*040404*040404*040404*040404*",
-                            "040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*040440400440*"
+                            "003000300*030303030*030030030*300000003*300000003*030000030*003000300*000303000*000030000*",
+                            "000333330000*003333333330*001116656000*016166656660*016116661666*011666611110*000666666600*003343330000*033343343330*333344443333*663634436366*666444444666*",
+                            "0000000000*0000000000*0022200222*0244420262*2422242222*2222222220*0222220000*0230230000*0000000000*0000000000*",
+                            "000336633000*003366663300*033666666330*033663366330*366633336663*336333333633*336333333633*366663366663*666151151666*011111111110*001111111100*000111111000*"
                     };
+
+
+
+
 
 
             //处理题目名字放到SP中
@@ -233,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean(KEY_SOUND_EFFECT,true);
 
             //SP记录具体每个题目的数据
+
             for (int i = 0; i < problemNames.length; ++i)
             {
                 String name = problemNames[i];
@@ -241,13 +269,40 @@ public class MainActivity extends AppCompatActivity {
                 editor_problem.putInt("size", problemSizes[i]);
                 editor_problem.putString("data", problemData[i]);
                 editor_problem.apply();
+
+                //处理题目初始图片
+
+                try {
+                    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(openFileOutput(Paths.getImageFileName(problemNames[i]),MODE_PRIVATE));
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(MainActivity.this.getResources().openRawResource(drawableId[i]));
+                    byte[] bytes = new byte[1024];
+                    Log.d(TAG, "dealFirstTimeRunApp: " + "bufferedInputStream.available(): " + bufferedInputStream.available());
+                    int len = 0;
+                    while((len = bufferedInputStream.read(bytes)) > 0)
+                    {
+                        bufferedOutputStream.write(bytes,0,len);
+                    }
+                    bufferedInputStream.close();
+                    bufferedOutputStream.flush();
+                    bufferedOutputStream.close();
+
+
+                    FileInputStream fileInputStream = openFileInput(Paths.getImageFileName(problemNames[i]));
+                    Log.d(TAG, "dealFirstTimeRunApp: " + fileInputStream.available());
+
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+
+
             }
 
-            //debug
-            //处理题目初始图片
 
 
 
         }
     }
+
 }
