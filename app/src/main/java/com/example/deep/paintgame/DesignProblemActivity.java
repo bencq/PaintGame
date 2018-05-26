@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -22,6 +23,9 @@ import android.widget.Toast;
 
 import com.example.deep.paintgame.utils.Paths;
 import com.example.deep.paintgame.utils.Utils;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import java.io.File;
 import java.io.FileNotFoundException;

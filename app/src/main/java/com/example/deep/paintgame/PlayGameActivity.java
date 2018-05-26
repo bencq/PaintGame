@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -31,9 +32,10 @@ import android.widget.Toast;
 
 import com.example.deep.paintgame.animation.Animation;
 import com.example.deep.paintgame.deprecated.SettingsActivity;
-
-
-
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 
 class FinishDialog extends Dialog implements View.OnClickListener {
@@ -138,6 +140,51 @@ public class PlayGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playgame);
+
+        final TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(100);
+        textPaint.setColor(Color.WHITE);
+        new ShowcaseView.Builder(this)
+                .withMaterialShowcase()
+                .setStyle(R.style.CustomText)  //设置自定义样式
+                .setTarget(new ViewTarget(findViewById(R.id.imageButton_playGame_knock)))//设置目标
+                .setContentText("方块清除工具")//提示的内容
+                .setContentTextPaint(textPaint)
+                .hideOnTouchOutside()   //点击空白位置也会被隐藏
+                .singleShot(1)       //用于单次显示. 当下次发现这个int值所标示的已经显示过了,就不再显示.int值自己随便写,注意不要重复就好
+                .setShowcaseEventListener(
+                        new SimpleShowcaseEventListener(){
+                            @Override
+                            public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                                new ShowcaseView.Builder(PlayGameActivity.this)
+                                        .withMaterialShowcase()
+                                        .setStyle(R.style.CustomText)
+                                        .setTarget(new ViewTarget(findViewById(R.id.imageButton_playGame_mark)))
+                                        .setContentText("方块上色工具")
+                                        .setContentTextPaint(textPaint)
+                                        .hideOnTouchOutside()
+                                        .singleShot(2)
+                                        .setShowcaseEventListener(
+                                                new SimpleShowcaseEventListener(){
+                                                    @Override
+                                                    public void onShowcaseViewDidHide(ShowcaseView sv){
+                                                        new ShowcaseView.Builder(PlayGameActivity.this)
+                                                                .withMaterialShowcase()
+                                                                .setStyle(R.style.CustomText)
+                                                                .setTarget(new ViewTarget(findViewById(R.id.imageButton_gotoSettings)))
+                                                                .setContentText("音乐设置")
+                                                                .setContentTextPaint(textPaint)
+                                                                .hideOnTouchOutside()
+                                                                .singleShot(3)
+                                                        .build();
+                                                    }
+                                                }
+                                        )
+                                .build();
+                            }
+                        }
+                )
+                .build();
 
         setbgmFragment=(SetBGMFragment)(getSupportFragmentManager().findFragmentById(R.id.drawerLayout_PG)) ;
 

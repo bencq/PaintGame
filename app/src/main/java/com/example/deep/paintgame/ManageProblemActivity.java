@@ -2,6 +2,7 @@ package com.example.deep.paintgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -9,15 +10,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.deep.paintgame.adapters.PIM_Adapter;
 import com.example.deep.paintgame.javaBean.Problem;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +108,26 @@ public class ManageProblemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manageproblem);
+
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(100);
+        textPaint.setColor(Color.WHITE);
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin);
+        Target viewTarget = new ViewTarget(R.id.floatingActionButton_MP_addProblem, this);     //R.id.rb4指定的要突出显示的控件的id
+        ShowcaseView sv = new ShowcaseView.Builder(this)
+                .withMaterialShowcase()
+                .setStyle(R.style.CustomText)  //设置自定义样式
+                .setTarget(viewTarget)
+                .setContentText("新建题目")        //提示的内容
+                .setContentTextPaint(textPaint)
+                .hideOnTouchOutside()   //点击空白位置也会被隐藏
+                .singleShot(5)       //用于单次显示. 当下次发现这个int值所标示的已经显示过了,就不再显示.int值自己随便写,注意不要重复就好
+                .build();
+        sv.setButtonPosition(lps);
 
         addProblemFragment = (AddProblemFragment)(getSupportFragmentManager().findFragmentById(R.id.fragment_MP_addProblem));
         drawerLayout = findViewById(R.id.drawerLayout_MP);
