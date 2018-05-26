@@ -104,6 +104,7 @@ public class PlayGameActivity extends AppCompatActivity {
     private int problem_source; // 题目来源
 
     private boolean isFinish = false; // 玩家是否完成当前题目
+    private boolean isPaused = false; //打开设置界面暂停计时
 
     private int totalCorrectCount = 0;//总的需要涂色的方块
     private int remainCount = 0;//剩下需要涂色的方块
@@ -158,12 +159,35 @@ public class PlayGameActivity extends AppCompatActivity {
             }
         });
 
+        drawerLayoutPG.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                isPaused = true;
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                isPaused = false;
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(PlayGameActivity.this);
         //music
         boolean musicSwitch = sharedPreferences.getBoolean(MainActivity.KEY_MUSIC_SWITCH,true);
         int musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
+        /*
         if(musicSwitch)
         {
             if(mediaPlayer != null)
@@ -180,6 +204,7 @@ public class PlayGameActivity extends AppCompatActivity {
                 mediaPlayer.start();
             }
         }
+        */
         soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 5);
 
 
@@ -585,7 +610,7 @@ public class PlayGameActivity extends AppCompatActivity {
                     {
                         break;
                     }
-                    else
+                    else if(!isPaused)
                     {
                         ++time_second;
                         if (time_second == 60)
