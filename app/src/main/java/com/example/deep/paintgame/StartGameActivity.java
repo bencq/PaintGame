@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -107,6 +108,9 @@ public class StartGameActivity extends AppCompatActivity {
                             client.newCall(request).enqueue(new Callback() {
                                 @Override
                                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    Looper.prepare();
+                                    Toast.makeText(StartGameActivity.this,"从服务器获取题目失败！",Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
                                     e.printStackTrace();
                                 }
 
