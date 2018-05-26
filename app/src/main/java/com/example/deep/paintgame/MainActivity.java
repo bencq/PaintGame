@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         //final ImageButton imageButton_main_Settings = findViewById(R.id.imageButton_main_Settings);
 
         dealFirstTimeRunApp();
+        //checkPermission();
 
 
 
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
             //题目数据
             String problemData[] =
                     {
-                            "003000300*030303030*030030030*300000003*300000003*030000030*003000300*000303000*000030000*",
+                            "003000300*030303030*333333333*333333333*333333333*033333330*003333300*000333000*000030000*",
                             "000333330000*003333333330*001116656000*016166656660*016116661666*011666611110*000666666600*003343330000*033343343330*333344443333*663634436366*666444444666*",
                             "0000000000*0000000000*0022200222*0244420262*2422242222*2222222220*0222220000*0230230000*0000000000*0000000000*",
                             "000336633000*003366663300*033666666330*033663366330*366633336663*336333333633*336333333633*366663366663*666151151666*011111111110*001111111100*000111111000*"
@@ -304,5 +305,23 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    /*
+    private void checkPermission() {
+        //检查权限（NEED_PERMISSION）是否被授权 PackageManager.PERMISSION_GRANTED表示同意授权
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //用户已经拒绝过一次，再次弹出权限申请对话框需要给用户一个解释
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission
+                    .WRITE_EXTERNAL_STORAGE)) {
+                Toast.makeText(this, "请开通相关权限，否则无法正常使用本应用！", Toast.LENGTH_SHORT).show();
+            }
+            //申请权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
 
+        } else {
+            Toast.makeText(this, "授权成功！", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "checkPermission: 已经授权！");
+        }
+    }
+    */
 }
