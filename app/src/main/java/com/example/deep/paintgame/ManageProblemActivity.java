@@ -1,5 +1,7 @@
 package com.example.deep.paintgame;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,15 +21,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.deep.paintgame.adapters.PIM_Adapter;
+import com.example.deep.paintgame.animation.Animation;
 import com.example.deep.paintgame.javaBean.Problem;
+
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
+import com.example.deep.paintgame.utils.Paths;
+
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +52,7 @@ public class ManageProblemActivity extends AppCompatActivity {
 
 
     FloatingActionButton floatingActionButton_MP_addProblem;
+    ImageView imageView_tool;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -132,6 +144,8 @@ public class ManageProblemActivity extends AppCompatActivity {
         addProblemFragment = (AddProblemFragment)(getSupportFragmentManager().findFragmentById(R.id.fragment_MP_addProblem));
         drawerLayout = findViewById(R.id.drawerLayout_MP);
 
+
+
         floatingActionButton_MP_addProblem = findViewById(R.id.floatingActionButton_MP_addProblem);
         floatingActionButton_MP_addProblem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,11 +160,61 @@ public class ManageProblemActivity extends AppCompatActivity {
             Log.e(TAG, "onCreate: " + "发生未知错误，problemList == null");
             return;
         }
+
+        if(problemList.size() < MainActivity.problemNames.length)
+        {
+            addRecoverButton();
+        }
+        else
+        {
+            for(int i = 0;i < MainActivity.problemNames.length; ++i)
+            {
+                String name = problemList.get(i).getName();
+                if(!MainActivity.problemNames[i].equals(name))
+                {
+                    addRecoverButton();
+                    break;
+                }
+            }
+        }
+
+
         recyclerView_MP = findViewById(R.id.recyclerView_MP);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(ManageProblemActivity.this,2);
         recyclerView_MP.setLayoutManager(gridLayoutManager);
         pim_adapter = new PIM_Adapter(problemList);
         recyclerView_MP.setAdapter(pim_adapter);
+    }
+
+    private void addRecoverButton() {
+        imageView_tool = findViewById(R.id.imageView_tool);
+        imageView_tool.startAnimation(Animation.animation_rotate);
+        imageView_tool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog alertDialog = new AlertDialog.Builder(ManageProblemActivity.this).create();
+                alertDialog.setTitle("恢复默认题目");
+                alertDialog.setMessage("要继续吗？");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        MainActivity.initProblems(ManageProblemActivity.this);
+                        Toast.makeText(ManageProblemActivity.this,"恢复成功!",Toast.LENGTH_SHORT).show();
+                        imageView_tool.setOnClickListener(null);
+                        imageView_tool.clearAnimation();
+                    }
+                });
+
+                alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alertDialog.show();
+            }
+        });
     }
 
 

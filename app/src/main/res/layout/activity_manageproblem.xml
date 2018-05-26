@@ -14,19 +14,61 @@
         android:contentDescription="background" />
 
     <FrameLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView_MP"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
-        </android.support.v7.widget.RecyclerView>
 
+
+            <FrameLayout
+                android:id="@+id/frameLayout_MP_head"
+                android:layout_width="match_parent"
+                android:layout_height="100dip">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/background"
+                    android:scaleType="matrix"
+                    android:alpha="0.4"
+                    android:contentDescription="background_head" />
+
+
+                <ImageView
+                    android:id="@+id/imageView_tool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/tool"
+                    android:contentDescription="tool" />
+
+
+
+
+
+
+
+            </FrameLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_below="@id/frameLayout_MP_head"
+                android:id="@+id/recyclerView_MP"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton_MP_addProblem"
@@ -38,6 +80,7 @@
             app:elevation="10dp"
             android:layout_gravity="bottom|end"
             />
+
 
     </FrameLayout>
 

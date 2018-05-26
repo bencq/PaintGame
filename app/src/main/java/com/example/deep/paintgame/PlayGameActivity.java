@@ -205,6 +205,7 @@ public class PlayGameActivity extends AppCompatActivity {
                 drawerLayoutPG.openDrawer(GravityCompat.END);
             }
         });
+        imageButton_gotoSettings.startAnimation(Animation.animation_rotate);
 
         drawerLayoutPG.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
