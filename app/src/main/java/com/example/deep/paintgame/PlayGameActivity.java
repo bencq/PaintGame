@@ -1,5 +1,7 @@
 package com.example.deep.paintgame;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,15 +20,52 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.deep.paintgame.animation.Animation;
 
+
+
+
+
+class FinishDialog extends Dialog implements View.OnClickListener {
+    private Context context;
+    public FinishDialog(Context context) {
+        // 更改样式,把背景设置为透明的
+        super(context, R.style.LocatonDialogStyle);
+        this.context = context;
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_finish);
+        ImageView imageView = (ImageView) findViewById(R.id.imageview_finishthegame);
+        imageView.setOnClickListener(this);
+        initLayoutParams();
+    }
+
+    private void initLayoutParams() {
+
+        //set windowManager.layoutParames params
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER;
+        params.alpha = 1f;
+        getWindow().setAttributes(params);
+    }
+    @Override
+    public void onClick(View v) {
+        dismiss();
+    }
+}
 
 public class PlayGameActivity extends AppCompatActivity {
     //
@@ -295,7 +334,10 @@ public class PlayGameActivity extends AppCompatActivity {
 
         if(errorCount >= totalCorrectCount || correctCount >= totalPaneCount - totalCorrectCount) {
             isFinish = true;
-            Toast.makeText(PlayGameActivity.this, "游戏结束啦！", Toast.LENGTH_LONG).show();
+            //show the finish game view
+            FinishDialog finishGameView=new FinishDialog(this);
+            finishGameView.show();
+            //Toast.makeText(PlayGameActivity.this, "游戏结束啦！", Toast.LENGTH_LONG).show();
         }
     }
 
