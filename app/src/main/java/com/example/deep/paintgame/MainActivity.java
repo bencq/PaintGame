@@ -281,7 +281,16 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder stringBuilder = new StringBuilder();
 
         String existedProblemNames = sharedPreferences.getString("problemNames","");
-        String existedNames[] = existedProblemNames.split("\\*");
+        String existedNames[] = null;
+        if(!existedProblemNames.equals(""))
+        {
+            existedNames = existedProblemNames.split("\\*");
+        }
+        else
+        {
+            existedNames = new String[0];
+        }
+
 
 
         for (String problemName : problemNames) {

@@ -227,6 +227,7 @@ public class ManageProblemActivity extends AppCompatActivity {
         {
             if(!problemNames.equals(""))
             {
+                Log.d(TAG, "getProblemList: " + "problemNames: " + problemNames);
                 String names[] = problemNames.split("\\*");
                 int problemCount = names.length;
                 problemList = new ArrayList<>(problemCount);
