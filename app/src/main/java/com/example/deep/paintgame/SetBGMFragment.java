@@ -148,6 +148,7 @@ public class SetBGMFragment extends Fragment {
             }
             PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[musicRadio]);
             PlayGameActivity.mediaPlayer.setLooping(true);
+            PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
             PlayGameActivity.mediaPlayer.start();
         }
 
@@ -167,6 +168,7 @@ public class SetBGMFragment extends Fragment {
                 }
                 PlayGameActivity.mediaPlayer  = MediaPlayer.create(activity, music_raw[1]);
                 PlayGameActivity.mediaPlayer.setLooping(true);
+                PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,1);
                 editor.apply();
@@ -187,6 +189,7 @@ public class SetBGMFragment extends Fragment {
                 }
                 PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[2]);
                 PlayGameActivity.mediaPlayer.setLooping(true);
+                PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,2);
                 editor.apply();
@@ -207,6 +210,7 @@ public class SetBGMFragment extends Fragment {
                 }
                 PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[3]);
                 PlayGameActivity.mediaPlayer.setLooping(true);
+                PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,3);
                 editor.apply();
@@ -227,6 +231,7 @@ public class SetBGMFragment extends Fragment {
                 }
                 PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[4]);
                 PlayGameActivity.mediaPlayer.setLooping(true);
+                PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,4);
                 editor.apply();
@@ -247,6 +252,7 @@ public class SetBGMFragment extends Fragment {
                 }
                 PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[5]);
                 PlayGameActivity.mediaPlayer.setLooping(true);
+                PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,5);
                 editor.apply();
@@ -267,6 +273,7 @@ public class SetBGMFragment extends Fragment {
                 }
                 PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[6]);
                 PlayGameActivity.mediaPlayer.setLooping(true);
+                PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
                 PlayGameActivity.mediaPlayer.start();
                 editor.putInt(MainActivity.KEY_MUSIC_RADIO,6);
                 editor.apply();
@@ -288,6 +295,7 @@ public class SetBGMFragment extends Fragment {
                     }
                     PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[music_number]);
                     PlayGameActivity.mediaPlayer.setLooping(true);
+                    PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
                     PlayGameActivity.mediaPlayer.start();
                     editor.putBoolean(MainActivity.KEY_MUSIC_SWITCH,true);
                     editor.apply();
@@ -336,7 +344,10 @@ public class SetBGMFragment extends Fragment {
                 activity.volume_BGM = (float)(i) / 100;
                 if(PlayGameActivity.mediaPlayer != null)
                 {
-                    PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
+                    if(switch_SA_music.isChecked())
+                    {
+                        PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
+                    }
                 }
             }
 
