@@ -441,16 +441,16 @@ public class PlayGameActivity extends AppCompatActivity {
         if(errorCount >= totalCorrectCount || correctCount >= totalPaneCount - totalCorrectCount) {
             isFinish = true;
             //show the finish game view
-
-            if(setbgmFragment.soundEffect)
-            {
-                if(errorCount<totalCorrectCount/3){
-                    wingame=true;
-                    soundPool.play(musicId[4],volume_soundEffect,volume_soundEffect, 0, 0, 1);
-                    //Toast.makeText(PlayGameActivity.this, "游戏结束啦！", Toast.LENGTH_LONG).show();
+            if(errorCount<totalCorrectCount/3){
+                wingame=true;
+                if(setbgmFragment.soundEffect) {
+                    soundPool.play(musicId[4], volume_soundEffect, volume_soundEffect, 0, 0, 1);
                 }
-                else if(errorCount>=totalCorrectCount/3){
-                    wingame=false;
+                    //Toast.makeText(PlayGameActivity.this, "游戏结束啦！", Toast.LENGTH_LONG).show();
+            }
+            else if(errorCount>=totalCorrectCount/3){
+                wingame=false;
+                if(setbgmFragment.soundEffect) {
                     soundPool.play(musicId[5],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                 }
             }
@@ -828,21 +828,23 @@ public class PlayGameActivity extends AppCompatActivity {
         super.onStop();
         if(mediaPlayer != null)
         {
+            boolean isPlaying;
+            try {
+                isPlaying = mediaPlayer.isPlaying();
+            }
+            catch (IllegalStateException e) {
+                mediaPlayer = null;
+                mediaPlayer = new MediaPlayer();
+            }
             if(mediaPlayer.isPlaying())
             {
-                mediaPlayer.pause();
+                mediaPlayer.stop();
             }
         }
     }
     @Override
     protected void onResume(){
         super.onResume();
-        if(mediaPlayer != null)
-        {
-            if(!mediaPlayer.isPlaying())
-            {
-                mediaPlayer.start();
-            }
-        }
+
     }
 }
