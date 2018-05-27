@@ -128,7 +128,7 @@ public class SetBGMFragment extends Fragment {
 
         musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
         music_number=musicRadio-1;
-        soundEffect=sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, false);
+        soundEffect=sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, true);
 
         switch_SA_music.setChecked(musicSwitch);
         switch_sound_effect.setChecked(soundEffect);
