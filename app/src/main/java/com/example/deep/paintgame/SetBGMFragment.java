@@ -127,10 +127,11 @@ public class SetBGMFragment extends Fragment {
         boolean musicSwitch = sharedPreferences.getBoolean(MainActivity.KEY_MUSIC_SWITCH,true);
         musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
 
-        PlayGameActivity.soundEffect = sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, true);
-        music_number = musicRadio;
+
+        soundEffect=sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, false);
+
         switch_SA_music.setChecked(musicSwitch);
-        switch_sound_effect.setChecked(PlayGameActivity.soundEffect);
+        switch_sound_effect.setChecked(soundEffect);
         if(!musicSwitch)
         {
             for(int i=0;i<music_Number;i++)
@@ -293,7 +294,7 @@ public class SetBGMFragment extends Fragment {
                     {
                         PlayGameActivity.mediaPlayer.release();
                     }
-                    PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[music_number]);
+                    PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[music_number+1]);
                     PlayGameActivity.mediaPlayer.setLooping(true);
                     PlayGameActivity.mediaPlayer.setVolume(activity.volume_BGM,activity.volume_BGM);
                     PlayGameActivity.mediaPlayer.start();
@@ -325,13 +326,14 @@ public class SetBGMFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(compoundButton.isChecked())
                 {
-                    PlayGameActivity.soundEffect = true;
+                    soundEffect=true;
                     editor.putBoolean(MainActivity.KEY_SOUND_EFFECT,true);
                     editor.apply();
                 }
                 else
                 {
-                    PlayGameActivity.soundEffect = false;
+
+                    soundEffect=false;
                     editor.putBoolean(MainActivity.KEY_SOUND_EFFECT,false);
                     editor.apply();
                 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -48,6 +49,7 @@ public class PIS_Adapter extends RecyclerView.Adapter<PIS_Adapter.ViewHolder>{
         viewholder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                playSoundEffect();
                 Intent intent = new Intent(parent.getContext(),PlayGameActivity.class);
                 int position = viewholder.getAdapterPosition();
                 Problem problem = problemList.get(position);
@@ -58,6 +60,12 @@ public class PIS_Adapter extends RecyclerView.Adapter<PIS_Adapter.ViewHolder>{
             }
         });
         return viewholder;
+    }
+
+    public void playSoundEffect(){
+            MediaPlayer mMediaPlayer;
+            mMediaPlayer= MediaPlayer.create(context, R.raw.soundeffect_selectgame);
+            mMediaPlayer.start();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

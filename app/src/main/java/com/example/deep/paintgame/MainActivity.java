@@ -1,23 +1,20 @@
 package com.example.deep.paintgame;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -33,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Random;
-import java.util.Timer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -74,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         imageButton_main_StartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playSoundeffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -82,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 animation_alpha.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-
                     }
 
                     @Override
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         imageButton_main_ManageProblem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                playSoundeffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -136,10 +132,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         imageButton_main_GameHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                playSoundeffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -148,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 animation_alpha.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
+
 
                     }
 
@@ -204,6 +202,12 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
+    public void playSoundeffect()
+    {
+        MediaPlayer mMediaPlayer;
+        mMediaPlayer= MediaPlayer.create(this, R.raw.soundeffect_selectmenu);
+        mMediaPlayer.start();
+    }
 
 
     //初始化游戏数据 完成后将该函数debug处putBoolean 改为false
@@ -272,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                         "003000300*033303330*333333333*333333333*333333333*033333330*003333300*000333000*000030000*",
                         "000333330000*003333333330*001116656000*016166656660*016116661666*011666611110*000666666600*003343330000*033343343330*333344443333*663634436366*666444444666*",
                         "0000000000*0000000000*0022200222*0244420262*2422242222*2222222220*0222220000*0230230000*0000000000*0000000000*",
-                        "000336633000*003366663300*033666666330*033663366330*366633336663*336333333633*336333333633*366663366663*666151151666*011111111110*001111111100*000111111000*"
+                        "000336633000*003366663300*033666666330*033663366330*366633336663*336333333633*336333333633*366663366663*666151151666*011151151110*001111111100*000111111000*"
                 };
 
 

@@ -25,7 +25,6 @@
             android:name=".ManageProblemActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".PlayGameActivity" />
-        <activity android:name=".deprecated.AddProblemActivity" />
         <activity android:name=".DesignProblemActivity" />
         <activity android:name=".deprecated.SettingsActivity"/>
         <activity android:name=".GameHelpActivity"/>
