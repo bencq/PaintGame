@@ -32,8 +32,7 @@ import android.widget.Toast;
 
 import com.example.deep.paintgame.animation.Animation;
 
-
-
+import static android.content.ContentValues.TAG;
 
 
 class FinishDialog extends Dialog implements View.OnClickListener {
@@ -48,8 +47,23 @@ class FinishDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_finish);
-        ImageView imageView = (ImageView) findViewById(R.id.imageview_finishthegame);
-        imageView.setOnClickListener(this);
+
+        ImageView imageViewWin= (ImageView) findViewById(R.id.imageview_finishthegame);
+        ImageView imageViewLost= (ImageView) findViewById(R.id.imageview_gameover);
+        if(PlayGameActivity.wingame)
+        {
+
+            imageViewWin.setVisibility(View.VISIBLE);
+            imageViewLost.setVisibility(View.INVISIBLE);
+            imageViewWin.setOnClickListener(this);
+        }
+        else
+        {
+            imageViewLost.setVisibility(View.VISIBLE);
+            imageViewWin.setVisibility(View.INVISIBLE);
+            imageViewLost.setOnClickListener(this);
+        }
+
         initLayoutParams();
     }
 
@@ -87,28 +101,28 @@ public class PlayGameActivity extends AppCompatActivity {
     public static final int SOURCE_LOCAL = 0;
     public static final int SOURCE_NETWORK = 1;
 
-    public static final int[] RAW_SOUND_EFFECT = {R.raw.soundeffect_brush, R.raw.soundeffect_broken,R.raw.soundeffect_wrong,R.raw.soundeffect_hint};
+    public static final int[] RAW_SOUND_EFFECT = {R.raw.soundeffect_brush, R.raw.soundeffect_broken,R.raw.soundeffect_wrong,
+            R.raw.soundeffect_hint,R.raw.soundeffect_finishgame,R.raw.soundeffect_gameover};
 
 
     static MediaPlayer mediaPlayer;
-    int[] musicId;
-    SoundPool soundPool;
+    static int[] musicId;
+    static SoundPool soundPool;
 
-    public float volume_soundEffect = 1.0f;
-    public float volume_BGM = 1.0f;
-
+    public static float volume_soundEffect = 1.0f;
+    public static float volume_BGM = 1.0f;
     private int problem_size; // 当前题目的尺寸大小
     private String problem_name; // 当前题目的名字
     private String problem_data; // 题目数据
     private int problem_source; // 题目来源
 
     private boolean isFinish = false; // 玩家是否完成当前题目
-
     private int totalCorrectCount = 0;//总的需要涂色的方块
     private int remainCount = 0;//剩下需要涂色的方块
     private int correctCount = 0;//正确数
     private int totalPaneCount = 0;//总方格数
     private int border_width = 1;//stroke宽度private int border_width = 1;//stroke宽度
+    public static boolean wingame=false;
 
     private Button[][] buttons; // 按钮对象
     private int[][] problem_rightAnswer; // 当前题目的正确答案
@@ -165,7 +179,7 @@ public class PlayGameActivity extends AppCompatActivity {
         int musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
         if(musicSwitch)
         {
-            mediaPlayer = MediaPlayer.create(PlayGameActivity.this,SettingsActivity.music_raw[musicRadio]);
+            mediaPlayer = MediaPlayer.create(PlayGameActivity.this,SetBGMFragment.music_raw[musicRadio]);
             mediaPlayer.setLooping(true);
             mediaPlayer.start();
         }
@@ -335,9 +349,21 @@ public class PlayGameActivity extends AppCompatActivity {
         if(errorCount >= totalCorrectCount || correctCount >= totalPaneCount - totalCorrectCount) {
             isFinish = true;
             //show the finish game view
+
+            if(setbgmFragment.soundEffect)
+            {
+                if(errorCount>=totalCorrectCount/2){
+                    wingame=false;
+                    soundPool.play(musicId[5],volume_soundEffect,volume_soundEffect, 0, 0, 1);
+                }
+                else if(errorCount<totalCorrectCount/2){
+                    wingame=true;
+                soundPool.play(musicId[4],volume_soundEffect,volume_soundEffect, 0, 0, 1);
+            //Toast.makeText(PlayGameActivity.this, "游戏结束啦！", Toast.LENGTH_LONG).show();
+                }
+            }
             FinishDialog finishGameView=new FinishDialog(this);
             finishGameView.show();
-            //Toast.makeText(PlayGameActivity.this, "游戏结束啦！", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -614,6 +640,8 @@ public class PlayGameActivity extends AppCompatActivity {
                     final int colNumber = col;
 
                     buttons[row][col].setOnClickListener(new Button.OnClickListener() {
+
+
                         @Override
                         public void onClick(View v) {
                             if (isInterrupted()) {
@@ -629,7 +657,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] != PANE_DEFAULT) {
                                         if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED ||
                                                 problem_currentAnswer[rowNumber][colNumber] == PANE_ERROR) {
-                                            if(SettingsActivity.soundEffect)
+                                            if(setbgmFragment.soundEffect)
                                             soundPool.play(musicId[3],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                         }
                                         break;
@@ -641,7 +669,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         --remainCount;
                                         textView_remainCountNumber.setText(String.valueOf(remainCount)) ;
 
-                                        if(SettingsActivity.soundEffect)
+                                        if(setbgmFragment.soundEffect)
                                         soundPool.play(musicId[1],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     else
@@ -659,7 +687,7 @@ public class PlayGameActivity extends AppCompatActivity {
                                         ++errorCount;
                                         String errorCountString = Integer.toString(errorCount);
                                         textView_errorCountNumber.setText(errorCountString);
-                                        if(SettingsActivity.soundEffect)
+                                        if(setbgmFragment.soundEffect)
                                         soundPool.play(musicId[2],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     break;
@@ -671,13 +699,13 @@ public class PlayGameActivity extends AppCompatActivity {
                                     if (problem_currentAnswer[rowNumber][colNumber] == PANE_DEFAULT)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_MARKED;
-                                        if(SettingsActivity.soundEffect)
+                                        if(setbgmFragment.soundEffect)
                                         soundPool.play(musicId[0],1,1, 0, 0, 1);
                                     }
                                     else if (problem_currentAnswer[rowNumber][colNumber] == PANE_MARKED)
                                     {
                                         problem_currentAnswer[rowNumber][colNumber] = PANE_DEFAULT;
-                                        if(SettingsActivity.soundEffect)
+                                        if(setbgmFragment.soundEffect)
                                         soundPool.play(musicId[0],volume_soundEffect,volume_soundEffect, 0, 0, 1);
                                     }
                                     break;

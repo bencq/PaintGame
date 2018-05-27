@@ -127,10 +127,10 @@ public class SetBGMFragment extends Fragment {
         boolean musicSwitch = sharedPreferences.getBoolean(MainActivity.KEY_MUSIC_SWITCH,false);
         musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
 
-        SettingsActivity.soundEffect=sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, false);
+        soundEffect=sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, false);
         music_no = musicRadio;
         switch_SA_music.setChecked(musicSwitch);
-        switch_sound_effect.setChecked(SettingsActivity.soundEffect);
+        switch_sound_effect.setChecked(soundEffect);
         if(!musicSwitch)
         {
             for(int i=0;i<music_Number;i++)
@@ -288,13 +288,13 @@ public class SetBGMFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(compoundButton.isChecked())
                 {
-                    SettingsActivity.soundEffect=true;
+                    soundEffect=true;
                     editor.putBoolean(MainActivity.KEY_SOUND_EFFECT,true);
                     editor.apply();
                 }
                 else
                 {
-                    SettingsActivity.soundEffect=false;
+                    soundEffect=false;
                     editor.putBoolean(MainActivity.KEY_SOUND_EFFECT,false);
                     editor.apply();
                 }

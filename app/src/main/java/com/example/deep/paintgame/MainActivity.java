@@ -1,28 +1,21 @@
 package com.example.deep.paintgame;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 
 import com.example.deep.paintgame.utils.SHA1;
 
 import java.util.Date;
 import java.util.Random;
-import java.util.Timer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         imageButton_main_StartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playSoundeffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -56,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 animation_alpha.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-
                     }
 
                     @Override
@@ -80,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         imageButton_main_ManageProblem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                playSoundeffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -110,10 +103,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         imageButton_main_GameHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                playSoundeffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -122,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 animation_alpha.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
+
 
                     }
 
@@ -178,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
+    public void playSoundeffect()
+    {
+        MediaPlayer mMediaPlayer;
+        mMediaPlayer= MediaPlayer.create(this, R.raw.soundeffect_selectmenu);
+        mMediaPlayer.start();
+    }
 
 
     //初始化游戏数据 完成后将该函数debug处putBoolean 改为false
