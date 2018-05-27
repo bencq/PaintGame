@@ -125,9 +125,9 @@ public class SetBGMFragment extends Fragment {
 
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         boolean musicSwitch = sharedPreferences.getBoolean(MainActivity.KEY_MUSIC_SWITCH,true);
+
         musicRadio = sharedPreferences.getInt(MainActivity.KEY_MUSIC_RADIO, 1);
-
-
+        music_number=musicRadio-1;
         soundEffect=sharedPreferences.getBoolean(MainActivity.KEY_SOUND_EFFECT, false);
 
         switch_SA_music.setChecked(musicSwitch);
@@ -145,7 +145,7 @@ public class SetBGMFragment extends Fragment {
         {
             if(PlayGameActivity.mediaPlayer != null)
             {
-                PlayGameActivity.mediaPlayer.release();
+                //PlayGameActivity.mediaPlayer.stop();
             }
             PlayGameActivity.mediaPlayer = MediaPlayer.create(activity, music_raw[musicRadio]);
             PlayGameActivity.mediaPlayer.setLooping(true);
