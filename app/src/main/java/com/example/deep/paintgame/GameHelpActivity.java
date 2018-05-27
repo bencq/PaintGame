@@ -41,7 +41,7 @@ public class GameHelpActivity extends AppCompatActivity {
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( picture_number != 10)
+                if( picture_number != 15)
                     picture_number++;
                 ChangePicture();
             }
@@ -66,18 +66,33 @@ public class GameHelpActivity extends AppCompatActivity {
                 imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_explanation));
                 break;
             case 6:
-                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_end));
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_skill_1));
                 break;
             case 7:
-                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_home_edit));
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_skill_2));
                 break;
             case 8:
-                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_edit));
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_skill_3));
                 break;
             case 9:
-                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_create_setting));
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_skill_4));
                 break;
             case 10:
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_skill_5));
+                break;
+            case 11:
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_end));
+                break;
+            case 12:
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_home_edit));
+                break;
+            case 13:
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_edit));
+                break;
+            case 14:
+                imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_create_setting));
+                break;
+            case 15:
                 imageview_help.setImageDrawable(getResources().getDrawable(R.drawable.help_create));
             default:
         }
