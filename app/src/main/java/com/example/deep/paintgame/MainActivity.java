@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,18 +15,13 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.deep.paintgame.utils.Paths;
 import com.example.deep.paintgame.utils.SHA1;
-import com.example.deep.paintgame.utils.Utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.Random;
 
@@ -44,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
     //题目名
     public static final String problemNames[] = {"heart","mario","tortoise","mushroom"};
 
+    MediaPlayer mediaPlayer;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,22 +57,23 @@ public class MainActivity extends AppCompatActivity {
 
         dealFirstTimeRunApp(MainActivity.this);
         //checkPermission();
-
+        mediaPlayer = MediaPlayer.create(this,R.raw.soundeffect_selectmenuitem);
 
 
 
         //debug
 
 
-
+        /*
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String identity = sharedPreferences.getString("identity","No id");
         Log.d(TAG, "dealFirstTimeRunApp: " + "identity: " + identity);
+        */
 
         imageButton_main_StartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playSoundeffect();
+                playSoundEffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         imageButton_main_ManageProblem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playSoundeffect();
+                playSoundEffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -136,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         imageButton_main_GameHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playSoundeffect();
+                playSoundEffect();
                 Animation animation_alpha = new AlphaAnimation(0.1f, 1.0f);
                 animation_alpha.setDuration(100);
                 animation_alpha.setRepeatCount(4);
@@ -202,11 +205,9 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
-    public void playSoundeffect()
+    public void playSoundEffect()
     {
-        MediaPlayer mMediaPlayer;
-        mMediaPlayer= MediaPlayer.create(this, R.raw.soundeffect_selectmenu);
-        mMediaPlayer.start();
+        mediaPlayer.start();
     }
 
 
